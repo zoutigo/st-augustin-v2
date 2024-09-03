@@ -22,5 +22,5 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no bdeh8989@ecole-st-augustin.fr << 'EOF'
             cd /home/username/dev_repo
-            git pull origin develop
+            git pull origin dev
           EOF
