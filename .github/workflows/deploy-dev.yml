@@ -1,9 +1,9 @@
-name: Deploy to Development
+name: Deploy to cPanel
 
 on:
   push:
     branches:
-      - dev
+      - dev # Ce workflow se déclenche lors des pushs sur la branche 'main'
 
 jobs:
   deploy:
@@ -16,11 +16,11 @@ jobs:
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.6.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_O2SWITCH }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy code to cPanel dev
+      - name: Deploy code to cPanel
         run: |
-          ssh -o StrictHostKeyChecking=no bdeh8989@ecole-st-augustin.fr << 'EOF'
-            cd /home/username/dev_repo
+          ssh -T -o StrictHostKeyChecking=no -o BatchMode=yes bdeh8989@ecole-st-augustin.fr << 'EOF'
+            cd /home/bdeh8989/dev
             git pull origin dev
           EOF
