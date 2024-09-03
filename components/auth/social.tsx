@@ -30,14 +30,14 @@ export const Social = () => {
       >
         <FcGoogle className="h-5 w-5" />
       </Button>
-      <Button
+      {/* <Button
         size="lg"
         variant="outline"
         className="w-full"
         onClick={() => onClick('facebook')}
       >
         <FaGithub className="h-5 w-5" />
-      </Button>
+      </Button> */}
     </div>
   );
 };
