@@ -1,5 +1,71 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# CI / CD
+
+## Cpanel deployment
+
+- Create a Git version control repository
+  The destination folder must be located in /repositories
+
+- Add the remote repository
+
+```bash
+git remote add cpanel ssh://username@username.odns.fr/home/username/repositories/project-name
+```
+
+- Create final folder repositry to host files
+
+```bash
+mkdir ecole-st-augustin-v2-dev
+```
+
+- Update the hook located in repositories/project-name/.git/hooks
+
+```bash
+  nano post-receive
+```
+
+```
+read oldrev newrev refname
+branch=$(echo $refname | cut -d/ -f3)
+
+if [ "$branch" = "dev" ]; then
+    echo "Deploying to development environment..."
+    GIT_WORK_TREE=/home/username/dev git checkout -f dev
+elif [ "$branch" = "main" ]; then
+    echo "Deploying to production environment..."
+    GIT_WORK_TREE=/home/username/prod git checkout -f main
+else
+    echo "Branch $branch not configured for deployment."
+    exit 0
+fi
+
+# Vérifier si la branche reçue est bien celle qui est actuellement déployée
+if [ "x$refname" == "xrefs/heads/$branch" ]; then
+    echo "Received update on the checked-out branch, queueing deployment."
+    (cd /home/username/repositories/project-repo && /usr/bin/uapi VersionControlDeployment create repository_root=$PWD)
+else
+    echo "Ref $refname does not match the deployment branch."
+fi
+```
+
+## Commands
+
+Remote ssh connexion to cpanel from linux
+
+```bash
+ssh -i ~/.ssh/id_rsa -p 22 username@ecole-st-augustin.fr
+```
+
+There are 2 branches dev and main . To Push to dev branch
+
+```bash
+git push -u cpanel dev
+
+```
+
+# Development
+
 ## Getting Started
 
 First, run the development server:
