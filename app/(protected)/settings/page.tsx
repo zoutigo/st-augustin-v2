@@ -33,7 +33,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { UserRole } from '@prisma/client';
+import { UserGrade, UserRole } from '@prisma/client';
 
 type Props = {};
 
@@ -72,7 +72,7 @@ const SettingsPage = (props: Props) => {
       email: user?.email || undefined,
       password: undefined,
       newPassword: undefined,
-      role: user?.role || undefined,
+      grade: user?.grade || undefined,
     },
   });
 
@@ -182,10 +182,10 @@ const SettingsPage = (props: Props) => {
               )}
               <FormField
                 control={form.control}
-                name="role"
+                name="grade"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Role</FormLabel>
+                    <FormLabel>Grade</FormLabel>
                     <Select
                       disabled={isPending}
                       onValueChange={field.onChange}
@@ -197,8 +197,14 @@ const SettingsPage = (props: Props) => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
-                        <SelectItem value={UserRole.USER}>User</SelectItem>
+                        <SelectItem value={UserGrade.ADMIN}>Admin</SelectItem>
+                        <SelectItem value={UserGrade.MANAGER}>
+                          Manager
+                        </SelectItem>
+                        <SelectItem value={UserGrade.MODERATOR}>
+                          Moderator
+                        </SelectItem>
+                        <SelectItem value={UserGrade.NONE}>None</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

@@ -32,10 +32,11 @@ export const login = async (
     );
 
     try {
-      await sendVerificationEmail(
-        verificationToken.email,
-        verificationToken.token
-      );
+      // await sendVerificationEmail(
+      //   verificationToken.email,
+      //   verificationToken.token
+      // );
+      console.log('token verification');
     } catch (error) {
       return { error: 'Verification email not sent!' };
     }

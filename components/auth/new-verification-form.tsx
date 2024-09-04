@@ -33,7 +33,7 @@ export const NewVerificationForm = (props: Props) => {
       try {
         const data = await newVerification(token);
         setSuccess(data.success);
-        setError(data.error);
+        // setError(data.error);
       } catch (error) {
         setError('Something went wrong');
       }
