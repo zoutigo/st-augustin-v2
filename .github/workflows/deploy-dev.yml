@@ -1,26 +1,29 @@
-name: Deploy to cPanel
+name: Build
 
 on:
   push:
     branches:
-      - dev # Ce workflow se déclenche lors des pushs sur la branche 'main'
+      - dev # Ce workflow se déclenche lors des pushs sur la branche 'dev'
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
+      # Étape 1 : Checkout du code source
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up SSH key
-        uses: webfactory/ssh-agent@v0.6.0
+      # Étape 2 : Configuration de Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_O2SWITCH }}
+          node-version: '20.16.0' # Utilisez la version de Node.js que vous souhaitez
 
-      - name: Deploy code to cPanel
-        run: |
-          ssh -T -o StrictHostKeyChecking=no -o BatchMode=yes bdeh8989@ecole-st-augustin.fr << 'EOF'
-            cd /home/bdeh8989/dev
-            git pull origin dev
-          EOF
+      # Étape 3 : Installation des dépendances
+      - name: Install dependencies
+        run: npm install
+
+      # Étape 4 : Build du projet
+      - name: Build the project
+        run: npm run build # Assurez-vous que cette commande existe dans votre package.json
