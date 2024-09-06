@@ -39,5 +39,5 @@ jobs:
           server: ${{ secrets.CPANEL_FTP_HOST }}
           username: ${{ secrets.CPANEL_FTP_USERNAME }}
           password: $(cat ftp_password.txt) # Utilisation du mot de passe décodé
-          local-dir: /.next
+          local-dir: /.next/
           remote-dir: ${{ env.REMOTE_DIR }}
