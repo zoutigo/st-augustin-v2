@@ -21,7 +21,7 @@ export const ProtectedNavbar = (props: Props) => {
           <Link href={'/server'}>Server</Link>
         </Button>
         <Button asChild variant={pathname == '/admin' ? 'default' : 'outline'}>
-          <Link href={'/admin'}>Admin</Link>
+          <Link href={'/admin'}>Admin </Link>
         </Button>
         <Button
           asChild
