@@ -1,7 +1,1 @@
-{
-  "/page": "app/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/(protected)/client/page": "app/(protected)/client/page.js",
-  "/(protected)/server/page": "app/(protected)/server/page.js",
-  "/(protected)/admin/page": "app/(protected)/admin/page.js"
-}
+{}
