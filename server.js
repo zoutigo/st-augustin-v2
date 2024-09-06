@@ -8,6 +8,11 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 console.log('environment:', dev);
+const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
+
+if (!NEXTAUTH_SECRET) {
+  throw new Error('NEXTAUTH_SECRET environment variable is not defined');
+}
 
 app
   .prepare()
