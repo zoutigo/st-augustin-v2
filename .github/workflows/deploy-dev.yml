@@ -1,29 +1,43 @@
-name: Build
+name: Deploy to cPanel
 
 on:
   push:
     branches:
-      - dev # Ce workflow se déclenche lors des pushs sur la branche 'dev'
+      - main
+      - dev
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Étape 1 : Checkout du code source
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      # Étape 2 : Configuration de Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: '20.16.0' # Utilisez la version de Node.js que vous souhaitez
+          node-version: '20.x'
 
-      # Étape 3 : Installation des dépendances
       - name: Install dependencies
         run: npm install
 
-      # Étape 4 : Build du projet
-      - name: Build the project
-        run: npm run build # Assurez-vous que cette commande existe dans votre package.json
+      - name: Build
+        run: npm run build
+
+      - name: Set remote directory
+        id: set-dir
+        run: echo "REMOTE_DIR=/home/bdeh8989/public_html/$(if [ $GITHUB_REF == 'refs/heads/main' ]; then echo 'ecole-st-augustin-v2-prod'; else echo 'ecole-st-augustin-v2-dev'; fi)" >> $GITHUB_ENV
+
+      - name: Decode FTP password
+        id: decode-password
+        run: echo "CPANEL_FTP_PASSWORD=$(echo ${{ secrets.CPANEL_FTP_PASSWORD_BASE64 }} | base64 --decode)" >> $GITHUB_ENV
+
+      - name: Upload to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          host: ${{ secrets.CPANEL_FTP_HOST }}
+          username: ${{ secrets.CPANEL_FTP_USERNAME }}
+          password: ${{ env.CPANEL_FTP_PASSWORD }}
+          local-dir: ./dist
+          remote-dir: ${{ env.REMOTE_DIR }}
