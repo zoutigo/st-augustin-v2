@@ -1,11 +1,14 @@
 import path from 'path';
 
 /** @type {import('next').NextConfig} */
+
+const isProduction = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  reactStrictMode: true,
+  reactStrictMode: !isProduction,
   swcMinify: true,
   webpack: (config, { dev }) => {
     config.resolve.alias['@'] = path.resolve('./');
