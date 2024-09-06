@@ -7,6 +7,8 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+console.log('All environment variables:', process.env);
+
 console.log('environment:', dev);
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
 
