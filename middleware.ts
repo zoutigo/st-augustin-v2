@@ -9,7 +9,7 @@ import {
 } from '@/routes';
 
 export async function middleware(req: NextRequest) {
-  const secret = process.env.AUTH_SECRET;
+  const secret = process.env.NEXTAUTH_SECRET;
 
   if (!secret) {
     throw new Error('NEXTAUTH_SECRET environment variable is not defined');
