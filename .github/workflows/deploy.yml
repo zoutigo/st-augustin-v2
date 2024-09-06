@@ -29,15 +29,11 @@ jobs:
         id: set-dir
         run: echo "REMOTE_DIR=/home/bdeh8989/public_html/$(if [ $GITHUB_REF == 'refs/heads/main' ]; then echo 'ecole-st-augustin-v2-prod'; else echo 'ecole-st-augustin-v2-dev'; fi)" >> $GITHUB_ENV
 
-      - name: Decode FTP password
-        id: decode-password
-        run: echo "CPANEL_FTP_PASSWORD=$(echo ${{ secrets.CPANEL_FTP_PASSWORD_BASE64 }} | base64 --decode)" >> $GITHUB_ENV
-
       - name: Upload to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
           host: ${{ secrets.CPANEL_FTP_HOST }}
           username: ${{ secrets.CPANEL_FTP_USERNAME }}
-          password: ${{ env.CPANEL_FTP_PASSWORD }}
+          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
           local-dir: ./dist
           remote-dir: ${{ env.REMOTE_DIR }}
