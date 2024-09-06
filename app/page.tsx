@@ -8,6 +8,11 @@ const font = Poppins({
   weight: ['600'],
 });
 export default function Home() {
+  const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
+
+  if (!NEXTAUTH_SECRET) {
+    console.log('NEXTAUTH_SECRET environment variable is not defined');
+  }
   return (
     <main className="flex h-full flex-col items-center justify-center bg-sky-500">
       <div className="space-y-6 text-center">

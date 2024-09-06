@@ -199,7 +199,7 @@ const SettingsPage = (props: Props) => {
                       <SelectContent>
                         <SelectItem value={UserGrade.ADMIN}>Admin</SelectItem>
                         <SelectItem value={UserGrade.MANAGER}>
-                          Manager of site
+                          Manager of site check
                         </SelectItem>
                         <SelectItem value={UserGrade.MODERATOR}>
                           Moderator

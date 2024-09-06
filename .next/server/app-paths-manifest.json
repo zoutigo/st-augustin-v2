@@ -1,16 +1,4 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/admin/route": "app/api/admin/route.js",
-  "/ecole/page": "app/ecole/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/(protected)/admin/page": "app/(protected)/admin/page.js",
-  "/(protected)/client/page": "app/(protected)/client/page.js",
-  "/(protected)/server/page": "app/(protected)/server/page.js",
-  "/(protected)/settings/page": "app/(protected)/settings/page.js",
-  "/auth/error/page": "app/auth/error/page.js",
-  "/auth/login/page": "app/auth/login/page.js",
-  "/auth/register/page": "app/auth/register/page.js",
-  "/auth/reset/page": "app/auth/reset/page.js"
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
 }
