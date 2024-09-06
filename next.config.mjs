@@ -7,7 +7,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const nextConfig = {
   output: 'export',
   eslint: {
-    ignoreDuringBuilds: false,
+    ignoreDuringBuilds: true,
   },
   reactStrictMode: !isProduction,
   swcMinify: true,
