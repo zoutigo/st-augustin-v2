@@ -10,6 +10,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # Déclaration des variables d'environnement
+    env:
+      DEV_REMOTE_DIR: dev.ecole-st-augustin.fr/v2/app
+      PROD_REMOTE_DIR: prod.ecole-st-augustin.fr/v2/app
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -25,9 +30,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Définir le répertoire distant en fonction de la branche
       - name: Set remote directory
         id: set-dir
-        run: echo "REMOTE_DIR=/home/bdeh8989/$(if [ $GITHUB_REF == 'refs/heads/main' ]; then echo 'ecole-st-augustin-v2-prod'; else echo 'dev.ecole-st-augustin.fr/application'; fi)" >> $GITHUB_ENV
+        run: |
+          if [ $GITHUB_REF == 'refs/heads/main' ]; then
+            echo "REMOTE_DIR=${{ env.PROD_REMOTE_DIR }}" >> $GITHUB_ENV
+          else
+            echo "REMOTE_DIR=${{ env.DEV_REMOTE_DIR }}" >> $GITHUB_ENV
+          fi
 
       - name: Decode FTP password
         id: decode-password
@@ -43,4 +54,4 @@ jobs:
           username: ${{ secrets.DEV_CPANEL_FTP_USERNAME }}
           password: ${{ env.FTP_PASSWORD }} # Utilisation de la variable d'environnement pour le mot de passe
           local-dir: ./.next/
-          remote-dir: ${{ env.REMOTE_DIR }}
+          remote-dir: ${{ env.REMOTE_DIR }} # Utilisation du chemin distant
