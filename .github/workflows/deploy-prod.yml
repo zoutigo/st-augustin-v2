@@ -31,13 +31,13 @@ jobs:
 
       - name: Decode FTP password
         id: decode-password
-        run: echo "${{ secrets.CPANEL_FTP_PASSWORD_BASE64 }}" | base64 --decode > ftp_password.txt
+        run: echo "${{ secrets.DEV_CPANEL_FTP_PASSWORD_BASE64 }}" | base64 --decode > ftp_password.txt
 
       - name: Upload to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
-          server: ${{ secrets.CPANEL_FTP_HOST }}
-          username: ${{ secrets.CPANEL_FTP_USERNAME }}
+          server: ${{ secrets.DEV_CPANEL_FTP_HOST }}
+          username: ${{ secrets.DEV_CPANEL_FTP_USERNAME }}
           password: $(cat ftp_password.txt) # Utilisation du mot de passe décodé
           local-dir: ./.next/
           remote-dir: ${{ env.REMOTE_DIR }}
