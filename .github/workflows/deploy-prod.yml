@@ -54,5 +54,5 @@ jobs:
           server: ${{ secrets.CPANEL_FTP_HOST }}
           username: ${{ env.CPANEL_USERNAME }} # Utilisation du username selon la branche
           password: ${{ env.CPANEL_PASSWORD }} # Utilisation du mot de passe selon la branche
-          local-dir: ./.next/
+          local-dir: ./
           remote-dir: ${{ env.REMOTE_DIR }} # Utilisation du chemin distant selon la branche
