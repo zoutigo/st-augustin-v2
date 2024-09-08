@@ -37,9 +37,6 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
-      - name: Create cache directory
-        run: mkdir -p cache
-
       # Définir le répertoire distant, username et mot de passe en fonction de la branche
       - name: Set environment variables based on branch
         id: set-env-vars
@@ -62,3 +59,7 @@ jobs:
           password: ${{ env.CPANEL_PASSWORD }} # Utilisation du mot de passe selon la branche
           local-dir: ./
           remote-dir: ${{ env.REMOTE_DIR }} # Utilisation du chemin distant selon la branche
+          exclude: |
+            .next/cache/
+            node_modules/
+            .git/
