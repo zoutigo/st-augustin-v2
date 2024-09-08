@@ -3,10 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env PORT=3001 npm run prisma:migrate:dev && npm install && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma:migrate:dev": "npx prisma migrate dev && npx prisma generate",
+    "prisma:migrate": "npx prisma migrate deploy",
+    "prestart:prod": "npm run prisma:migrate && npx prisma generate && npm install && npm run build",
+    "start:prod": "cross-env NODE_ENV=production PORT=3000  npm run start",
+    "prod": "npm run prestart:prod && npm run start:prod"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.4.1",
@@ -22,6 +27,7 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cross-env": "^7.0.3",
     "lucide-react": "^0.407.0",
     "next": "14.2.5",
     "next-auth": "^5.0.0-beta.19",
