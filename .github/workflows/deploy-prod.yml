@@ -37,8 +37,8 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
-      - name: Remove cache directory
-        run: rm -rf .next/cache
+      - name: Create cache directory
+        run: mkdir -p cache
 
       # Définir le répertoire distant, username et mot de passe en fonction de la branche
       - name: Set environment variables based on branch
