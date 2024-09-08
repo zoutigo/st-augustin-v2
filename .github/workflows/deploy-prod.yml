@@ -34,6 +34,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Run TypeScript Checks
+        run: npm run typecheck
+
+      - name: Remove cache directory
+        run: rm -rf .next/cache
+
       # Définir le répertoire distant, username et mot de passe en fonction de la branche
       - name: Set environment variables based on branch
         id: set-env-vars

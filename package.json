@@ -9,9 +9,9 @@
     "lint": "next lint",
     "prisma:migrate:dev": "npx prisma migrate dev && npx prisma generate",
     "prisma:migrate": "npx prisma migrate deploy",
-    "prestart:prod": "npm run prisma:migrate && npx prisma generate && npm install && npm run build",
+    "prestart:prod": "npm run prisma:migrate && npx prisma generate",
     "start:prod": "cross-env NODE_ENV=production PORT=3000  npm run start",
-    "prod": "npm run prestart:prod && npm run start:prod"
+    "prod": "npm install && npm run prestart:prod && npm run start:prod"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.4.1",
