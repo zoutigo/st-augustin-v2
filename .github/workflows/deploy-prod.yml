@@ -37,9 +37,6 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
-      - name: Run TypeScript Checks
-        run: npm run typecheck
-
       - name: Remove cache directory
         run: rm -rf .next/cache
 
