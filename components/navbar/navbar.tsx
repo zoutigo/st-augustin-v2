@@ -5,57 +5,8 @@ import { Button } from '../ui/button';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Poppins } from 'next/font/google';
-
-const routes = [
-  {
-    id: 1,
-    name: "L'ecole",
-    slug: 'ecole',
-    path: '/ecole',
-    primary: 'blue',
-    secondary: 'skyblue',
-  },
-  {
-    id: 2,
-    name: 'Vie Scolaire',
-    slug: 'vie-scolaire',
-    path: '/vie-scolaire',
-    primary: 'blue',
-    secondary: 'skyblue',
-  },
-  {
-    id: 3,
-    name: 'Les Classes',
-    slug: 'classes',
-    path: '/classes',
-    primary: 'blue',
-    secondary: 'skyblue',
-  },
-  {
-    id: 4,
-    name: 'Informations',
-    slug: 'informations',
-    path: '/informations',
-    primary: 'blue',
-    secondary: 'skyblue',
-  },
-  {
-    id: 5,
-    name: 'APEL-OGEC',
-    slug: 'apel-ogec',
-    path: '/apel-ogec',
-    primary: 'blue',
-    secondary: 'skyblue',
-  },
-  {
-    id: 6,
-    name: 'Espace privé',
-    slug: 'espace-prive',
-    path: '/espace-prive',
-    primary: 'blue',
-    secondary: 'skyblue',
-  },
-];
+import { NavButton } from './navButton';
+import { NavRoutes } from '@/routes';
 
 const font = Poppins({
   subsets: ['latin'],
@@ -64,22 +15,18 @@ const font = Poppins({
 
 export const Navbar = () => {
   const pathname = usePathname();
+
   return (
-    <header className="z-10 fixed flex flex-row justify-center items-center gap-3 h-[7vh]">
+    <header className="z-10 flex flex-row justify-between items-center h-[7vh] min-w-[100%] px-10 shadow-sm">
       <div className="bg-yellow-100 w-[20%]"> Logo</div>
-      <nav className="w-full bg-white ">
-        {routes.map((route) => {
+      <nav className=" bg-white w-[80%] flex flew-row justify-between items-center m-x-2">
+        {NavRoutes.map((route) => {
           return (
-            <Button
-              asChild
-              key={route.id}
-              variant={pathname === route.path ? 'default' : 'outline'}
-              className="mx-4"
-            >
-              <Link href={route.path}>
-                <span className="text-3xl">{route.name}</span>
-              </Link>
-            </Button>
+            <NavButton
+              {...route}
+              key={route.slug}
+              isActive={route.path.includes(pathname)}
+            />
           );
         })}
       </nav>
