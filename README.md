@@ -2,52 +2,18 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 # CI / CD
 
-## Cpanel deployment
+## Cpanel deployment by ftp
 
-- Create a Git version control repository
-  The destination folder must be located in /repositories
+- Create an ftp account and choose ftp destination folder
 
-- Add the remote repository
+- Add the credentials in github actions and update the deploy.yml
 
-```bash
-git remote add cpanel ssh://username@username.odns.fr/home/username/repositories/project-name
-```
+- Create a shell file with the associated cron task
+  There is a shell file in cpanel to run 'npm rum prod' twice a day if files are detected.
 
-- Create final folder repositry to host files
+This will update the dev.ecole-st-augustin.fr
 
-```bash
-mkdir ecole-st-augustin-v2-dev
-```
-
-- Update the hook located in repositories/project-name/.git/hooks
-
-```bash
-  nano post-receive
-```
-
-```
-read oldrev newrev refname
-branch=$(echo $refname | cut -d/ -f3)
-
-if [ "$branch" = "dev" ]; then
-    echo "Deploying to development environment..."
-    GIT_WORK_TREE=/home/username/dev git checkout -f dev
-elif [ "$branch" = "main" ]; then
-    echo "Deploying to production environment..."
-    GIT_WORK_TREE=/home/username/prod git checkout -f main
-else
-    echo "Branch $branch not configured for deployment."
-    exit 0
-fi
-
-# Vérifier si la branche reçue est bien celle qui est actuellement déployée
-if [ "x$refname" == "xrefs/heads/$branch" ]; then
-    echo "Received update on the checked-out branch, queueing deployment."
-    (cd /home/username/repositories/project-repo && /usr/bin/uapi VersionControlDeployment create repository_root=$PWD)
-else
-    echo "Ref $refname does not match the deployment branch."
-fi
-```
+- Create a nodejs app , based on the above destinaion folder
 
 ## Commands
 
@@ -56,6 +22,8 @@ Remote ssh connexion to cpanel from linux
 ```bash
 ssh -i ~/.ssh/id_rsa -p 22 username@ecole-st-augustin.fr
 ```
+
+Then to run npm commands , connect with the string provided by the nodejs application
 
 There are 2 branches dev and main . To Push to dev branch
 
