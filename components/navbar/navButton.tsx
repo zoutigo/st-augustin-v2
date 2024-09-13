@@ -31,7 +31,7 @@ export const NavButton = ({
         className={clsx(
           'cursor-pointer py-4 w-full bg-transparent text-center',
           `hover:bg-${buttonHoverColor}`
-          //   `hover:bg-infos`
+          //   `hover:bg-classes`
         )}
       >
         <Link href={path}>
