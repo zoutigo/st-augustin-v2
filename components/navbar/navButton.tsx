@@ -1,6 +1,11 @@
+'use client';
+
 import Link from 'next/link';
-import { Button } from '../ui/button';
+import clsx from 'clsx';
+
 import { SubRoute } from '@/types/nav-routes';
+
+import { getPathColor } from '@/lib/get-path-color';
 
 interface NavButtonProps {
   name: string;
@@ -16,9 +21,24 @@ export const NavButton = ({
   isActive,
   subroutes,
 }: NavButtonProps) => {
+  const buttonHoverColor = getPathColor(path);
+
+  console.log('color:', buttonHoverColor);
   return (
-    <Button variant={'link'} className="bg-inherit" asChild>
-      <Link href={path}>{name} </Link>
-    </Button>
+    <ul className=" w-full flex flex-col items-center justify-center">
+      <li>EmoiJ </li>
+      <li
+        className={clsx(
+          'cursor-pointer py-4 w-full bg-transparent text-center',
+          `hover:bg-${buttonHoverColor}`
+          //   `hover:bg-infos`
+        )}
+      >
+        <Link href={path}>
+          <span className="uppercase text-3xl">{name}</span>
+        </Link>
+      </li>
+      <li className={`w-[50%] h-1 ${isActive ? 'bg-slate-300' : ''}`} />
+    </ul>
   );
 };
