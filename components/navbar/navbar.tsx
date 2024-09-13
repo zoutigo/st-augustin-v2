@@ -23,7 +23,7 @@ export const Navbar = () => {
             <NavButton
               {...route}
               key={route.slug}
-              isActive={route.path.includes(pathname)}
+              isActive={route.path.includes(pathname) && pathname !== '/'}
             />
           );
         })}

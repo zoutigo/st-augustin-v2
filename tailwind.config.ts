@@ -51,10 +51,14 @@ const config = {
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          dark: 'hsl(var(--primary-dark))',
+          light: 'hsl(var(--primary-light))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
+          dark: 'hsl(var(--secondary-dark))',
+          ligth: 'hsl(var(--secondary-light))',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
@@ -79,26 +83,32 @@ const config = {
         ecole: {
           DEFAULT: 'hsl(187, 72%, 71%)',
           foreground: 'hsl(187, 72%, 93%)',
+          light: 'hsl(187, 72%, 93%)',
         },
         viescolaire: {
           DEFAULT: '	hsl(46, 100%, 65%)',
           foreground: 'hsl(46, 100%, 94%)',
+          light: 'hsl(46, 100%, 94%)',
         },
         classes: {
           DEFAULT: 'hsl(122, 39%, 49%)',
           foreground: 'hsl(125, 39%, 94%)',
+          light: 'hsl(125, 39%, 94%)',
         },
         infos: {
           DEFAULT: 'hsl(14, 100%, 63%)',
           foreground: 'hsl(6, 71%, 95%)',
+          light: 'hsl(6, 71%, 95%)',
         },
         apelogec: {
           DEFAULT: 'hsl(262, 47%, 63%)',
           foreground: 'hsl(264, 45%, 94%)',
+          light: 'hsl(264, 45%, 94%)',
         },
         private: {
           DEFAULT: 'hsl(187, 72%, 71%)',
           foreground: 'hsl(187, 72%, 93%)',
+          light: 'hsl(187, 72%, 93%)',
         },
       },
       borderRadius: {
