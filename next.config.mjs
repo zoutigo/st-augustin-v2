@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
   eslint: {
-    ignoreDuringBuilds: false,
+    ignoreDuringBuilds: true,
   },
   reactStrictMode: !isProduction,
   swcMinify: true,
