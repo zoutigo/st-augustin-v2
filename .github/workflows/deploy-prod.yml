@@ -1,0 +1,71 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # Déclaration des variables d'environnement pour dev et prod
+    env:
+      DEV_REMOTE_DIR: dev.ecole-st-augustin.fr/v2/app
+      PROD_REMOTE_DIR: prod.ecole-st-augustin.fr/v2/app
+      DEV_CPANEL_USERNAME: ${{ secrets.DEV_CPANEL_FTP_USERNAME }}
+      PROD_CPANEL_USERNAME: ${{ secrets.PROD_CPANEL_FTP_USERNAME }}
+      DEV_CPANEL_PASSWORD: ${{ secrets.DEV_CPANEL_FTP_PASSWORD_BASE64 }}
+      PROD_CPANEL_PASSWORD: ${{ secrets.PROD_CPANEL_FTP_PASSWORD_BASE64 }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.16.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Clean up old files
+        run: |
+          rm -rf .next/cache/
+          rm -rf node_modules/
+          rm -rf .git/
+
+      # Définir le répertoire distant, username et mot de passe en fonction de la branche
+      - name: Set environment variables based on branch
+        id: set-env-vars
+        run: |
+          if [ $GITHUB_REF == 'refs/heads/main' ]; then
+            echo "REMOTE_DIR=${{ env.PROD_REMOTE_DIR }}" >> $GITHUB_ENV
+            echo "CPANEL_USERNAME=${{ env.PROD_CPANEL_USERNAME }}" >> $GITHUB_ENV
+            echo "CPANEL_PASSWORD=$(echo '${{ env.PROD_CPANEL_PASSWORD }}' | base64 --decode | tr -d '\n')" >> $GITHUB_ENV
+          else
+            echo "REMOTE_DIR=${{ env.DEV_REMOTE_DIR }}" >> $GITHUB_ENV
+            echo "CPANEL_USERNAME=${{ env.DEV_CPANEL_USERNAME }}" >> $GITHUB_ENV
+            echo "CPANEL_PASSWORD=$(echo '${{ env.DEV_CPANEL_PASSWORD }}' | base64 --decode | tr -d '\n')" >> $GITHUB_ENV
+          fi
+
+      - name: Upload to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: ${{ secrets.CPANEL_FTP_HOST }}
+          username: ${{ env.CPANEL_USERNAME }} # Utilisation du username selon la branche
+          password: ${{ env.CPANEL_PASSWORD }} # Utilisation du mot de passe selon la branche
+          local-dir: ./
+          remote-dir: ${{ env.REMOTE_DIR }} # Utilisation du chemin distant selon la branche
+          exclude: |
+            .next/cache/
+            node_modules/
+            .git/

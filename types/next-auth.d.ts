@@ -4,6 +4,7 @@ import { JWT } from 'next-auth/jwt';
 
 export type ExtendedUser = DefaultSession['user'] & {
   role: UserRole;
+  grade: UserGrade;
   isOAuth: boolean;
 };
 
@@ -14,9 +15,10 @@ declare module 'next-auth' {
 }
 
 import { JWT } from '@auth/core/jwt';
-import { UserRole } from '@prisma/client';
+import { UserGrade, UserRole } from '@prisma/client';
 declare module 'next-auth/jwt' {
   interface JWT {
     role?: UserRole;
+    grade?: UserGrade;
   }
 }

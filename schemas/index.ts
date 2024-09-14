@@ -1,5 +1,4 @@
-import { newPassword } from '@/actions/new-password';
-import { UserRole } from '@prisma/client';
+import { UserGrade, UserRole } from '@prisma/client';
 import * as z from 'zod';
 
 export const ResetSchema = z.object({
@@ -41,7 +40,12 @@ export const RegisterSchema = z.object({
 export const SettingsSchema = z
   .object({
     name: z.optional(z.string()),
-    role: z.enum([UserRole.ADMIN, UserRole.USER]),
+    grade: z.enum([
+      UserGrade.ADMIN,
+      UserGrade.MANAGER,
+      UserGrade.MODERATOR,
+      UserGrade.NONE,
+    ]),
     email: z.optional(z.string().email()),
     password: z.optional(z.string().min(6)),
     newPassword: z.optional(z.string().min(6)),

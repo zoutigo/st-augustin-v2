@@ -49,7 +49,7 @@ export const LoginForm = () => {
       }
       login(values).then((data) => {
         setError(data?.error);
-        setSuccess(data?.success);
+        // setSuccess(data?.success);
       });
     });
   };
@@ -57,11 +57,12 @@ export const LoginForm = () => {
   return (
     <CardWrapper
       headerLabel="Welcome Back"
-      backButtonLabel="Don't have an Account"
+      backButtonLabel="Vous allez decouvrir de belles choses"
       backButtonHref="/auth/register"
       showSocial
     >
-      <Form {...form}>
+      Its time to login !!
+      {/* <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
             <FormField
@@ -115,7 +116,7 @@ export const LoginForm = () => {
             Login
           </Button>
         </form>
-      </Form>
+      </Form> */}
     </CardWrapper>
   );
 };

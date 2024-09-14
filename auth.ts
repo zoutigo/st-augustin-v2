@@ -3,7 +3,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import authConfig from '@/auth.config';
 import { db } from '@/lib/db';
 import { getUserByEmail, getUserById } from './data/user';
-import { UserRole } from '@prisma/client';
+import { UserGrade, UserRole } from '@prisma/client';
 import { getAccountByUserId } from './data/account';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -78,6 +78,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       if (token.role && session.user) {
         session.user.role = token.role as UserRole;
+        session.user.grade = token.role as UserGrade;
       }
 
       if (session.user) {
