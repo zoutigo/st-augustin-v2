@@ -47,7 +47,7 @@ export const Navbar = () => {
           >
             <TiThMenu
               className="h-14 w-14 text-primary"
-              // style={{ strokeWidth: 2 }}
+              // style={{ strokeWidth: 2  }}
             />
           </Button>
         )}
