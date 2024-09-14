@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation';
 import { TiThMenu } from 'react-icons/ti';
 
-import { SlMenu } from 'react-icons/sl';
 import { FaWindowClose } from 'react-icons/fa';
 import { cn } from '@/lib/utils';
 import { Poppins } from 'next/font/google';
@@ -23,7 +22,7 @@ export const Navbar = () => {
   const { isMenuOpen, toggleMenu } = useAppStore(); // Utilisez Zustand
 
   return (
-    <header className="z-10 flex flex-row justify-between items-center h-[14vh] min-w-[100%] px-10 shadow-sm">
+    <header className="flex flex-row justify-between items-center h-[14vh] min-w-[100%] px-10 shadow-sm">
       <div className="mt-7">
         <Logo />
       </div>

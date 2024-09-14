@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { auth } from '@/auth';
 import './globals.css';
 import { Navbar } from '@/components/navbar/navbar';
+import NavigationModal from '@/components/modals/navigation-modal';
 
 const poppins = Poppins({
   weight: ['400', '700'],
@@ -42,6 +43,7 @@ export default async function RootLayout({
           className={`${poppins.variable} ${raleway.variable} ${comfortaa.variable} font-sans`}
         >
           <Navbar />
+          <NavigationModal />
           <Toaster />
           {children}
         </body>
