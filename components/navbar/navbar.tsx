@@ -1,11 +1,17 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { TiThMenu } from 'react-icons/ti';
+
+import { SlMenu } from 'react-icons/sl';
+import { FaWindowClose } from 'react-icons/fa';
 import { cn } from '@/lib/utils';
 import { Poppins } from 'next/font/google';
 import { NavButton } from './navButton';
 import { NavRoutes } from '@/routes';
 import { Logo } from './logo';
+import { Button } from '../ui/button';
+import { useAppStore } from '@/lib/store';
 
 const font = Poppins({
   subsets: ['latin'],
@@ -14,14 +20,14 @@ const font = Poppins({
 
 export const Navbar = () => {
   const pathname = usePathname();
+  const { isMenuOpen, toggleMenu } = useAppStore(); // Utilisez Zustand
 
   return (
     <header className="z-10 flex flex-row justify-between items-center h-[14vh] min-w-[100%] px-10 shadow-sm">
       <div className="mt-7">
         <Logo />
       </div>
-      {/* <div className="bg-yellow-100 w-[20%]"> Logo</div> */}
-      <nav className=" bg-white w-[80%] flex flew-row justify-between items-center m-x-2">
+      <nav className="hidden lg:flex bg-white w-[80%] flex-row justify-between items-center mx-2">
         {NavRoutes.map((route) => {
           return (
             <NavButton
@@ -32,6 +38,34 @@ export const Navbar = () => {
           );
         })}
       </nav>
+      <div className="lg:hidden">
+        {!isMenuOpen && (
+          <Button
+            size={'lg'}
+            variant={'outline'}
+            className="border-none p-1"
+            onClick={toggleMenu}
+          >
+            <TiThMenu
+              className="h-14 w-14 text-primary"
+              // style={{ strokeWidth: 2 }}
+            />
+          </Button>
+        )}
+        {isMenuOpen && (
+          <Button
+            size={'lg'}
+            variant={'outline'}
+            className="border-none p-1"
+            onClick={toggleMenu}
+          >
+            <FaWindowClose
+              className="h-14 w-14 text-primary"
+              // style={{ strokeWidth: 2 }}
+            />
+          </Button>
+        )}
+      </div>
     </header>
   );
 };

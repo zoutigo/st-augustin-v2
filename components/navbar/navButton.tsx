@@ -36,7 +36,9 @@ export const NavButton = ({
         )}
       >
         <Link href={path}>
-          <span className="uppercase text-3xl">{name}</span>
+          <span className="uppercase lg:text-lg xl:text-2xl 2xl:text-3xl">
+            {name}
+          </span>
         </Link>
       </li>
       <li className={`w-[50%] h-1 ${isActive ? 'bg-slate-300' : ''}`} />
