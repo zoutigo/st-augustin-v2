@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { SubRoute } from '@/types/nav-routes';
 
 import { getPathColor } from '@/lib/get-path-color';
+import { cn } from '@/lib/utils';
 
 interface NavButtonProps {
   name: string;
@@ -28,7 +29,7 @@ export const NavButton = ({
     <ul className=" w-full flex flex-col items-center justify-center">
       <li>EmoiJ </li>
       <li
-        className={clsx(
+        className={cn(
           'cursor-pointer py-4 w-full bg-transparent text-center',
           `hover:bg-${buttonHoverColor}`
           //   `hover:bg-classes`
