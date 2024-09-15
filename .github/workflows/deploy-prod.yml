@@ -58,7 +58,7 @@ jobs:
           fi
 
       - name: Upload to cPanel via FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0-beta
         with:
           server: ${{ secrets.CPANEL_FTP_HOST }}
           username: ${{ env.CPANEL_USERNAME }} # Utilisation du username selon la branche
