@@ -27,7 +27,7 @@ const comfortaa = Comfortaa({
 export const metadata: Metadata = {
   title: 'Ecole St Augustin Crémieu',
   description:
-    "Informations et Actualités de l'Ecole Saint Augustin de Crémieu ",
+    "Informations et Actualités de l'Ecole Saint Augustin de Crémieu !",
 };
 
 export default async function RootLayout({
