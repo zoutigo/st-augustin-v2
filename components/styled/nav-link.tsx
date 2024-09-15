@@ -30,7 +30,7 @@ const NavLink = ({
       >
         {children}
       </a> */}
-      <span className="text-primary-dark">{children}</span>
+      <span className={`text-secondary ${className}`}>{children}</span>
     </Link>
   );
 };

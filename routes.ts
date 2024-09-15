@@ -167,7 +167,7 @@ export const NavRoutes: NavRoute[] = [
         name: 'APEL',
         slug: 'apel-ogec-apel',
         path: '/apel-ogec/apel',
-        subroutes: [
+        finalroutes: [
           {
             name: 'Activités',
             slug: 'apel-ogec-apel-activites',
@@ -192,7 +192,6 @@ export const NavRoutes: NavRoute[] = [
       },
     ],
   },
-
   {
     name: 'Espace privé',
     slug: 'espace-prive',
@@ -212,7 +211,7 @@ export const NavRoutes: NavRoute[] = [
         name: 'Dashboard',
         slug: 'dashboard',
         path: '/dashboard',
-        subroutes: [
+        finalroutes: [
           {
             name: 'Utilisateurs',
             slug: 'dashboard-users',
