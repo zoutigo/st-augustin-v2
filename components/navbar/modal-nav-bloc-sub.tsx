@@ -31,7 +31,7 @@ export const ModalNavBlocSub = ({
           {finalroutes.map((finalroute) => (
             <Button
               key={finalroute.slug}
-              variant={'outline'}
+              variant={'link'}
               className="min-w-[25%] min-h-14 !bg-transparent mt-3"
             >
               <Link href={finalroute.path}>
