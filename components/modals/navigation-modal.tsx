@@ -26,6 +26,7 @@ const NavigationModal = () => {
         className={`
             !top-0  p-0 m-0 !h-full !w-full bg-white flex flex-col
             transition-transform duration-300 max-w-[90vw]
+             overflow-auto max-h-[90vh]
             ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}
           `}
       >

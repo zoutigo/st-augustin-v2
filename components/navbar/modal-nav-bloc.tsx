@@ -33,7 +33,7 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
           className="col-span-10 bg-primary flex items-center justify-start h-full pl-8 cursor-pointer "
           onClick={onClickLink}
         >
-          <span className="tracking-wider text-2xl text-secondary uppercase">
+          <span className="font-semibold font-cursive tracking-wider text-2xl text-secondary uppercase">
             {name}
           </span>
         </div>

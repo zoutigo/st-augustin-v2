@@ -169,17 +169,12 @@ export const NavRoutes: NavRoute[] = [
         path: '/apel-ogec/apel',
         finalroutes: [
           {
-            name: 'Activités',
-            slug: 'apel-ogec-apel-activites',
-            path: '/apel-ogec/apel-activites',
+            name: 'Articles',
+            slug: 'apel-ogec-apel-articles',
+            path: '/apel-ogec/apel-articles',
           },
           {
-            name: 'Agenda',
-            slug: 'apel-ogec-apel-agenda',
-            path: '/apel-ogec/apel-agenda',
-          },
-          {
-            name: 'Agenda',
+            name: 'Albums',
             slug: 'apel-ogec-apel-albums',
             path: '/apel-ogec/apel-albums',
           },
@@ -189,6 +184,18 @@ export const NavRoutes: NavRoute[] = [
         name: 'OGEC',
         slug: 'apel-ogec-ogec',
         path: '/apel-ogec/ogec',
+        finalroutes: [
+          {
+            name: 'Articles',
+            slug: 'apel-ogec-ogec-articles',
+            path: '/apel-ogec/ogec-articles',
+          },
+          {
+            name: 'Albums',
+            slug: 'apel-ogec-ogec-albums',
+            path: '/apel-ogec/ogec-albums',
+          },
+        ],
       },
     ],
   },
