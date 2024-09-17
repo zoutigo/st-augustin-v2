@@ -26,7 +26,8 @@ export const Navbar = () => {
       <div className="mt-7">
         <Logo />
       </div>
-      <nav className="hidden lg:flex bg-white w-[80%] flex-row justify-between items-center mx-2">
+      {/* <nav className="hidden lg:flex bg-white w-[80%] flex-row justify-between items-center mx-2 gap-1"> */}
+      <nav className="hidden lg:grid grid-cols-6 bg-white w-[80%]">
         {NavRoutes.map((route) => {
           return (
             <NavButton

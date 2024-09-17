@@ -85,3 +85,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.group:hover .group-hover\:visible {
+  visibility: visible;
+}
+
+.group2:hover .group2-hover\:visible {
+  visibility: visible;
+}
