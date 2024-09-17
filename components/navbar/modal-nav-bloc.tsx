@@ -26,6 +26,10 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
   const onClickIcon = () => {
     toggleModalNavBock(!isOpenModalNavBock);
   };
+
+  const handleToggleModalNavBocck = () => {
+    toggleModalNavBock(false); // Ferme le modal
+  };
   return (
     <div id="modal-navbloc-grid" className="my-2 min-h-20">
       <div className="grid grid-cols-12 gap-2 h-full">
@@ -59,7 +63,7 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
             <ModalNavBlocSub
               key={subroute.slug}
               subroute={subroute}
-              toggleModalNavBock={toggleModalNavBock}
+              handleToggleModalNavBocck={handleToggleModalNavBocck}
             />
           ))}
       </div>
