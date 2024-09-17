@@ -4,14 +4,14 @@ import Link from 'next/link';
 
 interface ModalNavBlocSubProps {
   subroute: SubRoute;
-  toggleModalNavBock: () => void;
+  handleToggleModalNavBocck: (isOpen?: boolean) => void;
 }
 export const ModalNavBlocSub = ({
-  toggleModalNavBock,
+  handleToggleModalNavBocck,
   subroute: { name, slug, path, finalroutes },
 }: ModalNavBlocSubProps) => {
   const handleClick = () => {
-    toggleModalNavBock();
+    handleToggleModalNavBocck();
   };
   return (
     <div>
