@@ -93,3 +93,7 @@ body {
 .group2:hover .group2-hover\:visible {
   visibility: visible;
 }
+
+.stroke-secondary {
+  -webkit-text-stroke: 2px hsl(var(--secondary));
+}
