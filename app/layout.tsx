@@ -38,7 +38,7 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <SessionProvider session={session}>
-      <html lang="en">
+      <html lang="fr">
         <body
           className={`${poppins.variable} ${raleway.variable} ${comfortaa.variable} font-sans`}
         >
