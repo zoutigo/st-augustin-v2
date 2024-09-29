@@ -7,7 +7,7 @@ interface StyledParagraphProps {
 }
 
 const StyledParagraph: React.FC<StyledParagraphProps> = ({ children }) => (
-  <p className="my-10 mx-4 text-white text-2xl tracking-widest text-justify">
+  <p className="my-10 mx-4 text-white text-xl tracking-widest text-justify">
     {children}
   </p>
 );
