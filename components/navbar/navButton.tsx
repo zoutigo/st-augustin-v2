@@ -3,8 +3,6 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import clsx from 'clsx';
-
 import { SubRoute } from '@/types/nav-routes';
 
 import { getPathColor } from '@/lib/get-path-color';
