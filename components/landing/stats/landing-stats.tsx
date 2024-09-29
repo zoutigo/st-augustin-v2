@@ -3,10 +3,10 @@ import { LandingStatsCard } from './landing-stats-card';
 
 export const LandingStats = () => {
   const matrix = [
-    ['-30vh', '8vw'],
-    ['15vh', '35vw'],
-    ['-10vh', '55vw'],
-    ['5vh', '70vw'],
+    ['10vh', '8vw'],
+    ['45vh', '35vw'],
+    ['20vh', '55vw'],
+    ['35vh', '77vw'],
   ];
 
   const statitems = [
@@ -37,25 +37,19 @@ export const LandingStats = () => {
   ];
 
   return (
-    <div className="min-h-[70vh] bg-no-repeat flex items-center relative">
-      {/* Image d'arrière-plan */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/home-figures.JPG" // Chemin de l'image depuis le dossier 'public'
-          alt="Home Figures"
-          layout="fill" // Remplit entièrement l'élément parent
-          objectFit="cover" // S'adapte bien à l'élément parent sans déformation
-          objectPosition="top right" // Positionne l'image en haut à droite
-          quality={100} // Optionnel : pour ajuster la qualité de l'image
-        />
-      </div>
-
-      {/* Cartes statistiques */}
-      <div className="relative z-10 flex flex-col">
-        {statitems.map((statitem) => (
-          <LandingStatsCard key={statitem.name} {...statitem} />
-        ))}
-      </div>
+    <div className="min-h-[70vh] bg-no-repeat bg-right-top flex items-center relative">
+      <Image
+        src="/images/home-figures.JPG"
+        alt="Background Image"
+        fill
+        style={{
+          objectFit: 'cover',
+          backgroundPositionY: '-8vh',
+        }}
+      />
+      {statitems.map((statitem) => (
+        <LandingStatsCard key={statitem.name} {...statitem} />
+      ))}
     </div>
   );
 };

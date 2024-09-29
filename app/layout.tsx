@@ -6,6 +6,7 @@ import { auth } from '@/auth';
 import './globals.css';
 import { Navbar } from '@/components/navbar/navbar';
 import NavigationModal from '@/components/modals/navigation-modal';
+import { Footer } from '@/components/footer/footer';
 
 const poppins = Poppins({
   weight: ['400', '700'],
@@ -40,12 +41,13 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <html lang="fr">
         <body
-          className={`${poppins.variable} ${raleway.variable} ${comfortaa.variable} font-sans`}
+          className={`${poppins.variable} ${raleway.variable} ${comfortaa.variable} font-sans overflow-x-hidden`}
         >
           <Navbar />
           <NavigationModal />
           <Toaster />
-          {children}
+          <div className="flex-grow">{children}</div>
+          <Footer />
         </body>
       </html>
     </SessionProvider>
