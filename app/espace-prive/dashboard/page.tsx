@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {};
 
-const Ecole = (props: Props) => {
+const Dashboard = (props: Props) => {
   return (
     <PageHolder>
       <div>hello</div>
@@ -11,4 +11,4 @@ const Ecole = (props: Props) => {
   );
 };
 
-export default Ecole;
+export default Dashboard;
