@@ -75,3 +75,16 @@ export const SettingsSchema = z
       path: ['newPassword'],
     }
   );
+
+export const createPageSchema = z.object({
+  id: z.string().optional(), // L'ID est optionnel car il sera généré automatiquement
+  name: z.string().min(1, 'Le nom est requis'), // Le nom ne doit pas être vide
+  content: z.string().min(1, 'Le contenu est requis'), // Le contenu ne doit pas être vide
+  createdAt: z.date().optional(), // Le champ est optionnel lors de la création
+  updatedAt: z.date().optional(), // Le champ est optionnel lors de la création et sera géré automatiquement
+});
+export const updatePageSchema = z.object({
+  id: z.string(),
+  name: z.optional(z.string().min(1, 'le nom est requis')),
+  content: z.optional(z.string().min(1, 'Le contenu est requis')),
+});

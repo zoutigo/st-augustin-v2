@@ -3,12 +3,12 @@ import React from 'react';
 
 type Props = {};
 
-const Ecole = (props: Props) => {
+const EspacePrive = (props: Props) => {
   return (
     <PageHolder>
-      <div>hello</div>
+      <div>Espace Privé</div>
     </PageHolder>
   );
 };
 
-export default Ecole;
+export default EspacePrive;
