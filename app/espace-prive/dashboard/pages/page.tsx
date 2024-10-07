@@ -1,10 +1,11 @@
-// dashboard/components/page/page-list.tsx
+// app/espace-prive/dashboard/pages/page.tsx
 import React from 'react';
-import { DataTable } from '@/components/dashboard/page/page-table';
 import { getAllPages } from '@/actions/pages/get-all-pages';
 import { Page } from '@prisma/client';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { DataTable } from '@/components/data-table';
+import { PageColumns } from '@/components/dashboard/page/page-colums';
 
 const PageList = async () => {
   let pagesData: Page[] = [];
@@ -27,7 +28,7 @@ const PageList = async () => {
         </Button>
       </div>
       {error && <p className="text-red-500">{error}</p>}
-      <DataTable data={pagesData} />
+      <DataTable data={pagesData} columns={PageColumns} />
     </div>
   );
 };

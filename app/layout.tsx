@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { usePathname } from 'next/navigation'; // Importer usePathname
 
 import { Poppins, Raleway, Comfortaa } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
@@ -10,6 +9,7 @@ import { Navbar } from '@/components/navbar/navbar';
 import NavigationModal from '@/components/modals/navigation-modal';
 import { Footer } from '@/components/footer/footer';
 import Breadcrumb from '@/components/breadcrumb';
+import { ReactQueryProvider } from '@/lib/react-query-provider';
 
 const poppins = Poppins({
   weight: ['400', '700'],
@@ -51,7 +51,9 @@ export default async function RootLayout({
           <NavigationModal />
           <Toaster />
           <div className="flex flex-col min-h-screen">
-            <div className="flex-grow">{children}</div>
+            <div className="flex-grow">
+              <ReactQueryProvider>{children}</ReactQueryProvider>
+            </div>
             <Footer />
           </div>
         </body>
