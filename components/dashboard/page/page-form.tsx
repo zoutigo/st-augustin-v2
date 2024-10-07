@@ -7,7 +7,7 @@ import { createPageSchema } from '@/schemas';
 import { createPage } from '@/actions/pages/create-page';
 import { RichTextEditor } from '@/components/forms/text-editor';
 import { Button } from '@/components/ui/button';
-import { useState, useTransition } from 'react';
+import React, { useState, useTransition } from 'react';
 import {
   Form,
   FormField,
@@ -25,32 +25,27 @@ import { useRouter } from 'next/navigation';
 // Définir les types basés sur le schéma Zod
 type CreatePageInput = z.infer<typeof createPageSchema>;
 
-export const PageForm = () => {
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>('');
-  const [success, setSuccess] = useState<string | undefined>('');
+interface PageFormProps {
+  initialValues?: Partial<CreatePageInput>;
+  onSubmit: (values: CreatePageInput) => void;
+  isPending: boolean;
+  error?: string;
+  success?: string;
+}
+
+export const PageForm: React.FC<PageFormProps> = ({
+  initialValues = {},
+  onSubmit,
+  isPending,
+  error,
+  success,
+}) => {
   const router = useRouter();
 
   const form = useForm<CreatePageInput>({
     resolver: zodResolver(createPageSchema),
+    defaultValues: initialValues,
   });
-
-  const onSubmit = (values: CreatePageInput) => {
-    setError('');
-    startTransition(() => {
-      createPage(values)
-        .then((data) => {
-          if (data.error) {
-            setError(data.error);
-          }
-          if (data.success) {
-            setSuccess(data.success);
-            router.push('/espace-prive/dashboard/pages');
-          }
-        })
-        .catch(() => setError("Quelque chose n'a pas fonctionné"));
-    });
-  };
 
   // Mettre à jour le contenu du champ 'content' avec les données de l'éditeur
   const handleEditorChange = (content: string) => {
@@ -60,7 +55,9 @@ export const PageForm = () => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <p className="text-2xl font-semibold text-center">{'Créer une page'}</p>
+        <p className="text-2xl font-semibold text-center">
+          {'Créer ou Modifier une page'}
+        </p>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -86,7 +83,6 @@ export const PageForm = () => {
                 )}
               />
 
-              {/* Ajout du champ pour l'éditeur de texte */}
               <FormField
                 control={form.control}
                 name="content"
@@ -96,7 +92,7 @@ export const PageForm = () => {
                     <FormControl>
                       <RichTextEditor
                         initialContent={field.value}
-                        onChange={field.onChange}
+                        onChange={handleEditorChange}
                       />
                     </FormControl>
                     <FormMessage>
@@ -109,9 +105,12 @@ export const PageForm = () => {
 
             <FormError message={error} />
             <FormSuccess message={success} />
-
-            <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? 'En cours...' : 'Créer la page'}
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="text-secondary"
+            >
+              {isPending ? 'En cours...' : 'Soumettre'}
             </Button>
           </form>
         </Form>

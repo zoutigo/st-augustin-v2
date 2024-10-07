@@ -84,7 +84,6 @@ export const createPageSchema = z.object({
   updatedAt: z.date().optional(), // Le champ est optionnel lors de la création et sera géré automatiquement
 });
 export const updatePageSchema = z.object({
-  id: z.string(),
-  name: z.optional(z.string().min(1, 'le nom est requis')),
-  content: z.optional(z.string().min(1, 'Le contenu est requis')),
+  name: z.string().min(1, 'Le nom est requis'),
+  content: z.string().min(1, 'Le contenu est requis'),
 });

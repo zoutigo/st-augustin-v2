@@ -1,13 +1,12 @@
-// dashboard/components/DataTable.tsx
 'use client';
 
+import React from 'react';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-
 import {
   Table,
   TableBody,
@@ -18,28 +17,12 @@ import {
 } from '@/components/ui/table';
 import { Page } from '@prisma/client';
 
-const columns: ColumnDef<Page>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Nom de la page',
-  },
-  {
-    accessorKey: 'createdAt',
-    header: 'Date de création',
-    cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString(),
-  },
-  {
-    accessorKey: 'updatedAt',
-    header: 'Dernière mise à jour',
-    cell: ({ row }) => new Date(row.original.updatedAt).toLocaleDateString(),
-  },
-];
-
 interface DataTableProps {
   data: Page[];
+  columns: ColumnDef<Page>[];
 }
 
-export function DataTable({ data }: DataTableProps) {
+export function DataTable({ data, columns }: DataTableProps) {
   const table = useReactTable({
     data,
     columns,
@@ -66,23 +49,15 @@ export function DataTable({ data }: DataTableProps) {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
+          {table.getRowModel().rows.map((row) => (
+            <TableRow key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
             </TableRow>
-          )}
+          ))}
         </TableBody>
       </Table>
     </div>
