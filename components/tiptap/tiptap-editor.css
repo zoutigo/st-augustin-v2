@@ -1,0 +1,140 @@
+/* tiptap-editor.css */
+
+.editor {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  min-height: 200px; /* Hauteur minimale */
+}
+
+.menu-bar {
+  border: 1px solid grey;
+}
+
+.menu-bar-button-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 1rem;
+}
+.menu-bar-button-group-list {
+  display: flex;
+  flex-wrap: wrap; /* Permet de passer à la ligne suivante lorsque la ligne est pleine */
+  gap: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 1rem;
+}
+
+.menu-bar-button-group-list button {
+  flex: 0 1 auto; /* Les boutons occupent la largeur de leur contenu */
+}
+
+.menu-bar button {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.menu-bar button.is-active {
+  background: #ddd;
+}
+
+.ProseMirror {
+  background-color: #f9f9f9; /* Couleur de fond */
+  color: #333; /* Couleur du texte */
+  padding: 8px;
+  border-radius: 4px;
+  min-height: 200px; /* Hauteur minimale */
+}
+
+.editor h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.editor h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.editor h3 {
+  font-size: 1.17em;
+  font-weight: bold;
+}
+
+/* tiptap-editor.css */
+
+.editor img {
+  height: auto;
+  display: inline;
+  margin: 1.5rem 0;
+  max-width: 100%;
+  resize: both;
+  overflow: auto;
+}
+
+.editor img.ProseMirror-selectednode {
+  outline: 3px solid var(--purple);
+}
+
+.ProseMirror .column-block {
+  width: 100%;
+  display: flex; /* Utiliser Flexbox */
+  gap: 24px;
+  padding: 8px 0;
+  background-color: #f0f0f0; /* Couleur de fond pour le bloc de colonnes */
+  border-radius: 8px; /* Arrondir les coins du bloc de colonnes */
+}
+
+.ProseMirror .column {
+  flex: 1; /* Assurer que les colonnes prennent une largeur égale */
+  overflow: hidden;
+  padding: 16px; /* Augmenter le padding pour plus d'espace interne */
+  margin: 0; /* Ajuster la marge pour un meilleur alignement */
+  background-color: #ffffff; /* Couleur de fond pour chaque colonne */
+  border-radius: 8px; /* Arrondir les coins des colonnes */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajouter une ombre pour un effet de profondeur */
+  transition: border 0.3s ease; /* Ajouter une transition pour les bordures */
+}
+
+.ProseMirror-focused .column {
+  border: 2px dashed gray; /* Augmenter l'épaisseur de la bordure pour une meilleure visibilité */
+  border-radius: 8px;
+  background-color: #e0e0e0; /* Changer la couleur de fond lors de la sélection */
+}
+
+/* Styles pour le redimensionnement des colonnes de tableau */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid #000; /* Ajouter une bordure plus épaisse et visible au tableau */
+}
+
+th,
+td {
+  border: 2px solid #000; /* Ajouter une bordure plus épaisse et visible aux cellules */
+  padding: 8px;
+  position: relative; /* Nécessaire pour le redimensionnement */
+}
+
+th::after,
+td::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px; /* Largeur de la poignée de redimensionnement */
+  cursor: col-resize;
+  background-color: transparent;
+}
+
+th.resizing,
+td.resizing {
+  cursor: col-resize;
+  background-color: #f0f0f0; /* Couleur de fond pendant le redimensionnement */
+}
