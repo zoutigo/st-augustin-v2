@@ -5,9 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createPageSchema } from '@/schemas';
 import { createPage } from '@/actions/pages/create-page';
-import { RichTextEditor } from '@/components/forms/text-editor';
 import { Button } from '@/components/ui/button';
-import React, { useState, useTransition } from 'react';
+import React, { useState } from 'react';
 import {
   Form,
   FormField,
@@ -21,6 +20,7 @@ import { Input } from '@/components/ui/input';
 import { FormError } from '@/components/form-error';
 import { FormSuccess } from '@/components/form-success';
 import { useRouter } from 'next/navigation';
+import { TiptapEditor } from '@/components/tiptap/tiptap';
 
 // Définir les types basés sur le schéma Zod
 type CreatePageInput = z.infer<typeof createPageSchema>;
@@ -41,15 +41,18 @@ export const PageForm: React.FC<PageFormProps> = ({
   success,
 }) => {
   const router = useRouter();
+  const [editorContent, setEditorContent] = useState(
+    initialValues.content || ''
+  );
 
   const form = useForm<CreatePageInput>({
     resolver: zodResolver(createPageSchema),
-    defaultValues: initialValues,
+    defaultValues: { ...initialValues, content: editorContent },
   });
 
-  // Mettre à jour le contenu du champ 'content' avec les données de l'éditeur
-  const handleEditorChange = (content: string) => {
-    form.setValue('content', content); // Utiliser form.setValue
+  const handleSubmit = (values: CreatePageInput) => {
+    console.log('Form submitted with values:', values); // Log the form values
+    onSubmit(values);
   };
 
   return (
@@ -61,7 +64,10 @@ export const PageForm: React.FC<PageFormProps> = ({
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            className="space-y-6"
+            onSubmit={form.handleSubmit(handleSubmit)}
+          >
             <div className="space-y-4">
               <FormField
                 control={form.control}
@@ -82,7 +88,6 @@ export const PageForm: React.FC<PageFormProps> = ({
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="content"
@@ -90,9 +95,12 @@ export const PageForm: React.FC<PageFormProps> = ({
                   <FormItem>
                     <FormLabel>Contenu de la page :</FormLabel>
                     <FormControl>
-                      <RichTextEditor
+                      <TiptapEditor
                         initialContent={field.value}
-                        onChange={handleEditorChange}
+                        onChange={(content) => {
+                          field.onChange(content);
+                          setEditorContent(content);
+                        }}
                       />
                     </FormControl>
                     <FormMessage>
