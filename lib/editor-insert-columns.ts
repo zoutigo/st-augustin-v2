@@ -1,4 +1,5 @@
 import { Editor } from '@tiptap/react';
+import { TextSelection } from 'prosemirror-state';
 
 interface editorInsertColumnsProps {
   editor: Editor | null;

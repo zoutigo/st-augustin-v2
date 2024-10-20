@@ -1,19 +1,24 @@
 'use client';
 import Link from 'next/link';
 
-import { Page } from '@prisma/client';
+import { Entity } from '@prisma/client';
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 
-export const PageColumns: ColumnDef<Page>[] = [
+export const EntitiesColumns: ColumnDef<Entity>[] = [
   {
     accessorKey: 'name',
     header: 'Nom de la page',
     cell: ({ row }) => (
-      <Link href={`/espace-prive/dashboard/pages/${row.original.id}`}>
+      <Link href={`/espace-prive/dashboard/entities/${row.original.id}`}>
         {row.original.name}
       </Link>
     ),
+  },
+  {
+    accessorKey: 'id',
+    header: 'Id',
+    cell: ({ row }) => <div>{row.original.id} </div>,
   },
   {
     accessorKey: 'slug',
@@ -36,7 +41,9 @@ export const PageColumns: ColumnDef<Page>[] = [
     cell: ({ row }) => {
       return (
         <Button className="text-secondary">
-          <Link href={`/espace-prive/dashboard/pages/${row.original.id}/edit`}>
+          <Link
+            href={`/espace-prive/dashboard/entities/${row.original.id}/edit`}
+          >
             Modifier
           </Link>
         </Button>

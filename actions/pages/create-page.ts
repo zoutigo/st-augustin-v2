@@ -5,7 +5,6 @@ import { db } from '@/lib/db';
 import { createPageSchema } from '@/schemas';
 
 export const createPage = async (values: z.infer<typeof createPageSchema>) => {
-  console.log(values);
   const validatedFields = createPageSchema.safeParse(values);
 
   if (!validatedFields.success) {

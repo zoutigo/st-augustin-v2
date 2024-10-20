@@ -10,10 +10,10 @@ const Sidebar = () => {
   return (
     <aside className="w-64 bg-gray-800 text-white">
       <nav className="p-4 space-y-4">
-        <Link href="/espace-prive/dashboard/pages">
+        <Link href="/espace-prive/dashboard/pages" passHref>
           <Button
             variant={
-              pathname === 'espace-prive/dashboard/pages'
+              pathname === '/espace-prive/dashboard/pages'
                 ? 'secondary'
                 : 'ghost'
             }
@@ -22,10 +22,11 @@ const Sidebar = () => {
             Pages
           </Button>
         </Link>
-        <Link href="espace-prive/dashboard/users">
+
+        <Link href="/espace-prive/dashboard/users" passHref>
           <Button
             variant={
-              pathname === 'espace-prive/dashboard/users'
+              pathname === '/espace-prive/dashboard/users'
                 ? 'secondary'
                 : 'ghost'
             }
@@ -34,10 +35,24 @@ const Sidebar = () => {
             Users
           </Button>
         </Link>
-        <Link href="espace-prive/dashboard/posts">
+
+        <Link href="/espace-prive/dashboard/entities">
           <Button
             variant={
-              pathname === 'espace-prive/dashboard/posts'
+              pathname === '/espace-prive/dashboard/entities'
+                ? 'secondary'
+                : 'ghost'
+            }
+            className="w-full"
+          >
+            Entités
+          </Button>
+        </Link>
+
+        <Link href="/espace-prive/dashboard/blog-posts">
+          <Button
+            variant={
+              pathname === '/espace-prive/dashboard/blog-posts'
                 ? 'secondary'
                 : 'ghost'
             }

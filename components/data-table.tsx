@@ -15,14 +15,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Page } from '@prisma/client';
 
-interface DataTableProps {
-  data: Page[];
-  columns: ColumnDef<Page>[];
+interface DataTableProps<T> {
+  data: T[];
+  columns: ColumnDef<T>[];
 }
 
-export function DataTable({ data, columns }: DataTableProps) {
+export function DataTable<T>({ data, columns }: DataTableProps<T>) {
   const table = useReactTable({
     data,
     columns,

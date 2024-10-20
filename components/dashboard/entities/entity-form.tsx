@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { createPageSchema } from '@/schemas';
+import { createEntitySchema } from '@/schemas';
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
 import {
@@ -21,17 +21,17 @@ import { FormSuccess } from '@/components/form-success';
 import { TiptapEditor } from '@/components/tiptap/tiptap';
 
 // Définir les types basés sur le schéma Zod
-type CreatePageInput = z.infer<typeof createPageSchema>;
+type CreateEntityInput = z.infer<typeof createEntitySchema>;
 
-interface PageFormProps {
-  initialValues?: Partial<CreatePageInput>;
-  onSubmit: (values: CreatePageInput) => void;
+interface EntityFormProps {
+  initialValues?: Partial<CreateEntityInput>;
+  onSubmit: (values: CreateEntityInput) => void;
   isPending: boolean;
   error?: string;
   success?: string;
 }
 
-export const PageForm: React.FC<PageFormProps> = ({
+export const EntityForm: React.FC<EntityFormProps> = ({
   initialValues = {},
   onSubmit,
   isPending,
@@ -39,15 +39,14 @@ export const PageForm: React.FC<PageFormProps> = ({
   success,
 }) => {
   const [editorContent, setEditorContent] = useState(
-    initialValues.content || ''
+    initialValues.description || ''
   );
-
-  const form = useForm<CreatePageInput>({
-    resolver: zodResolver(createPageSchema),
-    defaultValues: { ...initialValues, content: editorContent },
+  const form = useForm<CreateEntityInput>({
+    resolver: zodResolver(createEntitySchema),
+    defaultValues: { ...initialValues, description: editorContent },
   });
 
-  const handleSubmit = (values: CreatePageInput) => {
+  const handleSubmit = (values: CreateEntityInput) => {
     onSubmit(values);
   };
 
@@ -55,7 +54,9 @@ export const PageForm: React.FC<PageFormProps> = ({
     <Card className="w-full">
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
-          {'Créer ou Modifier une page'}
+          {initialValues
+            ? 'Modifier la catégorie de blog'
+            : 'Créer une catégorie de blog'}
         </p>
       </CardHeader>
       <CardContent>
@@ -70,11 +71,11 @@ export const PageForm: React.FC<PageFormProps> = ({
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nom de la page :</FormLabel>
+                    <FormLabel>{"Nom de l'entité :"} </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Nom de la page"
+                        placeholder="Nom de l'entité"
                         disabled={isPending}
                       />
                     </FormControl>
@@ -89,11 +90,11 @@ export const PageForm: React.FC<PageFormProps> = ({
                 name="slug"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Slug :</FormLabel>
+                    <FormLabel>{"Slug de l'entité :"} </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Slug de la page"
+                        placeholder="Slug de l'entité"
                         disabled={isPending}
                       />
                     </FormControl>
@@ -105,10 +106,10 @@ export const PageForm: React.FC<PageFormProps> = ({
               />
               <FormField
                 control={form.control}
-                name="content"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Contenu de la page :</FormLabel>
+                    <FormLabel>{"Description de l'entité"} </FormLabel>
                     <FormControl>
                       <TiptapEditor
                         initialContent={field.value}
@@ -119,7 +120,7 @@ export const PageForm: React.FC<PageFormProps> = ({
                       />
                     </FormControl>
                     <FormMessage>
-                      {form.formState.errors.content?.message}
+                      {form.formState.errors.description?.message}
                     </FormMessage>
                   </FormItem>
                 )}

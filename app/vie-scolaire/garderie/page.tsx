@@ -5,8 +5,8 @@ import React from 'react';
 
 type Props = {};
 
-const Ecole = async (props: Props) => {
-  const slug = 'ecole';
+const GarderiePage = async (props: Props) => {
+  const slug = 'vie-scolaire-garderie';
   const page = await getPageByName(slug);
 
   if (!page) {
@@ -20,4 +20,4 @@ const Ecole = async (props: Props) => {
   );
 };
 
-export default Ecole;
+export default GarderiePage;

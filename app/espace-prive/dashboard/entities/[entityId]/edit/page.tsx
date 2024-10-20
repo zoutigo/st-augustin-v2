@@ -1,37 +1,30 @@
 'use client';
 
-import { getPageById } from '@/actions/pages/get-page';
-import { updatePage } from '@/actions/pages/update-page';
-import { PageForm } from '@/components/dashboard/page/page-form';
+import { getEntityById } from '@/actions/entity/get';
+import { updateEntity } from '@/actions/entity/posts';
+import { EntityForm } from '@/components/dashboard/entities/entity-form';
+
 import { useCustomMutation } from '@/hooks/useCustomMutation';
-import { updatePageSchema } from '@/schemas';
+import { updateEntitySchema } from '@/schemas';
+import { Entity } from '@prisma/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { z } from 'zod';
 
-type Page = {
-  name: string;
-  slug?: string;
-  content: string;
-  id?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-};
-
-const EditPage = () => {
+const EditEntityPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const params = useParams();
-  const { pageId } = params;
+  const { entityId } = params;
 
-  const { data: pageData, isLoading } = useQuery<Page>({
-    queryKey: ['page', pageId],
+  const { data: entityData, isLoading } = useQuery<Entity>({
+    queryKey: ['entity', entityId],
     queryFn: async () => {
       try {
-        return await getPageById(pageId as string);
+        return await getEntityById(entityId as string);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message || "Quelque chose n'a pas fonctionné en front");
@@ -41,21 +34,24 @@ const EditPage = () => {
         throw err; // Re-throw the error to ensure the query fails
       }
     },
-    enabled: !!pageId, // Only run the query if pageId is defined
+    enabled: !!entityId, // Only run the query if pageId is defined
   });
 
   const mutation = useCustomMutation<
     { success: string } | { error: string },
     any,
-    z.infer<typeof updatePageSchema>,
+    z.infer<typeof updateEntitySchema>,
     unknown
   >(
-    { queryKey: ['page', pageId] },
-    (values) => updatePage(pageId as string, values),
+    { queryKey: ['entity', entityId] },
+    (values) => updateEntity(entityId as string, values),
     {
       onSuccess: [
-        () => queryClient.invalidateQueries({ queryKey: ['page', pageId] }),
-        () => router.push('/espace-prive/dashboard/pages'),
+        () =>
+          queryClient.invalidateQueries({
+            queryKey: ['entity', entityId],
+          }),
+        () => router.push('/espace-prive/dashboard/entities'),
       ],
       onError: [
         (err: unknown) => {
@@ -71,7 +67,7 @@ const EditPage = () => {
     }
   );
 
-  const handleSubmit = (values: z.infer<typeof updatePageSchema>) => {
+  const handleSubmit = (values: z.infer<typeof updateEntitySchema>) => {
     setError('');
     mutation.mutate(values);
   };
@@ -81,8 +77,8 @@ const EditPage = () => {
   }
 
   return (
-    <PageForm
-      initialValues={pageData}
+    <EntityForm
+      initialValues={entityData}
       onSubmit={handleSubmit}
       isPending={mutation.isPending}
       error={error}
@@ -91,4 +87,4 @@ const EditPage = () => {
   );
 };
 
-export default EditPage;
+export default EditEntityPage;
