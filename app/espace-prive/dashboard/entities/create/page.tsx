@@ -1,39 +1,41 @@
 'use client';
 
-import { PageForm } from '@/components/dashboard/page/page-form';
 import React, { useState, useTransition } from 'react';
-import { createPageSchema } from '@/schemas';
+import { createEntitySchema } from '@/schemas';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { createPage } from '@/actions/pages/create-page';
+import { createEntity } from '@/actions/entity/posts';
+import { EntityForm } from '@/components/dashboard/entities/entity-form';
 
-type CreatePageInput = z.infer<typeof createPageSchema>;
+type CreateEntityInput = z.infer<typeof createEntitySchema>;
 
 type Props = {};
 
-const CreatePage = (props: Props) => {
+const CreateEntityPage = (props: Props) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
 
-  const initialValues: Partial<CreatePageInput> = {
+  const initialValues: Partial<CreateEntityInput> = {
     name: '',
-    content: '',
     slug: '',
+    description: '',
   };
 
-  const handleSubmit = (values: CreatePageInput) => {
+  const handleSubmit = (values: CreateEntityInput) => {
     setError('');
     startTransition(() => {
-      createPage(values)
+      createEntity(values)
         .then((data) => {
           if (data.error) {
             setError(data.error);
           }
           if (data.success) {
             setSuccess(data.success);
-            router.push('/espace-prive/dashboard/pages');
+
+            router.push('/espace-prive/dashboard/entities');
+            router.refresh();
           }
         })
         .catch(() => setError("Quelque chose n'a pas fonctionné"));
@@ -41,7 +43,7 @@ const CreatePage = (props: Props) => {
   };
 
   return (
-    <PageForm
+    <EntityForm
       initialValues={initialValues}
       onSubmit={handleSubmit}
       isPending={isPending}
@@ -51,4 +53,4 @@ const CreatePage = (props: Props) => {
   );
 };
 
-export default CreatePage;
+export default CreateEntityPage;

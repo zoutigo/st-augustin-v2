@@ -1,26 +1,7 @@
 import { Editor } from '@tiptap/react';
 import { TextSelection } from 'prosemirror-state'; // Importez TextSelection
 import React, { useState } from 'react';
-import {
-  FaBold,
-  FaItalic,
-  FaUnderline,
-  FaListUl,
-  FaListOl,
-  FaHeading,
-  FaStrikethrough,
-  FaHighlighter,
-  FaAlignLeft,
-  FaAlignCenter,
-  FaAlignRight,
-  FaAlignJustify,
-  FaParagraph,
-  FaImage,
-  FaColumns,
-  FaTable,
-  FaBorderNone,
-  FaFillDrip,
-} from 'react-icons/fa';
+import { FaImage } from 'react-icons/fa';
 import TableButtons from './table-buttons';
 import TextFormattingButtons from './text-formatting-buttons';
 import ColumnButtons from './columns-buttons';

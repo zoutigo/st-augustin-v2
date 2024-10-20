@@ -1,6 +1,6 @@
 import React from 'react';
-import { getPageById } from '@/actions/pages/getPageById';
-import PageContent from '@/components/dashboard/page/page-content';
+import { getPageById } from '@/actions/pages/get-page';
+import PageContent from '@/components/tiptap/page-content';
 
 interface PageDetailProps {
   params: {
@@ -18,6 +18,7 @@ const PageDetail = async ({ params }: PageDetailProps) => {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">{page.name}</h1>
+      <h2 className="text-2xl font-bold mb-4">{page.slug}</h2>
       <PageContent content={page.content} />
       <p>Created at: {new Date(page.createdAt).toLocaleDateString()}</p>
       <p>Updated at: {new Date(page.updatedAt).toLocaleDateString()}</p>
