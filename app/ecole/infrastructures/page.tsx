@@ -6,7 +6,7 @@ import React from 'react';
 type Props = {};
 
 const Ecole = async (props: Props) => {
-  const slug = 'ecole';
+  const slug = 'ecole-infrastructures';
   const page = await getPageByName(slug);
 
   if (!page) {

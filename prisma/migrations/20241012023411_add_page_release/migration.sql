@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `Page` ADD COLUMN `release` BOOLEAN NOT NULL DEFAULT false,
+    MODIFY `content` LONGTEXT NOT NULL;
