@@ -75,3 +75,41 @@ export const SettingsSchema = z
       path: ['newPassword'],
     }
   );
+
+export const createPageSchema = z.object({
+  id: z.string().optional(), // L'ID est optionnel car il sera généré automatiquement
+  name: z.string().min(1, 'Le nom est requis'), // Le nom ne doit pas être vide
+  slug: z.string().min(1, 'Le slug est requis'), // Le nom ne doit pas être vide
+  content: z.string().min(1, 'Le contenu est requis'), // Le contenu ne doit pas être vide
+  createdAt: z.date().optional(), // Le champ est optionnel lors de la création
+  updatedAt: z.date().optional(), // Le champ est optionnel lors de la création et sera géré automatiquement
+});
+export const updatePageSchema = z.object({
+  name: z.string().min(1, 'Le nom est requis'),
+  content: z.string().min(1, 'Le contenu est requis'),
+  slug: z.optional(z.string().min(1, 'Le contenu est requis')),
+});
+
+export const createEntitySchema = z.object({
+  id: z.string().optional(), // L'ID est optionnel car il sera généré automatiquement
+  name: z.string().min(1, 'Le nom est requis'), // Le nom ne doit pas être vide
+  slug: z.string().min(1, 'Le slug est requis'), // Le nom ne doit pas être vide
+  description: z.string().min(1, 'Le slug est requis'), // Le nom ne doit pas être vide
+  createdAt: z.date().optional(), // Le champ est optionnel lors de la création
+  updatedAt: z.date().optional(), // Le champ est optionnel lors de la création et sera géré automatiquement
+});
+
+export const updateEntitySchema = createEntitySchema.partial();
+
+export const createBlogPostSchema = z.object({
+  id: z.string().optional(), // L'ID est optionnel car il sera généré automatiquement
+  title: z.string().min(1, 'Le titre est requis'), // Le titre ne doit pas être vide
+  content: z.string().min(1, 'Le contenu est requis'), // Le contenu ne doit pas être vide
+  isPublic: z.boolean().optional().default(false), // Le champ est optionnel et par défaut false
+  isReleased: z.boolean().optional().default(false), // Le champ est optionnel et par défaut false
+  createdAt: z.date().optional(), // Le champ est optionnel lors de la création
+  updatedAt: z.date().optional(), // Le champ est optionnel lors de la création et sera géré automatiquement
+  categoryId: z.string().min(1, 'La catégorie est requise'), // La catégorie ne doit pas être vide
+});
+
+export const updateBlogPostSchema = createBlogPostSchema.partial();

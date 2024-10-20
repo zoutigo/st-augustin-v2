@@ -47,13 +47,18 @@ export const NavRoutes: NavRoute[] = [
       },
       {
         name: 'Projets',
-        slug: 'ecole-equipe',
-        path: '/ecole/equipe',
+        slug: 'ecole-projets',
+        path: '/ecole/projets',
       },
       {
         name: 'Infrastructures',
         slug: 'ecole-infrastructures',
         path: '/ecole/infrastructures',
+      },
+      {
+        name: 'Inscriptions',
+        slug: 'ecole-inscriptions',
+        path: '/ecole/inscriptions',
       },
     ],
   },
@@ -76,11 +81,6 @@ export const NavRoutes: NavRoute[] = [
         name: 'Pastorale',
         slug: 'vie-scolaire-pastorale',
         path: '/vie-scolaire/pastorale',
-      },
-      {
-        name: 'Horaires',
-        slug: 'vie-scolaire-horaires',
-        path: '/vie-scolaire/horaires',
       },
     ],
   },
