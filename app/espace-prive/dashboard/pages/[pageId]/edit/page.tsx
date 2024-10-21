@@ -1,6 +1,6 @@
 'use client';
 
-import { getPageById } from '@/actions/pages/get-page';
+import { getPageById } from '@/actions/pages/get';
 import { updatePage } from '@/actions/pages/update-page';
 import { PageForm } from '@/components/dashboard/page/page-form';
 import { useCustomMutation } from '@/hooks/useCustomMutation';
@@ -27,11 +27,15 @@ const EditPage = () => {
   const params = useParams();
   const { pageId } = params;
 
-  const { data: pageData, isLoading } = useQuery<Page>({
+  const { data: pageData, isLoading } = useQuery<Page | { error: string }>({
     queryKey: ['page', pageId],
     queryFn: async () => {
       try {
-        return await getPageById(pageId as string);
+        const result = await getPageById(pageId as string);
+        if ('error' in result) {
+          throw new Error(result.error);
+        }
+        return result;
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message || "Quelque chose n'a pas fonctionné en front");
@@ -82,7 +86,7 @@ const EditPage = () => {
 
   return (
     <PageForm
-      initialValues={pageData}
+      initialValues={pageData as Partial<Page>}
       onSubmit={handleSubmit}
       isPending={mutation.isPending}
       error={error}

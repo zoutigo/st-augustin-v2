@@ -5,14 +5,19 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { DataTable } from '@/components/data-table';
 import { PageColumns } from '@/components/dashboard/page/page-colums';
-import { getAllPages } from '@/actions/pages/get-page';
+import { getAllPages } from '@/actions/pages/get';
 
 const PageList = async () => {
   let pagesData: Page[] = [];
   let error: string | null = null;
 
   try {
-    pagesData = await getAllPages();
+    const result = await getAllPages();
+    if ('error' in result) {
+      error = result.error;
+    } else {
+      pagesData = result;
+    }
   } catch (err) {
     error = (err as Error).message;
   }
