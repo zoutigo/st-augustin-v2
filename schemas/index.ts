@@ -109,7 +109,7 @@ export const createBlogPostSchema = z.object({
   isReleased: z.boolean().optional().default(false), // Le champ est optionnel et par défaut false
   createdAt: z.date().optional(), // Le champ est optionnel lors de la création
   updatedAt: z.date().optional(), // Le champ est optionnel lors de la création et sera géré automatiquement
-  categoryId: z.string().min(1, 'La catégorie est requise'), // La catégorie ne doit pas être vide
+  entityId: z.string().min(1, "l'entité est requise"), // La catégorie ne doit pas être vide
 });
 
-export const updateBlogPostSchema = createBlogPostSchema.partial();
+export const updateBlogPostSchema = createBlogPostSchema;

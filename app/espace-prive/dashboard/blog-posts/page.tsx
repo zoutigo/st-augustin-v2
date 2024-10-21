@@ -1,4 +1,3 @@
-import { getPageByName } from '@/actions/pages/get-page';
 import React from 'react';
 
 type Props = {};
