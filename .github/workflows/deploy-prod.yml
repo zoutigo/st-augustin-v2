@@ -37,6 +37,9 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
+      - name: Run Tests
+        run: npm test
+
       - name: Clean up old files
         run: |
           rm -rf .next/cache/

@@ -5,7 +5,7 @@ import React, { useState, useTransition } from 'react';
 import { createPageSchema } from '@/schemas';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { createPage } from '@/actions/pages/create-page';
+import { createPage } from '@/actions/pages/post';
 
 type CreatePageInput = z.infer<typeof createPageSchema>;
 

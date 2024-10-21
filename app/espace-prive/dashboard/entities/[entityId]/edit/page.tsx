@@ -24,7 +24,11 @@ const EditEntityPage = () => {
     queryKey: ['entity', entityId],
     queryFn: async () => {
       try {
-        return await getEntityById(entityId as string);
+        const entity = await getEntityById(entityId as string);
+        if (!entity) {
+          throw new Error('Entity not found');
+        }
+        return entity;
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message || "Quelque chose n'a pas fonctionné en front");
