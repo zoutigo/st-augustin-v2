@@ -5,9 +5,9 @@ import { BlogPost } from '@prisma/client';
 
 export const getBlogPostById = async (
   blogPostId: string
-): Promise<BlogPost> => {
+): Promise<BlogPost | { error: string }> => {
   if (!blogPostId) {
-    throw new Error('Veillez indiquer le numéro du post ');
+    return { error: 'Veillez indiquer le numéro du post ' };
   }
   try {
     const blogPost = await db.blogPost.findUnique({
@@ -16,21 +16,21 @@ export const getBlogPostById = async (
       },
     });
     if (!blogPost) {
-      throw new Error('Category not found');
+      return { error: 'Post not found' };
     }
     return blogPost;
   } catch (error) {
-    console.error('Failed to fetch page:', error);
-    throw new Error('Failed to fetch page');
+    return { error: 'Failed to fetch page' };
   }
 };
 
-export const getAllBlogPosts = async (): Promise<BlogPost[]> => {
+export const getAllBlogPosts = async (): Promise<
+  BlogPost[] | { error: string }
+> => {
   try {
     const blogCategories = await db.blogPost.findMany();
     return blogCategories;
   } catch (error) {
-    console.error('Failed to fetch posts:', error);
-    throw new Error('Failed to fetch posts');
+    return { error: 'Failed to fetch posts' };
   }
 };
