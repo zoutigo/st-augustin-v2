@@ -1,6 +1,4 @@
-// extensions.ts
-
-import { Node, mergeAttributes, CommandProps } from '@tiptap/core';
+import { Node, mergeAttributes, Mark } from '@tiptap/core';
 
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -15,13 +13,11 @@ import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
 
+// ✅ **Table Cell Personnalisée**
 const CustomTableCell = TableCell.extend({
   addAttributes() {
     return {
-      // extend the existing attributes …
       ...this.parent?.(),
-
-      // and add a new one …
       backgroundColor: {
         default: null,
         parseHTML: (element) => element.getAttribute('data-background-color'),
@@ -36,19 +32,37 @@ const CustomTableCell = TableCell.extend({
   },
 });
 
+// ✅ **Extension Column**
 export const Column = Node.create({
   name: 'column',
 
   group: 'block',
-
   content: 'block+',
 
-  parseHTML() {
-    return [
-      {
-        tag: 'div[data-type="column"]',
+  addAttributes() {
+    return {
+      backgroundColor: {
+        default: null,
+        parseHTML: (element: HTMLElement) => {
+          const dataColor = element.getAttribute('data-bgcolor');
+          const inlineStyle = element.style?.backgroundColor;
+          return dataColor || inlineStyle || null;
+        },
+        renderHTML: (attributes) => {
+          if (!attributes.backgroundColor) {
+            return {};
+          }
+          return {
+            'data-bgcolor': attributes.backgroundColor,
+            style: `background-color: ${attributes.backgroundColor};`,
+          };
+        },
       },
-    ];
+    };
+  },
+
+  parseHTML() {
+    return [{ tag: 'div[data-type="column"]' }];
   },
 
   renderHTML({ HTMLAttributes }) {
@@ -63,17 +77,39 @@ export const Column = Node.create({
   },
 });
 
-export const Columns = Node.create({
-  name: 'columns',
+// ✅ **Extension ColumnBlock**
+export const ColumnBlock = Node.create({
+  name: 'column-block',
 
   group: 'block',
-
   content: 'column+',
+
+  addAttributes() {
+    return {
+      backgroundColor: {
+        default: null,
+        parseHTML: (element: HTMLElement) => {
+          const dataColor = element.getAttribute('data-bgcolor');
+          const inlineStyle = element.style?.backgroundColor;
+          return dataColor || inlineStyle || null;
+        },
+        renderHTML: (attributes) => {
+          if (!attributes.backgroundColor) {
+            return {};
+          }
+          return {
+            'data-bgcolor': attributes.backgroundColor,
+            style: `background-color: ${attributes.backgroundColor};`,
+          };
+        },
+      },
+    };
+  },
 
   parseHTML() {
     return [
       {
-        tag: 'div[data-type="columns"]',
+        tag: 'div[data-type="column-block"]',
       },
     ];
   },
@@ -81,103 +117,47 @@ export const Columns = Node.create({
   renderHTML({ HTMLAttributes }) {
     return [
       'div',
-      mergeAttributes(HTMLAttributes, { 'data-type': 'columns' }),
+      mergeAttributes(HTMLAttributes, {
+        'data-type': 'column-block',
+        class: 'column-block',
+      }),
       0,
     ];
   },
+});
 
-  addCommands() {
+// Extension TextColor
+export const TextColor = Mark.create({
+  name: 'textColor',
+
+  addAttributes() {
     return {
-      setColumns:
-        () =>
-        ({ commands }: CommandProps) => {
-          return commands.insertContent({
-            type: this.name,
-          });
+      color: {
+        default: null,
+        parseHTML: (element) => element.style.color || null,
+        renderHTML: (attributes) => {
+          if (!attributes.color) return {};
+          return { style: `color: ${attributes.color};` };
         },
-      insertColumns:
-        () =>
-        ({ commands }: CommandProps) => {
-          return commands.insertContent({
-            type: 'columns',
-            content: [
-              {
-                type: 'column',
-                content: [
-                  {
-                    type: 'paragraph',
-                    content: [
-                      {
-                        type: 'text',
-                        text: 'Column 1 content',
-                      },
-                    ],
-                  },
-                ],
-              },
-              {
-                type: 'column',
-                content: [
-                  {
-                    type: 'paragraph',
-                    content: [
-                      {
-                        type: 'text',
-                        text: 'Column 2 content',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          });
-        },
-      deleteColumn:
-        () =>
-        ({ state, dispatch }: CommandProps) => {
-          if (!state || !dispatch) return false;
-
-          const { selection } = state;
-          const { $from } = selection;
-          const columnPos = $from.before($from.depth);
-          const columnNode = state.doc.nodeAt(columnPos);
-
-          if (columnNode && columnNode.type.name === 'column') {
-            const tr = state.tr.delete(
-              columnPos,
-              columnPos + columnNode.nodeSize
-            );
-            dispatch(tr);
-            return true;
-          }
-
-          return false;
-        },
-      deleteColumns:
-        () =>
-        ({ state, dispatch }: CommandProps) => {
-          if (!state || !dispatch) return false;
-
-          const { selection } = state;
-          const { $from } = selection;
-          const columnsPos = $from.before($from.depth);
-          const columnsNode = state.doc.nodeAt(columnsPos);
-
-          if (columnsNode && columnsNode.type.name === 'columns') {
-            const tr = state.tr.delete(
-              columnsPos,
-              columnsPos + columnsNode.nodeSize
-            );
-            dispatch(tr);
-            return true;
-          }
-
-          return false;
-        },
+      },
     };
+  },
+
+  parseHTML() {
+    return [
+      {
+        style: 'color',
+        getAttrs: (value) => (value ? { color: value } : {}),
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ['span', mergeAttributes(HTMLAttributes), 0];
   },
 });
 
+// ✅ **Tableau Final des Extensions**
 export const extensions = [
   StarterKit,
   Underline,
@@ -194,12 +174,17 @@ export const extensions = [
     allowBase64: true,
     inline: true,
   }),
+
+  // 🛠️ Nos extensions personnalisées
   Column,
-  Columns,
+  ColumnBlock,
+
+  // 🛠️ Extensions de table
   Table.configure({
     resizable: true,
   }),
   TableRow,
   TableHeader,
   CustomTableCell,
+  TextColor,
 ];

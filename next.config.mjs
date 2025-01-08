@@ -10,8 +10,11 @@ const nextConfig = {
   },
   reactStrictMode: !isProduction,
   swcMinify: true,
-  webpack: (config, { dev }) => {
+  webpack: (config, { dev, isServer }) => {
     config.resolve.alias['@'] = path.resolve('./');
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
     if (!dev) {
       // Limiter le nombre de threads pour éviter de surcharger le serveur
       config.parallelism = 2;

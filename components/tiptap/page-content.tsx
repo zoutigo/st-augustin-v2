@@ -1,32 +1,27 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Editor } from '@tiptap/core';
+import React from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+
 import { extensions } from '@/components/tiptap/extensions';
+import './tiptap-editor.css';
 
 interface PageContentProps {
   content: string;
 }
 
 const PageContent: React.FC<PageContentProps> = ({ content }) => {
-  const [htmlContent, setHtmlContent] = useState<string | null>(null);
-
-  useEffect(() => {
-    const editor = new Editor({
-      extensions,
-      content: JSON.parse(content),
-    });
-    const generatedHTML = editor.getHTML();
-    console.log(generatedHTML); // Vérifiez le contenu HTML généré
-    setHtmlContent(generatedHTML);
-  }, [content]);
-
-  if (!htmlContent) {
-    return <p>Loading content...</p>;
-  }
-
+  const editor = useEditor({
+    extensions,
+    // On réinjecte le JSON comme contenu
+    content: JSON.parse(content),
+    editable: false, // mode lecture seule
+  });
+  if (!editor) return <p>Loading...</p>;
   return (
-    <div className="editor" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+    <div className="editor">
+      <EditorContent editor={editor} />
+    </div>
   );
 };
 

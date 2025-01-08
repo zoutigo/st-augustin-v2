@@ -49,10 +49,10 @@ const Sidebar = () => {
           </Button>
         </Link>
 
-        <Link href="/espace-prive/dashboard/blog-posts">
+        <Link href="/espace-prive/dashboard/blogposts">
           <Button
             variant={
-              pathname === '/espace-prive/dashboard/blog-posts'
+              pathname === '/espace-prive/dashboard/blogposts'
                 ? 'secondary'
                 : 'ghost'
             }
