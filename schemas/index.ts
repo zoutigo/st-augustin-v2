@@ -101,7 +101,7 @@ export const createEntitySchema = z.object({
 
 export const updateEntitySchema = createEntitySchema.partial();
 
-export const createBlogPostSchema = z.object({
+export const createBlogpostSchema = z.object({
   id: z.string().optional(), // L'ID est optionnel car il sera généré automatiquement
   title: z.string().min(1, 'Le titre est requis'), // Le titre ne doit pas être vide
   content: z.string().min(1, 'Le contenu est requis'), // Le contenu ne doit pas être vide
@@ -112,4 +112,4 @@ export const createBlogPostSchema = z.object({
   entityId: z.string().min(1, "l'entité est requise"), // La catégorie ne doit pas être vide
 });
 
-export const updateBlogPostSchema = createBlogPostSchema;
+export const updateBlogPostSchema = createBlogpostSchema;

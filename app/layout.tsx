@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+/// <reference path="../types/tiptap-extensions.d.ts" />
+
 import { Poppins, Raleway, Comfortaa } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import { Toaster } from '@/components/ui/sonner';
