@@ -17,7 +17,7 @@ export const Social = () => {
     //   return redirect(callbackUrl || '/');
     // }
     signIn(provider, {
-      callbackUrl: '/client' || DEFAULT_LOGIN_REDIRECT,
+      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
   };
   return (
