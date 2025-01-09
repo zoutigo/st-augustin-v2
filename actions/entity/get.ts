@@ -48,7 +48,10 @@ export const getEntitybySlug = async (
 export const getAllEntities = async (): Promise<Entity[]> => {
   try {
     const entities = await db.entity.findMany();
-    return entities;
+
+    return entities.map((entity) => ({
+      ...entity,
+    }));
   } catch (error) {
     throw new Error('Failed to fetch entities');
   }

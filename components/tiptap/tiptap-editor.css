@@ -15,14 +15,14 @@
   display: flex;
   gap: 8px;
   margin-bottom: 8px;
-  padding-bottom: 1rem;
+  padding: 1rem 0.5rem;
 }
 .menu-bar-button-group-list {
   display: flex;
   flex-wrap: wrap; /* Permet de passer à la ligne suivante lorsque la ligne est pleine */
   gap: 8px;
   margin-bottom: 8px;
-  padding-bottom: 1rem;
+  padding: 0.1rem 0.5rem;
 }
 
 .menu-bar-button-group-list button {
@@ -49,11 +49,26 @@
   padding: 8px;
   border-radius: 4px;
   min-height: 200px; /* Hauteur minimale */
+  line-height: 1.5;
+  margin: 1em 0;
+}
+
+.ProseMirror ul {
+  list-style-type: disc;
+  margin-left: 1.5em;
+}
+.ProseMirror ol {
+  list-style-type: decimal; /* ou autre style */
+  margin-left: 1.5em;
+}
+.ProseMirror li {
+  margin: 4px 0;
 }
 
 .editor h1 {
   font-size: 2em;
   font-weight: bold;
+  margin: 1em 0;
 }
 
 .editor h2 {
@@ -84,21 +99,27 @@
 .ProseMirror .column-block {
   width: 100%;
   display: flex; /* Utiliser Flexbox */
-  gap: 24px;
+  flex-direction: row;
+  gap: 8px;
   padding: 8px 0;
-  background-color: #f0f0f0; /* Couleur de fond pour le bloc de colonnes */
-  border-radius: 8px; /* Arrondir les coins du bloc de colonnes */
+  background-color: var(--background-color, transparent);
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
 .ProseMirror .column {
-  flex: 1; /* Assurer que les colonnes prennent une largeur égale */
+  flex: 1;
+  min-width: 0; /* Évite de forcer la largeur minimale */
+  overflow-wrap: break-word; /* Permet au texte de se renvoyer à la ligne */
+  /* ou word-wrap: break-word; selon vos besoins */
+
   overflow: hidden;
-  padding: 16px; /* Augmenter le padding pour plus d'espace interne */
-  margin: 0; /* Ajuster la marge pour un meilleur alignement */
-  background-color: #ffffff; /* Couleur de fond pour chaque colonne */
-  border-radius: 8px; /* Arrondir les coins des colonnes */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajouter une ombre pour un effet de profondeur */
-  transition: border 0.3s ease; /* Ajouter une transition pour les bordures */
+  padding: 16px;
+  margin: 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border 0.3s ease;
 }
 
 .ProseMirror-focused .column {
@@ -107,6 +128,9 @@
   background-color: #e0e0e0; /* Changer la couleur de fond lors de la sélection */
 }
 
+.ProseMirror span[style*='color'] {
+  transition: color 0.3s ease;
+}
 /* Styles pour le redimensionnement des colonnes de tableau */
 table {
   border-collapse: collapse;
@@ -137,4 +161,10 @@ th.resizing,
 td.resizing {
   cursor: col-resize;
   background-color: #f0f0f0; /* Couleur de fond pendant le redimensionnement */
+}
+
+@media (max-width: 768px) {
+  .ProseMirror .column-block {
+    flex-direction: column !important;
+  }
 }

@@ -1,11 +1,11 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { BlogPost } from '@prisma/client';
+import { BlogPostWithEntity } from '@/types/model';
 
 export const getBlogPostById = async (
   blogPostId: string
-): Promise<BlogPost | { error: string }> => {
+): Promise<BlogPostWithEntity | { error: string }> => {
   if (!blogPostId) {
     return { error: 'Veillez indiquer le numéro du post ' };
   }
@@ -13,6 +13,9 @@ export const getBlogPostById = async (
     const blogPost = await db.blogPost.findUnique({
       where: {
         id: blogPostId,
+      },
+      include: {
+        entity: true,
       },
     });
     if (!blogPost) {
@@ -25,10 +28,14 @@ export const getBlogPostById = async (
 };
 
 export const getAllBlogPosts = async (): Promise<
-  BlogPost[] | { error: string }
+  BlogPostWithEntity[] | { error: string }
 > => {
   try {
-    const blogCategories = await db.blogPost.findMany();
+    const blogCategories = await db.blogPost.findMany({
+      include: {
+        entity: true,
+      },
+    });
     return blogCategories;
   } catch (error) {
     return { error: 'Failed to fetch posts' };

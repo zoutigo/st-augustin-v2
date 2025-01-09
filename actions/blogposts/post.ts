@@ -2,12 +2,12 @@
 
 import { z } from 'zod';
 import { db } from '@/lib/db';
-import { createBlogPostSchema, updateBlogPostSchema } from '@/schemas';
+import { createBlogpostSchema, updateBlogPostSchema } from '@/schemas';
 
 export const createBlogPost = async (
-  values: z.infer<typeof createBlogPostSchema>
+  values: z.infer<typeof createBlogpostSchema>
 ) => {
-  const validatedFields = createBlogPostSchema.safeParse(values);
+  const validatedFields = createBlogpostSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: 'Les champs ne sont pas correctement remplis' };
