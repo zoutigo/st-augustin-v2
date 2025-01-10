@@ -55,11 +55,6 @@ export const NavRoutes: NavRoute[] = [
         slug: 'ecole-infrastructures',
         path: '/ecole/infrastructures',
       },
-      {
-        name: 'Inscriptions',
-        slug: 'ecole-inscriptions',
-        path: '/ecole/inscriptions',
-      },
     ],
   },
   {
@@ -70,7 +65,7 @@ export const NavRoutes: NavRoute[] = [
       {
         name: 'Cantine',
         slug: 'vie-scolaire-cantine',
-        path: '/vie-scolaire/infrastructures',
+        path: '/vie-scolaire/cantine',
       },
       {
         name: 'Garderie',
@@ -212,32 +207,32 @@ export const NavRoutes: NavRoute[] = [
       {
         name: 'Mon Compte',
         slug: 'account',
-        path: '/account',
+        path: '/espace-prive/account',
       },
       {
         name: 'Dashboard',
         slug: 'dashboard',
-        path: '/dashboard',
+        path: '/espace-prive/dashboard',
         finalroutes: [
           {
             name: 'Utilisateurs',
             slug: 'dashboard-users',
-            path: '/dashboard/users',
+            path: '/espace-prive/dashboard/users',
           },
           {
             name: 'Pages',
             slug: 'dashboard-pages',
-            path: '/dashboard/pages',
+            path: '/espace-prive/dashboard/pages',
           },
           {
             name: 'Activités',
             slug: 'dashboard-activites',
-            path: '/dashboard/activites',
+            path: '/espace-prive/dashboard/activites',
           },
           {
             name: 'Albums',
             slug: 'dashboard-albums',
-            path: '/dashboard/albums',
+            path: '/espace-prive/dashboard/albums',
           },
         ],
       },

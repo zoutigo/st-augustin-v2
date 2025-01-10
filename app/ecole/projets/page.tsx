@@ -6,7 +6,7 @@ import React from 'react';
 
 type Props = {};
 
-const Projets = async (props: Props) => {
+const ProjetsPage = async (props: Props) => {
   const slug = 'ecole-projets';
   const result = await getPageBySlug(slug);
 
@@ -23,4 +23,4 @@ const Projets = async (props: Props) => {
   );
 };
 
-export default Projets;
+export default ProjetsPage;
