@@ -113,3 +113,44 @@ export const createBlogpostSchema = z.object({
 });
 
 export const updateBlogPostSchema = createBlogpostSchema;
+
+export const createModalSchema = z
+  .object({
+    id: z.string().optional(),
+    title: z.string().min(1, 'Le titre est requis'),
+    content: z.string().min(1, 'Le contenu est requis'),
+    startDate: z.date({
+      required_error: 'La date de début est requise',
+      invalid_type_error: 'La date de début doit être une date valide',
+    }),
+    endDate: z.date({
+      required_error: 'La date de fin est requise',
+      invalid_type_error: 'La date de fin doit être une date valide',
+    }),
+    createdAt: z.date().optional(),
+    updatedAt: z.date().optional(),
+  })
+  .superRefine(({ startDate, endDate }, ctx) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Ignorer les heures pour comparer uniquement les dates
+
+    // Vérification de startDate
+    if (startDate < today) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['startDate'],
+        message: 'La date de début doit être au moins aujourd’hui',
+      });
+    }
+
+    // Vérification de endDate
+    if (endDate <= startDate) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['endDate'],
+        message: 'La date de fin doit être postérieure à la date de début',
+      });
+    }
+  });
+
+export const updateModalSchema = createModalSchema;

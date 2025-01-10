@@ -61,6 +61,19 @@ const Sidebar = () => {
             Posts
           </Button>
         </Link>
+
+        <Link href="/espace-prive/dashboard/modals">
+          <Button
+            variant={
+              pathname === '/espace-prive/dashboard/modals'
+                ? 'secondary'
+                : 'ghost'
+            }
+            className="w-full"
+          >
+            Modales
+          </Button>
+        </Link>
       </nav>
     </aside>
   );
