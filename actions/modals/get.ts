@@ -32,3 +32,29 @@ export const getAllModals = async (): Promise<Modal[] | { error: string }> => {
     return { error: 'Failed to fetch posts' };
   }
 };
+
+export const getModalToDisplay = async () => {
+  try {
+    const currentDate = new Date();
+
+    const modals = await db.modal.findMany({
+      where: {
+        endDate: {
+          gte: currentDate, // Filtre pour inclure uniquement les modales avec une date de fin future
+        },
+      },
+      orderBy: {
+        startDate: 'desc', // Trie par date de début décroissante
+      },
+    });
+
+    if (modals.length > 0) {
+      return modals[0]; // Retourne la modale la plus récente
+    }
+
+    return null; // Retourne null si aucune modale n'est disponible
+  } catch (error) {
+    console.error('Error fetching modals:', error);
+    throw new Error('Failed to fetch modals.');
+  }
+};
