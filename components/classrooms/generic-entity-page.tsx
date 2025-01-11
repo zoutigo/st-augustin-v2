@@ -1,9 +1,8 @@
 import { getEntityBySlug } from '@/actions/entity/get';
-import { EntityBlogPostList } from '@/components/dashboard/entities/entity-blogposts-list';
-import { PageHolder } from '@/components/page-holder';
-import PageContent from '@/components/tiptap/page-content';
+
 import { BlogPost, Entity } from '@prisma/client';
 import React from 'react';
+import { GenericEntityPageClient } from './generic-entity-page-client';
 
 interface GenericEntityPageProps {
   entitySlug: string; // Slug de l'entité à récupérer
@@ -16,6 +15,8 @@ export const GenericEntityPage: React.FC<GenericEntityPageProps> = async ({
   blogpostsLimit = 10, // Limite par défaut
   blogpostsTitle = 'Articles récents', // Titre par défaut
 }) => {
+  const classroomsSlugs = ['ce1', 'ce2', 'cm1', 'cm2', 'cp', 'gs', 'ms', 'ps'];
+
   try {
     // Récupérer l'entité avec les blogposts associés
     const entity: (Entity & { blogpages?: BlogPost[] }) | null =
@@ -30,25 +31,15 @@ export const GenericEntityPage: React.FC<GenericEntityPageProps> = async ({
     }
 
     const blogposts: BlogPost[] = entity.blogpages || [];
+    const isClassroom = classroomsSlugs.includes(entitySlug);
 
     return (
-      <PageHolder>
-        <div className="flex flex-col lg:flex-row lg:space-x-8 space-y-4 lg:space-y-0">
-          {/* Section principale */}
-          <div className="lg:w-2/3">
-            <PageContent content={entity.description} />
-          </div>
-
-          {/* Section blogposts */}
-          <div className="lg:w-1/3">
-            <EntityBlogPostList
-              title={blogpostsTitle}
-              blogposts={blogposts}
-              postsPerPage={4} // Pagination définie
-            />
-          </div>
-        </div>
-      </PageHolder>
+      <GenericEntityPageClient
+        entity={entity}
+        blogposts={blogposts}
+        blogpostsTitle={blogpostsTitle}
+        isClassroom={isClassroom}
+      />
     );
   } catch (error) {
     console.error('Error loading entity page:', error);

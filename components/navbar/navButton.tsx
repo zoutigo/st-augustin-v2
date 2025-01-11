@@ -89,7 +89,7 @@ export const NavButton = ({
   return (
     <StyledNavRoute
       $hoverColor={dynamicColor()} // Utilise le prop transitoire
-      className="col-span-1 relative  group bg-transparent"
+      className="col-span-1 relative  group bg-transparent z-50"
     >
       <div className="text-3xl uppercase tracking-wide text-secondary h-[4rem] w-full flex items-center justify-center xl:tracking-widest">
         <Link href={path}>{name}</Link>
@@ -105,7 +105,7 @@ export const NavButton = ({
               <div className="h-[4rem] flex items-center justify-center text-2xl tracking-wider text-secondary">
                 <Link href={subroute.path}>{subroute.name} </Link>
               </div>
-              <div className="absolute w-full top-0 left-full invisible group2-hover:visible bg-transparent">
+              <div className="absolute w-full top-0 left-full invisible group2-hover:visible bg-transparent z-50">
                 {subroute.finalroutes &&
                   subroute.finalroutes.map((finalroute) => (
                     <StyledNavFinalRoute

@@ -27,7 +27,7 @@ export const Navbar = () => {
         <Logo />
       </div>
       {/* <nav className="hidden lg:flex bg-white w-[80%] flex-row justify-between items-center mx-2 gap-1"> */}
-      <nav className="hidden lg:grid grid-cols-6 bg-white w-[80%]">
+      <nav className="hidden lg:grid grid-cols-6 bg-slate-50 w-[80%]">
         {NavRoutes.map((route) => {
           return (
             <NavButton
