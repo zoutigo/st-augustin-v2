@@ -2,14 +2,14 @@ import { GenericEntityPage } from '@/components/classrooms/generic-entity-page';
 import React from 'react';
 type Props = {};
 
-const PastoralePage = async (props: Props) => {
+const ApelPage = async (props: Props) => {
   return (
     <GenericEntityPage
-      entitySlug="pastorale"
+      entitySlug="apel"
       blogpostsLimit={15}
-      blogpostsTitle="News Pastorales"
+      blogpostsTitle="News de l'APEL"
     />
   );
 };
 
-export default PastoralePage;
+export default ApelPage;

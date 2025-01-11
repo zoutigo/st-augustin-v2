@@ -1,4 +1,4 @@
-import { GenericEntityPage } from '@/components/dashboard/entities/entity-generic-landing-page';
+import { GenericEntityPage } from '@/components/classrooms/generic-entity-page';
 import React from 'react';
 type Props = {};
 
