@@ -165,28 +165,28 @@ export const NavRoutes: NavRoute[] = [
         name: 'Dashboard',
         slug: 'dashboard',
         path: '/espace-prive/dashboard',
-        finalroutes: [
-          {
-            name: 'Utilisateurs',
-            slug: 'dashboard-users',
-            path: '/espace-prive/dashboard/users',
-          },
-          {
-            name: 'Pages',
-            slug: 'dashboard-pages',
-            path: '/espace-prive/dashboard/pages',
-          },
-          {
-            name: 'Activités',
-            slug: 'dashboard-activites',
-            path: '/espace-prive/dashboard/activites',
-          },
-          {
-            name: 'Albums',
-            slug: 'dashboard-albums',
-            path: '/espace-prive/dashboard/albums',
-          },
-        ],
+        // finalroutes: [
+        //   {
+        //     name: 'Utilisateurs',
+        //     slug: 'dashboard-users',
+        //     path: '/espace-prive/dashboard/users',
+        //   },
+        //   {
+        //     name: 'Pages',
+        //     slug: 'dashboard-pages',
+        //     path: '/espace-prive/dashboard/pages',
+        //   },
+        //   {
+        //     name: 'Activités',
+        //     slug: 'dashboard-activites',
+        //     path: '/espace-prive/dashboard/activites',
+        //   },
+        //   {
+        //     name: 'Albums',
+        //     slug: 'dashboard-albums',
+        //     path: '/espace-prive/dashboard/albums',
+        //   },
+        // ],
       },
     ],
   },

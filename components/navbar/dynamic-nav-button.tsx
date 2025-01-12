@@ -49,13 +49,13 @@ export const DynamicNavButton = ({
         <Link href={path}>{name}</Link>
       </div>
       {showDropDown && subroutes && (
-        <div className="absolute w-full bg-transparent">
+        <div className="absolute w-full bg-transparent ">
           {subroutes.map((subroute) => (
             <div
               key={subroute.slug}
               className={`relative group2 bg-gray-100 w-full my-1 box-border hover:bg-${hoverClass}`}
             >
-              <div className="h-[4rem] flex items-center justify-center text-2xl tracking-wider text-secondary">
+              <div className="text-2xl md:text-sm lg:text-xl tracking-wider text-secondary  h-[4rem] flex items-center justify-center ">
                 <Link
                   href={subroute.path}
                   onClick={handleSubrouteClick} // Ferme le menu au clic
@@ -68,7 +68,7 @@ export const DynamicNavButton = ({
                   subroute.finalroutes.map((finalroute) => (
                     <div
                       key={finalroute.slug}
-                      className={`text-2xl tracking-wider h-[4rem] w-full flex items-center justify-center bg-gray-100 mx-1 mb-1 box-border hover:bg-${hoverClass}`}
+                      className={`text-2xl md:text-sm lg:text-xl tracking-wider text-secondary h-[4rem] w-full flex items-center justify-center bg-gray-100 mx-1 mb-1 box-border hover:bg-${hoverClass}`}
                     >
                       <Link
                         href={finalroute.path}
