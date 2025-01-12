@@ -15,6 +15,7 @@ export const config = {
     'hover:bg-classes',
     'hover:bg-blog',
     'hover:bg-espaceprive',
+    'hover:bg-private',
   ],
   theme: {
     container: {
