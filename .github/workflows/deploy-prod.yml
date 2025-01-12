@@ -77,12 +77,15 @@ jobs:
           dangerous-clean-slate: true
           exclude: |
             **/*.map
-            node_modules/
-            .git/
-            .github/
-            .env*
+            **/node_modules/**
+            **.git/**
+            **.github/**
+            **.env**
             **/tests/
-            package*.json
+            .next/**
+            **/dist/**
+            **/coverage/**
+          log-level: verbose
 
       - name: Install dependencies on the server
         run: |
