@@ -1,6 +1,18 @@
 declare module 'draft-js' {
   import { ComponentType } from 'react';
 
+  export interface EditorProps {
+    editorState: EditorState;
+    onChange: (editorState: EditorState) => void;
+    handleKeyCommand?: (
+      command: string,
+      editorState: EditorState
+    ) => 'handled' | 'not-handled';
+    placeholder?: string;
+  }
+
+  export class Editor extends React.Component<EditorProps> {}
+
   export class EditorState {
     static createEmpty(): EditorState;
     static createWithContent(contentState: ContentState): EditorState;
@@ -10,16 +22,6 @@ declare module 'draft-js' {
   export class ContentState {
     static createFromText(text: string): ContentState;
   }
-
-  export class Editor extends ComponentType<{
-    editorState: EditorState;
-    onChange: (editorState: EditorState) => void;
-    handleKeyCommand?: (
-      command: string,
-      editorState: EditorState
-    ) => 'handled' | 'not-handled';
-    placeholder?: string;
-  }> {}
 
   export class RichUtils {
     static handleKeyCommand(
