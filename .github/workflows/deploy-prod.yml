@@ -72,7 +72,7 @@ jobs:
           server: ${{ secrets.CPANEL_FTP_HOST }}
           username: ${{ env.CPANEL_USERNAME }}
           password: ${{ env.CPANEL_PASSWORD }}
-          local-dir: ./# Only deploy built files
+          local-dir: ./ # Only deploy built files
           remote-dir: ${{ env.REMOTE_DIR }}
           dangerous-clean-slate: false
           exclude: |
