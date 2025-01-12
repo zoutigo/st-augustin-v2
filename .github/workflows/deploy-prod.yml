@@ -73,7 +73,7 @@ jobs:
           username: ${{ env.CPANEL_USERNAME }}
           password: ${{ env.CPANEL_PASSWORD }}
           local-dir: ./ # Only deploy built files
-          server-dir: ${{ env.REMOTE_DIR }}
+          remote-dir: ${{ env.REMOTE_DIR }}
           dangerous-clean-slate: true
           exclude: |
             **/*.map
