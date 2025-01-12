@@ -1,12 +1,10 @@
-import { getBlogPostsByEntitySlug } from '@/actions/blogposts/get';
 import { getPageBySlug } from '@/actions/pages/get';
 import { PageHolder } from '@/components/page-holder';
 import PageContent from '@/components/tiptap/page-content';
 import { Page } from '@prisma/client';
 import React from 'react';
 
-type Props = {};
-const Equipe: React.FC<Props> = async (props) => {
+const Equipe = async (): Promise<JSX.Element> => {
   const slug = 'ecole-equipe';
   const result = await getPageBySlug(slug);
 

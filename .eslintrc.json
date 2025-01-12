@@ -19,6 +19,10 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    // Ajoutez vos règles personnalisées ici
+    "react/react-in-jsx-scope": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
+    "react/prop-types": "off"
   }
 }

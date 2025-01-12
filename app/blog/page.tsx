@@ -4,9 +4,7 @@ import { PageHolder } from '@/components/page-holder';
 import { BlogPost } from '@prisma/client';
 import { BlogPostList } from '@/components/blog/blogpost-list';
 
-type Props = {};
-
-const BlogPage: React.FC<Props> = async () => {
+const BlogPage = async (): Promise<JSX.Element> => {
   const blogposts: BlogPost[] | { error: string } = await getAllBlogPosts();
 
   if ('error' in blogposts) {

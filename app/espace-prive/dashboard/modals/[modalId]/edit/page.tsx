@@ -33,7 +33,7 @@ const EditModalPage = () => {
 
   const mutation = useCustomMutation<
     { success: string } | { error: string },
-    any,
+    unknown,
     z.infer<typeof createModalSchema>,
     unknown
   >(

@@ -1,15 +1,33 @@
-import { GenericEntityPage } from '@/components/classrooms/generic-entity-page';
-import React from 'react';
-type Props = {};
+import GenericEntityPage from '@/components/classrooms/generic-entity-page';
+import { GenericEntityPageClient } from '@/components/classrooms/generic-entity-page-client';
 
-const CPPage = async (props: Props) => {
+const CpPage = async () => {
+  const { entitySlug, blogpostsLimit, blogpostsTitle } = {
+    entitySlug: 'cp',
+    blogpostsLimit: 10,
+    blogpostsTitle: 'Les news du CP',
+  };
+
+  const pageData = await GenericEntityPage({
+    entitySlug,
+    blogpostsLimit,
+    blogpostsTitle,
+  });
+
+  if ('error' in pageData) {
+    return <div className="text-red-500">{pageData.error}</div>;
+  }
+
+  const { entity, blogposts, isClassroom } = pageData;
+
   return (
-    <GenericEntityPage
-      entitySlug="cp"
-      blogpostsLimit={15}
-      blogpostsTitle="Les news du CP"
+    <GenericEntityPageClient
+      entity={entity}
+      blogposts={blogposts}
+      blogpostsTitle={blogpostsTitle}
+      isClassroom={isClassroom}
     />
   );
 };
 
-export default CPPage;
+export default CpPage;
