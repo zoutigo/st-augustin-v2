@@ -74,7 +74,7 @@ jobs:
           password: ${{ env.CPANEL_PASSWORD }}
           local-dir: ./ # Only deploy built files
           remote-dir: ${{ env.REMOTE_DIR }}
-          dangerous-clean-slate: true
+          dangerous-clean-slate: false
           exclude: |
             **/*.map
             **/node_modules/**
@@ -86,10 +86,3 @@ jobs:
             **/dist/**
             **/coverage/**
           log-level: verbose
-
-      - name: Install dependencies on the server
-        run: |
-          ssh ${{ secrets.CPANEL_SSH_USER }}@$${{ secrets.CPANEL_HOST }} << 'EOF'
-          cd ${{ env.REMOTE_DIR }}
-          npm install --production
-          EOF
