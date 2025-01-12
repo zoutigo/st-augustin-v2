@@ -65,20 +65,7 @@ jobs:
             echo "CPANEL_PASSWORD=$(echo '${{ env.DEV_CPANEL_PASSWORD }}' | base64 --decode | tr -d '\n')" >> $GITHUB_ENV
           fi
 
-        # 8: Transférer le dossier `.next` sur le serveur cPanel via FTP
-      - name: Deploy `.next` folder to cPanel
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.CPANEL_FTP_HOST }}
-          username: ${{ secrets.CPANEL_FTP_USERNAME }}
-          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
-          local-dir: ./.next
-          remote-dir: ${{ env.REMOTE_DIR }}
-          exclude: |
-            **/*.map
-            **/node_modules/**
-
-      # 9. Upload to cPanel via FTP
+      # 8. Upload to cPanel via FTP
       - name: Upload to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
