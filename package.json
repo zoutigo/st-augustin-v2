@@ -11,7 +11,7 @@
     "prisma:migrate": "npx prisma migrate deploy",
     "prestart:prod": "npm run prisma:migrate && npx prisma generate",
     "start:prod": "cross-env NODE_ENV=production npm run start",
-    "prod": "npm install && npm run prestart:prod && npm run build && npm run start:prod",
+    "prod": "NODE_OPTIONS='--max-old-space-size=2048' npm install && npm run prestart:prod && npm run build && npm run start:prod",
     "test": "jest --config jest.config.ts",
     "test:watch": "jest --watch"
   },
