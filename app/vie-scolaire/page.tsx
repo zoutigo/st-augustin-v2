@@ -2,9 +2,7 @@ import { PageHolder } from '@/components/page-holder';
 
 import React from 'react';
 
-type Props = {};
-
-const VieScolairePage = async (props: Props) => {
+const VieScolairePage = async () => {
   return (
     <PageHolder>
       {'Vie Scolaire'}

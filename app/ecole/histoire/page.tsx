@@ -4,8 +4,7 @@ import PageContent from '@/components/tiptap/page-content';
 import { Page } from '@prisma/client';
 import React from 'react';
 
-type Props = {};
-const Histoire: React.FC<Props> = async (props) => {
+const Histoire = async (): Promise<JSX.Element> => {
   const slug = 'ecole-histoire';
   const result = await getPageBySlug(slug);
 

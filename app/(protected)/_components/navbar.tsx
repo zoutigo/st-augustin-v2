@@ -7,9 +7,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-type Props = {};
-
-export const ProtectedNavbar = (props: Props) => {
+export const ProtectedNavbar = () => {
   const pathname = usePathname();
   return (
     <nav className="bg-secondary flex justify-between items-center p-4 rounded-xl w-[600px] shadow-sm">

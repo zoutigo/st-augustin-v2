@@ -35,7 +35,27 @@ export type TailwindColors = {
 
 // border: string; input: string; ring: string; background: string; foreground: string; primary: { DEFAULT: string; foreground: string; dark: string; light: string; }; secondary:
 
-const colors: TailwindColors = config.theme.extend.colors;
+const colors: TailwindColors = {
+  border: '',
+  input: '',
+  ring: '',
+  background: '',
+  foreground: '',
+  primary: { DEFAULT: '' },
+  secondary: { DEFAULT: '' },
+  destructive: { DEFAULT: '' },
+  muted: { DEFAULT: '' },
+  accent: { DEFAULT: '' },
+  popover: { DEFAULT: '' },
+  card: { DEFAULT: '' },
+  ecole: { DEFAULT: '' },
+  viescolaire: { DEFAULT: '' },
+  classes: { DEFAULT: '' },
+  blog: { DEFAULT: '' },
+  private: { DEFAULT: '' },
+  espaceprive: { DEFAULT: '' },
+  ...config.theme?.extend?.colors,
+};
 
 // Fonction pour obtenir la couleur par nom
 export const getColorByName = (colorName: keyof TailwindColors): string => {
