@@ -6,11 +6,11 @@ import { TiThMenu } from 'react-icons/ti';
 import { FaWindowClose } from 'react-icons/fa';
 import { cn } from '@/lib/utils';
 import { Poppins } from 'next/font/google';
-import { NavButton } from './navButton';
 import { NavRoutes } from '@/routes';
 import { Logo } from './logo';
 import { Button } from '../ui/button';
 import { useAppStore } from '@/lib/store';
+import { DynamicNavButton } from './dynamic-nav-button';
 
 const font = Poppins({
   subsets: ['latin'],
@@ -23,14 +23,14 @@ export const Navbar = () => {
 
   return (
     <header className="flex flex-row justify-between items-center h-[14vh] min-w-[100%] px-10 shadow-sm">
-      <div className="mt-7">
+      <div className="mt-12">
         <Logo />
       </div>
       {/* <nav className="hidden lg:flex bg-white w-[80%] flex-row justify-between items-center mx-2 gap-1"> */}
-      <nav className="hidden lg:grid grid-cols-6 bg-white w-[80%]">
+      <nav className="hidden lg:grid grid-cols-6 bg-slate-50 w-[80%]">
         {NavRoutes.map((route) => {
           return (
-            <NavButton
+            <DynamicNavButton
               {...route}
               key={route.slug}
               isActive={route.path.includes(pathname) && pathname !== '/'}
@@ -47,8 +47,8 @@ export const Navbar = () => {
             onClick={toggleMenu}
           >
             <TiThMenu
-              className="h-14 w-14 text-primary"
-              // style={{ strokeWidth: 2  }}
+              className="h-20 w-20 text-primary"
+              style={{ strokeWidth: 1, width: 50, height: 50 }}
             />
           </Button>
         )}

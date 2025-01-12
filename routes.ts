@@ -36,6 +36,11 @@ export const NavRoutes: NavRoute[] = [
     path: '/ecole',
     subroutes: [
       {
+        name: 'Inscriptions',
+        slug: 'informations-incriptions',
+        path: '/ecole/inscriptions',
+      },
+      {
         name: 'Equipe',
         slug: 'ecole-equipe',
         path: '/ecole/equipe',
@@ -77,10 +82,20 @@ export const NavRoutes: NavRoute[] = [
         slug: 'vie-scolaire-pastorale',
         path: '/vie-scolaire/pastorale',
       },
+      {
+        name: 'Apel',
+        slug: 'vie-scolaire-apel',
+        path: '/vie-scolaire/apel',
+      },
+      {
+        name: 'OGEC',
+        slug: 'vie-scolaire-ogec',
+        path: '/vie-scolaire/ogec',
+      },
     ],
   },
   {
-    name: 'Les Classes',
+    name: 'Classes',
     slug: 'classes',
     path: '/classes',
     subroutes: [
@@ -127,72 +142,9 @@ export const NavRoutes: NavRoute[] = [
     ],
   },
   {
-    name: 'Informations',
-    slug: 'informations',
-    path: '/informations',
-    subroutes: [
-      {
-        name: 'Inscriptions',
-        slug: 'informations-incriptions',
-        path: '/informations/inscriptions',
-      },
-      {
-        name: 'Fournitures',
-        slug: 'informations-fournitures',
-        path: '/informations/fournitures',
-      },
-      {
-        name: 'Nous Contacter',
-        slug: 'informations-contact',
-        path: '/informations/contact',
-      },
-      {
-        name: 'Actualités',
-        slug: 'informations-actualites',
-        path: '/informations/actualites',
-      },
-    ],
-  },
-  {
-    name: 'APEL-OGEC',
-    slug: 'apel-ogec',
-    path: '/apel-ogec',
-    subroutes: [
-      {
-        name: 'APEL',
-        slug: 'apel-ogec-apel',
-        path: '/apel-ogec/apel',
-        finalroutes: [
-          {
-            name: 'Articles',
-            slug: 'apel-ogec-apel-articles',
-            path: '/apel-ogec/apel-articles',
-          },
-          {
-            name: 'Albums',
-            slug: 'apel-ogec-apel-albums',
-            path: '/apel-ogec/apel-albums',
-          },
-        ],
-      },
-      {
-        name: 'OGEC',
-        slug: 'apel-ogec-ogec',
-        path: '/apel-ogec/ogec',
-        finalroutes: [
-          {
-            name: 'Articles',
-            slug: 'apel-ogec-ogec-articles',
-            path: '/apel-ogec/ogec-articles',
-          },
-          {
-            name: 'Albums',
-            slug: 'apel-ogec-ogec-albums',
-            path: '/apel-ogec/ogec-albums',
-          },
-        ],
-      },
-    ],
+    name: 'Blog',
+    slug: 'blog',
+    path: '/blog',
   },
   {
     name: 'Espace privé',
@@ -213,28 +165,28 @@ export const NavRoutes: NavRoute[] = [
         name: 'Dashboard',
         slug: 'dashboard',
         path: '/espace-prive/dashboard',
-        finalroutes: [
-          {
-            name: 'Utilisateurs',
-            slug: 'dashboard-users',
-            path: '/espace-prive/dashboard/users',
-          },
-          {
-            name: 'Pages',
-            slug: 'dashboard-pages',
-            path: '/espace-prive/dashboard/pages',
-          },
-          {
-            name: 'Activités',
-            slug: 'dashboard-activites',
-            path: '/espace-prive/dashboard/activites',
-          },
-          {
-            name: 'Albums',
-            slug: 'dashboard-albums',
-            path: '/espace-prive/dashboard/albums',
-          },
-        ],
+        // finalroutes: [
+        //   {
+        //     name: 'Utilisateurs',
+        //     slug: 'dashboard-users',
+        //     path: '/espace-prive/dashboard/users',
+        //   },
+        //   {
+        //     name: 'Pages',
+        //     slug: 'dashboard-pages',
+        //     path: '/espace-prive/dashboard/pages',
+        //   },
+        //   {
+        //     name: 'Activités',
+        //     slug: 'dashboard-activites',
+        //     path: '/espace-prive/dashboard/activites',
+        //   },
+        //   {
+        //     name: 'Albums',
+        //     slug: 'dashboard-albums',
+        //     path: '/espace-prive/dashboard/albums',
+        //   },
+        // ],
       },
     ],
   },

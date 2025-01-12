@@ -4,10 +4,10 @@ export const getPathColor = (pathname: string): string => {
   switch (true) {
     case pathname.includes('/ecole'):
       return 'ecole';
-    case pathname.includes('/apel-ogec'):
-      return 'apelogec';
-    case pathname.includes('/informations'):
-      return 'infos';
+    case pathname.includes('/blog'):
+      return 'blog';
+    case pathname.includes('/espace-prive'):
+      return 'espaceprive';
     case pathname.includes('/classes'):
       return 'classes';
     case pathname.includes('/vie-scolaire'):

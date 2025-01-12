@@ -11,21 +11,21 @@ import { ZodError } from 'zod';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { db } from './lib/db';
 
-export default {
+const authConfig: NextAuthConfig = {
   providers: [
     Facebook({
-      clientId: process.env.AUTH_FACEBOOK_ID,
-      clientSecret: process.env.AUTH_FACEBOOK_SECRET,
+      clientId: process.env.AUTH_FACEBOOK_ID || '',
+      clientSecret: process.env.AUTH_FACEBOOK_SECRET || '',
     }),
     Google({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      clientId: process.env.AUTH_GOOGLE_ID || '',
+      clientSecret: process.env.AUTH_GOOGLE_SECRET || '',
     }),
     Credentials({
       name: 'credentials',
       credentials: {
-        email: {},
-        password: {},
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' },
       },
       authorize: async (credentials) => {
         console.log("Log 1: Début de l'autorisation");
@@ -55,8 +55,6 @@ export default {
             }
 
             console.log('Log 8: Mot de passe incorrect');
-            // return { error: 'mot de pass incorrect' };
-            // throw new Error('Mot de passe incorrect');
             return null;
           } catch (error) {
             console.log('Log 9: Erreur dans le bloc try', error);
@@ -67,7 +65,7 @@ export default {
             }
 
             console.log('Log 11: Autre erreur', error);
-            throw error; // Re-throw the error if it's not a ZodError
+            throw error;
           }
         }
 
@@ -76,4 +74,6 @@ export default {
       },
     }),
   ],
-} satisfies NextAuthConfig;
+};
+
+export default authConfig;

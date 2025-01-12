@@ -2,7 +2,7 @@
 
 import { getBlogPostById } from '@/actions/blogposts/get';
 import { updateBlogPost } from '@/actions/blogposts/post';
-import { getAllEntities, getEntityById } from '@/actions/entity/get';
+import { getAllEntities } from '@/actions/entity/get';
 import { BlogPostForm } from '@/components/dashboard/bloposts/blogpost-form';
 import { useCustomMutation } from '@/hooks/useCustomMutation';
 import { createBlogpostSchema } from '@/schemas';
@@ -60,7 +60,7 @@ const EditBlogpostPage = () => {
 
   const mutation = useCustomMutation<
     { success: string } | { error: string },
-    any,
+    unknown,
     z.infer<typeof createBlogpostSchema>,
     unknown
   >(

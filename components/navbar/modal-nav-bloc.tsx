@@ -7,6 +7,7 @@ import { BiSolidChevronDown, BiSolidChevronUp } from 'react-icons/bi';
 import { useAppStore } from '@/lib/store';
 import { useState } from 'react';
 import { ModalNavBlocSub } from './modal-nav-bloc-sub';
+import { on } from 'events';
 
 interface ModalNavBlocProps {
   route: NavRoute;
@@ -31,25 +32,25 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
     toggleModalNavBock(false); // Ferme le modal
   };
   return (
-    <div id="modal-navbloc-grid" className="my-2 min-h-20">
+    <div id="modal-navbloc-grid" className="my-2 min-h-12">
       <div className="grid grid-cols-12 gap-2 h-full">
         <div
-          className="col-span-10 bg-primary flex items-center justify-start h-full pl-8 cursor-pointer "
+          className="col-span-10 bg-primary flex items-center justify-start h-full pl-8 cursor-pointer p-2 rounded-sm"
           onClick={onClickLink}
         >
-          <span className="font-semibold font-cursive tracking-wider text-2xl text-secondary uppercase">
+          <span className="font-semibold font-cursive tracking-widest text-2xl text-secondary uppercase">
             {name}
           </span>
         </div>
-        <div className="col-span-2 bg-transparent shadow-sm p-1 h-full">
+        <div className="col-span-2 bg-transparent shadow-sm p-y-1 h-full">
           <Button
             size={'sm'}
             variant={'outline'}
-            className="w-full h-full"
+            className="min-w-full min-h-full"
             onClick={onClickIcon}
           >
             {!isOpenModalNavBock && (
-              <BiSolidChevronDown className="h-10 w-10 text-secondary" />
+              <BiSolidChevronDown className="h-full w-full text-secondary" />
             )}
             {isOpenModalNavBock && (
               <BiSolidChevronUp className="h-10 w-10 text-secondary" />

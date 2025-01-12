@@ -1,6 +1,6 @@
 import type { Config } from 'tailwindcss';
 
-export const config = {
+const tailwindConfig: Config = {
   darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -9,6 +9,14 @@ export const config = {
     './src/**/*.{ts,tsx}',
   ],
   prefix: '',
+  safelist: [
+    'hover:bg-ecole',
+    'hover:bg-viescolaire',
+    'hover:bg-classes',
+    'hover:bg-blog',
+    'hover:bg-espaceprive',
+    'hover:bg-private',
+  ],
   theme: {
     container: {
       center: true,
@@ -19,7 +27,7 @@ export const config = {
     },
     extend: {
       fontFamily: {
-        sans: ['Poppins', 'Raleway', 'sans-serif'], // Assurez-vous que Poppins et Raleway sont inclus
+        sans: ['Poppins', 'Raleway', 'sans-serif'],
         cursive: ['Comfortaa', 'cursive'],
       },
       fontSize: {
@@ -37,10 +45,6 @@ export const config = {
         tight: '1.2',
         relaxed: '3',
         normal: '1.1',
-      },
-      textTransform: {
-        uppercase: 'uppercase',
-        capitalize: 'capitalize',
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -60,33 +64,13 @@ export const config = {
           dark: 'hsl(var(--secondary-dark))',
           ligth: 'hsl(var(--secondary-light))',
         },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
-        },
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
-        },
         ecole: {
           DEFAULT: 'hsl(187, 72%, 71%)',
           foreground: 'hsl(187, 72%, 93%)',
           light: 'hsl(187, 72%, 93%)',
         },
         viescolaire: {
-          DEFAULT: '	hsl(46, 100%, 65%)',
+          DEFAULT: 'hsl(46, 100%, 65%)',
           foreground: 'hsl(46, 100%, 94%)',
           light: 'hsl(46, 100%, 94%)',
         },
@@ -95,12 +79,12 @@ export const config = {
           foreground: 'hsl(125, 39%, 94%)',
           light: 'hsl(125, 39%, 94%)',
         },
-        infos: {
+        espaceprive: {
           DEFAULT: 'hsl(14, 100%, 63%)',
           foreground: 'hsl(6, 71%, 95%)',
           light: 'hsl(6, 71%, 95%)',
         },
-        apelogec: {
+        blog: {
           DEFAULT: 'hsl(262, 47%, 63%)',
           foreground: 'hsl(264, 45%, 94%)',
           light: 'hsl(264, 45%, 94%)',
@@ -133,6 +117,6 @@ export const config = {
     },
   },
   plugins: [require('tailwindcss-animate')],
-} satisfies Config;
+};
 
-export default config;
+export default tailwindConfig;

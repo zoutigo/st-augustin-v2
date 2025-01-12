@@ -4,9 +4,7 @@ import PageContent from '@/components/tiptap/page-content';
 import { Page } from '@prisma/client';
 import React from 'react';
 
-type Props = {};
-
-const GarderiePage = async (props: Props) => {
+const GarderiePage = async () => {
   const slug = 'vie-scolaire-garderie';
   const result = await getPageBySlug(slug);
 

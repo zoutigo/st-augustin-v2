@@ -50,7 +50,7 @@ const EditPage = () => {
 
   const mutation = useCustomMutation<
     { success: string } | { error: string },
-    any,
+    unknown,
     z.infer<typeof updatePageSchema>,
     unknown
   >(
