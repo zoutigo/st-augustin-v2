@@ -27,9 +27,9 @@ export type TailwindColors = {
   ecole: ColorGroup;
   viescolaire: ColorGroup;
   classes: ColorGroup;
-  infos: ColorGroup;
-  apelogec: ColorGroup;
+  blog: ColorGroup;
   private: ColorGroup;
+  espaceprive: ColorGroup;
   [key: string]: ColorGroup | string; // Signature d'index pour les clés dynamiques
 };
 
