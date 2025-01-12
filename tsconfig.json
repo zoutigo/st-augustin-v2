@@ -32,7 +32,8 @@
     ".next/types/**/*.ts",
     "server.js",
     "types/**/*",
-    "tailwind-custom.d.ts"
+    "tailwind-custom.d.ts",
+    "bcrypt.d.ts"
   ],
   "exclude": ["node_modules"]
 }
