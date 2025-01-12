@@ -23,7 +23,7 @@ export const Navbar = () => {
 
   return (
     <header className="flex flex-row justify-between items-center h-[14vh] min-w-[100%] px-10 shadow-sm">
-      <div className="mt-7">
+      <div className="mt-12">
         <Logo />
       </div>
       {/* <nav className="hidden lg:flex bg-white w-[80%] flex-row justify-between items-center mx-2 gap-1"> */}
@@ -47,8 +47,8 @@ export const Navbar = () => {
             onClick={toggleMenu}
           >
             <TiThMenu
-              className="h-14 w-14 text-primary"
-              // style={{ strokeWidth: 2  }}
+              className="h-20 w-20 text-primary"
+              style={{ strokeWidth: 1, width: 50, height: 50 }}
             />
           </Button>
         )}

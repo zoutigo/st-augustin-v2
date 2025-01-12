@@ -1,6 +1,7 @@
 import { SubRoute } from '@/types/nav-routes';
 import { Button } from '../ui/button';
 import Link from 'next/link';
+import { useAppStore } from '@/lib/store';
 
 interface ModalNavBlocSubProps {
   subroute: SubRoute;
@@ -10,18 +11,21 @@ export const ModalNavBlocSub = ({
   handleToggleModalNavBocck,
   subroute: { name, slug, path, finalroutes },
 }: ModalNavBlocSubProps) => {
+  const { isMenuOpen, toggleMenu, closeMenu } = useAppStore(); // Utilisez Zustand
+
   const handleClick = () => {
     handleToggleModalNavBocck();
+    closeMenu();
   };
   return (
     <div>
       <Button
         variant={'outline'}
-        className="w-full justify-start pl-12 mt-1 min-h-16 items-center bg-primary-light"
+        className="w-full justify-start pl-12 mt-1 min-h-12 items-center bg-primary-light"
         onClick={handleClick}
       >
-        <Link href={path}>
-          <span className="text-2xl tracking-wider capitalize text-secondary">
+        <Link href={path} passHref onClick={handleClick}>
+          <span className="text-2xl  tracking-widest capitalize text-secondary">
             {name}
           </span>
         </Link>
@@ -36,7 +40,7 @@ export const ModalNavBlocSub = ({
             >
               <Link href={finalroute.path}>
                 <span className="text-2xl capitalize text-secondary">
-                  {name}
+                  {finalroute.name}
                 </span>
               </Link>
             </Button>
