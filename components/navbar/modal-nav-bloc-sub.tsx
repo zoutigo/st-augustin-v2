@@ -55,14 +55,13 @@ export const ModalNavBlocSub = ({
           {finalroutes.map((finalroute) => (
             <Button
               key={finalroute.slug}
-              variant={'link'}
+              variant="link"
               className="min-w-[25%] min-h-14 !bg-transparent mt-3"
+              onClick={() => router.push(finalroute.path)}
             >
-              <Link href={finalroute.path}>
-                <span className="text-2xl capitalize text-secondary">
-                  {finalroute.name}
-                </span>
-              </Link>
+              <span className="text-2xl capitalize text-secondary">
+                {finalroute.name}
+              </span>
             </Button>
           ))}
         </div>
