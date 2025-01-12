@@ -9,6 +9,13 @@ export const config = {
     './src/**/*.{ts,tsx}',
   ],
   prefix: '',
+  safelist: [
+    'hover:bg-ecole',
+    'hover:bg-viescolaire',
+    'hover:bg-classes',
+    'hover:bg-blog',
+    'hover:bg-espaceprive',
+  ],
   theme: {
     container: {
       center: true,
@@ -95,12 +102,12 @@ export const config = {
           foreground: 'hsl(125, 39%, 94%)',
           light: 'hsl(125, 39%, 94%)',
         },
-        infos: {
+        espaceprive: {
           DEFAULT: 'hsl(14, 100%, 63%)',
           foreground: 'hsl(6, 71%, 95%)',
           light: 'hsl(6, 71%, 95%)',
         },
-        apelogec: {
+        blog: {
           DEFAULT: 'hsl(262, 47%, 63%)',
           foreground: 'hsl(264, 45%, 94%)',
           light: 'hsl(264, 45%, 94%)',
