@@ -10,7 +10,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    # Déclaration des variables d'environnement pour dev et prod
     env:
       DEV_REMOTE_DIR: dev.ecole-st-augustin.fr/v2/app
       PROD_REMOTE_DIR: prod.ecole-st-augustin.fr/v2/app
@@ -20,30 +19,39 @@ jobs:
       PROD_CPANEL_PASSWORD: ${{ secrets.PROD_CPANEL_FTP_PASSWORD_BASE64 }}
 
     steps:
+      # 1. Checkout code
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # 2. Cache Node.js modules
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # 3. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '20.16.0'
+          cache: 'npm'
 
+      # 4. Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci # Faster and cleaner than `npm install`
 
+      # 5. Build project
       - name: Build
         run: npm run build
 
+      # 6. Lint code
       - name: Run Lint
         run: npm run lint
 
-      - name: Clean up old files
-        run: |
-          rm -rf .next/cache/
-          rm -rf node_modules/
-          rm -rf .git/
-
-      # Définir le répertoire distant, username et mot de passe en fonction de la branche
+      # 7. Set environment variables based on branch
       - name: Set environment variables based on branch
         id: set-env-vars
         run: |
@@ -57,16 +65,21 @@ jobs:
             echo "CPANEL_PASSWORD=$(echo '${{ env.DEV_CPANEL_PASSWORD }}' | base64 --decode | tr -d '\n')" >> $GITHUB_ENV
           fi
 
+      # 8. Upload to cPanel via FTP
       - name: Upload to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.CPANEL_FTP_HOST }}
-          username: ${{ env.CPANEL_USERNAME }} # Utilisation du username selon la branche
-          password: ${{ env.CPANEL_PASSWORD }} # Utilisation du mot de passe selon la branche
-          local-dir: ./
-          remote-dir: ${{ env.REMOTE_DIR }} # Utilisation du chemin distant selon la branche
-          dangerous-clean-slate: true
+          username: ${{ env.CPANEL_USERNAME }}
+          password: ${{ env.CPANEL_PASSWORD }}
+          local-dir: ./.next # Only deploy built files
+          remote-dir: ${{ env.REMOTE_DIR }}
+          dangerous-clean-slate: false
           exclude: |
-            .next/cache/
+            **/*.map
             node_modules/
             .git/
+            .github/
+            .env*
+            **/tests/
+            package*.json
