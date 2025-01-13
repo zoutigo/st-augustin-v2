@@ -4,7 +4,7 @@ import { NavRoute } from './types/nav-routes';
  * These routes does not require authentication
  * @type {string[]}
  */
-export const publicRoutes = ['/', '/auth/new-verification'];
+export const publicRoutes = ['/', '/auth/new-verification', '/api/files'];
 
 /** An array of routes that are used for authentication
  * These routes will redirect logged users to /settings

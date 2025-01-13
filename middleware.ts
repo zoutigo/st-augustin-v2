@@ -23,6 +23,11 @@ export async function middleware(req: NextRequest) {
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
+  // Allow access to /api/files without authentication
+  if (nextUrl.pathname.startsWith('/api/files')) {
+    return NextResponse.next();
+  }
+
   if (isApiAuthRoute) {
     return NextResponse.next();
   }
@@ -49,6 +54,9 @@ export async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
+// export const config = {
+//   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+// };
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };
