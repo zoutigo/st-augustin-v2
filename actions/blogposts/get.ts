@@ -21,7 +21,12 @@ export const getBlogPostById = async (
     if (!blogPost) {
       return { error: 'Post not found' };
     }
-    return blogPost;
+
+    const deserializedContent = blogPost.content
+      ? JSON.parse(blogPost.content)
+      : null;
+
+    return { ...blogPost, content: deserializedContent };
   } catch (error) {
     return { error: 'Failed to fetch page' };
   }
@@ -62,8 +67,27 @@ export const getBlogPostsByEntitySlug = async (
       return { error: `Aucun blogpost trouvé pour l'entité : ${entitySlug}` };
     }
 
+    // Désérialiser le champ content pour chaque blogpost
+    const deserializedBlogPosts = blogPosts.map((post) => {
+      try {
+        return {
+          ...post,
+          content: post.content ? JSON.parse(post.content) : null, // Désérialisation du contenu
+        };
+      } catch (error) {
+        console.error(
+          `Erreur lors de la désérialisation du contenu pour le blogPost ID ${post.id}:`,
+          error
+        );
+        return {
+          ...post,
+          content: null, // Mettre le contenu à null en cas d'erreur de désérialisation
+        };
+      }
+    });
+
     // Retourner les blogposts triés
-    return blogPosts;
+    return deserializedBlogPosts;
   } catch (error) {
     console.error('Erreur lors de la récupération des blogposts:', error);
     return {
@@ -76,12 +100,31 @@ export const getAllBlogPosts = async (): Promise<
   BlogPostWithEntity[] | { error: string }
 > => {
   try {
-    const blogCategories = await db.blogPost.findMany({
+    const blogposts = await db.blogPost.findMany({
       include: {
         entity: true,
       },
     });
-    return blogCategories;
+
+    // Désérialiser le champ content pour chaque blogpost
+    const deserializedBlogPosts = blogposts.map((post) => {
+      try {
+        return {
+          ...post,
+          content: post.content ? JSON.parse(post.content) : null, // Désérialisation du contenu
+        };
+      } catch (error) {
+        console.error(
+          `Erreur lors de la désérialisation du contenu pour le blogPost ID ${post.id}:`,
+          error
+        );
+        return {
+          ...post,
+          content: null, // Mettre le contenu à null en cas d'erreur de désérialisation
+        };
+      }
+    });
+    return deserializedBlogPosts;
   } catch (error) {
     return { error: 'Failed to fetch posts' };
   }

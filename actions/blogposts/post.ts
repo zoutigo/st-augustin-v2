@@ -17,6 +17,7 @@ export const createBlogPost = async (
     const blogPost = await db.blogPost.create({
       data: {
         ...values,
+        content: JSON.stringify(values.content),
       },
     });
     if (!blogPost) {
@@ -48,6 +49,7 @@ export const updateBlogPost = async (
       where: { id: blogPostId },
       data: {
         ...values,
+        content: JSON.stringify(values.content),
       },
     });
 
