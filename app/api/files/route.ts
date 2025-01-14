@@ -73,7 +73,7 @@ export const POST = async (req: Request) => {
     console.log('Fichier sauvegardé:', filePath);
 
     // Définir les permissions pour le fichier
-    await fs.chmod(filePath, 0o644);
+    await fs.chmod(filePath, 0o755);
     console.log('Permissions définies pour:', filePath);
 
     // Retourner l'URL publique
