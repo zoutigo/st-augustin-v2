@@ -40,7 +40,14 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
   const handleFile = async (file: File | null) => {
     if (file) {
       const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 Mo
-      const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'application/pdf'];
+      const ALLOWED_MIME_TYPES = [
+        'image/jpeg',
+        'image/png',
+        'application/pdf',
+        'image/gif',
+        'image/jpg',
+        'image/webp',
+      ];
 
       if (!ALLOWED_MIME_TYPES.includes(file.type)) {
         console.error('Unsupported file type');
@@ -70,6 +77,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
         }
 
         const data = await response.json();
+        console.log('url:', data.url);
 
         if (data && data.url) {
           editor.chain().focus().setImage({ src: data.url }).run();
