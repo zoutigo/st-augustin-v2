@@ -26,71 +26,71 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
     command();
   };
 
-  // const handleImageUpload = (file: File | null) => {
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       const base64 = reader.result as string;
-  //       editor.chain().focus().setImage({ src: base64 }).run();
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
-  const handleFile = async (file: File | null) => {
+  const handleFile = (file: File | null) => {
     if (file) {
-      const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 Mo
-      const ALLOWED_MIME_TYPES = [
-        'image/jpeg',
-        'image/png',
-        'application/pdf',
-        'image/gif',
-        'image/jpg',
-        'image/webp',
-      ];
-
-      if (!ALLOWED_MIME_TYPES.includes(file.type)) {
-        console.error('Unsupported file type');
-        alert('Le type de fichier n’est pas supporté.');
-        return;
-      }
-
-      if (file.size > MAX_FILE_SIZE) {
-        console.error('File is too large');
-        alert('Le fichier est trop volumineux (limite : 10 Mo).');
-        return;
-      }
-
-      try {
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const response = await fetch('/api/files', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (!response.ok) {
-          console.error('File upload failed');
-          alert('Le téléchargement du fichier a échoué.');
-          return;
-        }
-
-        const data = await response.json();
-        console.log('url:', data.url);
-
-        if (data && data.url) {
-          editor.chain().focus().setImage({ src: data.url }).run();
-        } else {
-          console.error('Invalid response from server');
-          alert('Réponse invalide du serveur.');
-        }
-      } catch (error) {
-        console.error('Error during file upload:', error);
-        alert('Une erreur est survenue lors du téléchargement du fichier.');
-      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result as string;
+        editor.chain().focus().setImage({ src: base64 }).run();
+      };
+      reader.readAsDataURL(file);
     }
   };
+
+  // const handleFile = async (file: File | null) => {
+  //   if (file) {
+  //     const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 Mo
+  //     const ALLOWED_MIME_TYPES = [
+  //       'image/jpeg',
+  //       'image/png',
+  //       'application/pdf',
+  //       'image/gif',
+  //       'image/jpg',
+  //       'image/webp',
+  //     ];
+
+  //     if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+  //       console.error('Unsupported file type');
+  //       alert('Le type de fichier n’est pas supporté.');
+  //       return;
+  //     }
+
+  //     if (file.size > MAX_FILE_SIZE) {
+  //       console.error('File is too large');
+  //       alert('Le fichier est trop volumineux (limite : 10 Mo).');
+  //       return;
+  //     }
+
+  //     try {
+  //       const formData = new FormData();
+  //       formData.append('file', file);
+
+  //       const response = await fetch('/api/files', {
+  //         method: 'POST',
+  //         body: formData,
+  //       });
+
+  //       if (!response.ok) {
+  //         console.error('File upload failed');
+  //         alert('Le téléchargement du fichier a échoué.');
+  //         return;
+  //       }
+
+  //       const data = await response.json();
+  //       console.log('url:', data.url);
+
+  //       if (data && data.url) {
+  //         editor.chain().focus().setImage({ src: data.url }).run();
+  //       } else {
+  //         console.error('Invalid response from server');
+  //         alert('Réponse invalide du serveur.');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error during file upload:', error);
+  //       alert('Une erreur est survenue lors du téléchargement du fichier.');
+  //     }
+  //   }
+  // };
 
   return (
     <div className="menu-bar">
