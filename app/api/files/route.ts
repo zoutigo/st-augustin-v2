@@ -76,9 +76,12 @@ export const POST = async (req: Request) => {
     await fs.chmod(filePath, 0o755);
     console.log('Permissions définies pour:', filePath);
 
-    // Retourner l'URL publique
-    const fileUrl = `/uploads/${sanitizedFileName}`;
-    console.log('URL du fichier:', fileUrl);
+    // Construire l'URL du fichier
+    const baseUrl =
+      process.env.NODE_ENV === 'production'
+        ? process.env.NEXT_PUBLIC_BASE_URL || 'https://www.votre-domaine.com'
+        : 'http://localhost:3001';
+    const fileUrl = `${baseUrl}/uploads/${sanitizedFileName}`;
 
     return NextResponse.json({ url: fileUrl });
   } catch (error) {
