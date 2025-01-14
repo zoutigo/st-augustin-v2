@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import mime from 'mime-types'; // Pour vérifier le type MIME après l'enregistrement
 
 // Configuration
 const UPLOAD_DIR = path.join(process.cwd(), 'public/uploads');
@@ -72,8 +73,23 @@ export const POST = async (req: Request) => {
     await fs.writeFile(filePath, buffer);
     console.log('Fichier sauvegardé:', filePath);
 
+    // Vérifier le type MIME du fichier après l'écriture
+    const detectedMimeType = mime.lookup(filePath);
+    console.log('Type MIME détecté:', detectedMimeType);
+
+    if (!ALLOWED_MIME_TYPES.includes(detectedMimeType || '')) {
+      console.error('Type MIME incorrect après l’écriture:', detectedMimeType);
+      await fs.unlink(filePath); // Supprimer le fichier
+      return NextResponse.json(
+        {
+          error: `Le type MIME détecté (${detectedMimeType}) n'est pas autorisé.`,
+        },
+        { status: 400 }
+      );
+    }
+
     // Définir les permissions pour le fichier
-    await fs.chmod(filePath, 0o755);
+    await fs.chmod(filePath, 0o644);
     console.log('Permissions définies pour:', filePath);
 
     // Construire l'URL du fichier

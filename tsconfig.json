@@ -30,7 +30,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "server.js",
+    "server.mjs",
     "types/**/*",
     "tailwind-custom.d.ts",
     "bcrypt.d.ts",
