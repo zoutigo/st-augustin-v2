@@ -14,10 +14,16 @@ export const createBlogPost = async (
   }
 
   try {
+    const serializegPost =
+      typeof values.content === 'string'
+        ? values.content
+        : JSON.stringify(values.content);
+
+    console.log('serialized post:', serializegPost);
     const blogPost = await db.blogPost.create({
       data: {
         ...values,
-        content: JSON.stringify(values.content),
+        content: serializegPost,
       },
     });
     if (!blogPost) {
@@ -26,7 +32,10 @@ export const createBlogPost = async (
 
     return { success: 'Le post a été créé.' };
   } catch (error) {
-    return { error: "Quelque chose n'a pas fonctionné" };
+    console.error('error:', error);
+    return {
+      error: ` Quelque chose n'a pas fonctionné : ${JSON.stringify(error)}`,
+    };
   }
 };
 
