@@ -15,6 +15,7 @@ const PageContent: React.FC<PageContentProps> = ({ content }) => {
     extensions,
     // On réinjecte le JSON comme contenu
     content: JSON.parse(content),
+
     editable: false, // mode lecture seule
   });
   if (!editor) return <p>Loading...</p>;

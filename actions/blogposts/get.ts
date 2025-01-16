@@ -22,11 +22,11 @@ export const getBlogPostById = async (
       return { error: 'Post not found' };
     }
 
-    const deserializedContent = blogPost.content
-      ? JSON.parse(blogPost.content)
-      : null;
+    // const deserializedContent = blogPost.content
+    //   ? JSON.parse(blogPost.content)
+    //   : null;
 
-    return { ...blogPost, content: deserializedContent };
+    return { ...blogPost };
   } catch (error) {
     return { error: 'Failed to fetch page' };
   }
@@ -68,26 +68,26 @@ export const getBlogPostsByEntitySlug = async (
     }
 
     // Désérialiser le champ content pour chaque blogpost
-    const deserializedBlogPosts = blogPosts.map((post) => {
-      try {
-        return {
-          ...post,
-          content: post.content ? JSON.parse(post.content) : null, // Désérialisation du contenu
-        };
-      } catch (error) {
-        console.error(
-          `Erreur lors de la désérialisation du contenu pour le blogPost ID ${post.id}:`,
-          error
-        );
-        return {
-          ...post,
-          content: null, // Mettre le contenu à null en cas d'erreur de désérialisation
-        };
-      }
-    });
+    // const deserializedBlogPosts = blogPosts.map((post) => {
+    //   try {
+    //     return {
+    //       ...post,
+    //       content: post.content ? JSON.parse(post.content) : null, // Désérialisation du contenu
+    //     };
+    //   } catch (error) {
+    //     console.error(
+    //       `Erreur lors de la désérialisation du contenu pour le blogPost ID ${post.id}:`,
+    //       error
+    //     );
+    //     return {
+    //       ...post,
+    //       content: null, // Mettre le contenu à null en cas d'erreur de désérialisation
+    //     };
+    //   }
+    // });
 
     // Retourner les blogposts triés
-    return deserializedBlogPosts;
+    return blogPosts;
   } catch (error) {
     console.error('Erreur lors de la récupération des blogposts:', error);
     return {
@@ -107,24 +107,24 @@ export const getAllBlogPosts = async (): Promise<
     });
 
     // Désérialiser le champ content pour chaque blogpost
-    const deserializedBlogPosts = blogposts.map((post) => {
-      try {
-        return {
-          ...post,
-          content: post.content ? JSON.parse(post.content) : null, // Désérialisation du contenu
-        };
-      } catch (error) {
-        console.error(
-          `Erreur lors de la désérialisation du contenu pour le blogPost ID ${post.id}:`,
-          error
-        );
-        return {
-          ...post,
-          content: null, // Mettre le contenu à null en cas d'erreur de désérialisation
-        };
-      }
-    });
-    return deserializedBlogPosts;
+    // const deserializedBlogPosts = blogposts.map((post) => {
+    //   try {
+    //     return {
+    //       ...post,
+    //       content: post.content ? JSON.parse(post.content) : null, // Désérialisation du contenu
+    //     };
+    //   } catch (error) {
+    //     console.error(
+    //       `Erreur lors de la désérialisation du contenu pour le blogPost ID ${post.id}:`,
+    //       error
+    //     );
+    //     return {
+    //       ...post,
+    //       content: null, // Mettre le contenu à null en cas d'erreur de désérialisation
+    //     };
+    //   }
+    // });
+    return blogposts;
   } catch (error) {
     return { error: 'Failed to fetch posts' };
   }

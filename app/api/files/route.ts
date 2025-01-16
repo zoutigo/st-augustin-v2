@@ -4,7 +4,17 @@ import path from 'path';
 import mime from 'mime-types'; // Pour vérifier le type MIME après l'enregistrement
 
 // Configuration
-const UPLOAD_DIR = path.join(process.cwd(), 'public/uploads');
+// const UPLOAD_DIR = path.join(
+//   process.cwd(),
+//   '/home/zoutigo/projets/nextjs/files'
+// );
+
+// const UPLOAD_DIR = '/home/zoutigo/projets/nextjs/files';
+const UPLOAD_DIR =
+  process.env.EXTERNAL_UPLOAD_DIR || '/home/zoutigo/projets/nextjs/files';
+
+console.log('Chemin absolu des fichiers :', UPLOAD_DIR);
+
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 Mo
 const ALLOWED_MIME_TYPES = [
   'image/jpeg',
@@ -97,7 +107,7 @@ export const POST = async (req: Request) => {
       process.env.NODE_ENV === 'production'
         ? process.env.NEXT_PUBLIC_BASE_URL || 'https://www.votre-domaine.com'
         : 'http://localhost:3001';
-    const fileUrl = `${baseUrl}/uploads/${sanitizedFileName}`;
+    const fileUrl = `${baseUrl}/api/external-files/${sanitizedFileName}`;
 
     return NextResponse.json({ url: fileUrl });
   } catch (error) {

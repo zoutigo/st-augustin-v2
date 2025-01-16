@@ -27,6 +27,10 @@ export async function middleware(req: NextRequest) {
   if (nextUrl.pathname.startsWith('/api/files')) {
     return NextResponse.next();
   }
+  // Allow access to /api/files without authentication
+  if (nextUrl.pathname.startsWith('/api/external-files')) {
+    return NextResponse.next();
+  }
 
   if (isApiAuthRoute) {
     return NextResponse.next();
