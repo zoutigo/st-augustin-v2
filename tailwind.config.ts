@@ -1,22 +1,14 @@
 import type { Config } from 'tailwindcss';
 
-const tailwindConfig: Config = {
-  darkMode: ['class'],
+const config = {
+  darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-  ],
-  prefix: '',
-  safelist: [
-    'hover:bg-ecole',
-    'hover:bg-viescolaire',
-    'hover:bg-classes',
-    'hover:bg-blog',
-    'hover:bg-espaceprive',
-    'hover:bg-private',
-  ],
+	],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -26,26 +18,6 @@ const tailwindConfig: Config = {
       },
     },
     extend: {
-      fontFamily: {
-        sans: ['Poppins', 'Raleway', 'sans-serif'],
-        cursive: ['Comfortaa', 'cursive'],
-      },
-      fontSize: {
-        h1: '12em',
-        h2: '1.1rem',
-        h3: '1rem',
-        subtitle: '0.9rem',
-      },
-      letterSpacing: {
-        wider: '1px',
-        widest: '2px',
-        'extra-wide': '4px',
-      },
-      lineHeight: {
-        tight: '1.2',
-        relaxed: '3',
-        normal: '1.1',
-      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -59,40 +31,28 @@ const tailwindConfig: Config = {
           light: 'hsl(var(--primary-light))',
         },
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
-          dark: 'hsl(var(--secondary-dark))',
-          ligth: 'hsl(var(--secondary-light))',
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
-        ecole: {
-          DEFAULT: 'hsl(187, 72%, 71%)',
-          foreground: 'hsl(187, 72%, 93%)',
-          light: 'hsl(187, 72%, 93%)',
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
-        viescolaire: {
-          DEFAULT: 'hsl(46, 100%, 65%)',
-          foreground: 'hsl(46, 100%, 94%)',
-          light: 'hsl(46, 100%, 94%)',
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
-        classes: {
-          DEFAULT: 'hsl(122, 39%, 49%)',
-          foreground: 'hsl(125, 39%, 94%)',
-          light: 'hsl(125, 39%, 94%)',
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
-        espaceprive: {
-          DEFAULT: 'hsl(14, 100%, 63%)',
-          foreground: 'hsl(6, 71%, 95%)',
-          light: 'hsl(6, 71%, 95%)',
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
-        blog: {
-          DEFAULT: 'hsl(262, 47%, 63%)',
-          foreground: 'hsl(264, 45%, 94%)',
-          light: 'hsl(264, 45%, 94%)',
-        },
-        private: {
-          DEFAULT: 'hsl(187, 72%, 71%)',
-          foreground: 'hsl(187, 72%, 93%)',
-          light: 'hsl(187, 72%, 93%)',
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
       },
       borderRadius: {
@@ -116,7 +76,7 @@ const tailwindConfig: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
-};
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config
 
-export default tailwindConfig;
+export default config

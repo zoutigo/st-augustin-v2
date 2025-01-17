@@ -6,21 +6,8 @@ import React from 'react';
 
 type Props = {};
 
-const Ecole = async (props: Props) => {
-  const slug = 'ecole';
-  const result = await getPageBySlug(slug);
-
-  if ('error' in result) {
-    return <p className="text-red-500">Page not found : `${result.error}`</p>;
-  }
-
-  const page: Page = result;
-
-  return (
-    <PageHolder>
-      <PageContent content={page.content} />
-    </PageHolder>
-  );
+const Ecole = (props: Props) => {
+  return <div>Ecoles</div>;
 };
 
 export default Ecole;

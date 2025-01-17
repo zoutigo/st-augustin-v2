@@ -7,14 +7,7 @@
     "dev": "cross-env PORT=3001 npm run prisma:migrate:dev && npm install && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "prisma:migrate:dev": "npx prisma migrate dev && npx prisma generate",
-    "prisma:migrate": "npx prisma migrate deploy",
-    "prestart:prod": "npm run prisma:migrate && npx prisma generate",
-    "start:prod": "cross-env NODE_ENV=production npm run start",
-    "prod": "NODE_OPTIONS='--max-old-space-size=2048' npm install && npm run prestart:prod && npm run start:prod",
-    "test": "jest --config jest.config.ts",
-    "test:watch": "jest --watch"
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.4.1",
@@ -48,10 +41,6 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.4.7",
-    "draft-js": "^0.11.7",
-    "draft-js-export-html": "^1.4.1",
     "lucide-react": "^0.407.0",
     "mime-types": "^2.1.35",
     "next": "14.2.5",
@@ -70,8 +59,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tiptap-extension-resize-image": "^1.1.9",
     "uuid": "^10.0.0",
-    "zod": "^3.23.8",
-    "zustand": "^4.5.6"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",
