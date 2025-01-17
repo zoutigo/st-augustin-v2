@@ -28,7 +28,7 @@
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-switch": "^1.1.0",
-    "@tanstack/react-query": "^5.64.0",
+    "@tanstack/react-query": "^5.64.1",
     "@tanstack/react-query-devtools": "^5.64.0",
     "@tanstack/react-table": "^8.20.5",
     "@tiptap-extend/columns": "^2.1.6",
