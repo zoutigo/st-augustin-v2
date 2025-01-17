@@ -12,7 +12,8 @@ GlobalWorkerOptions.workerSrc = '/libs/pdfjs/pdf.worker.min.mjs';
  * @param pdfUrl - L'URL du PDF à charger
  */
 export const loadPdfPagesAsImages = async (
-  pdfUrl: string
+  pdfUrl: string,
+  quality: number = 0.6 // Valeur par défaut pour la qualité
 ): Promise<string[]> => {
   try {
     const pdf = await getDocument(pdfUrl).promise;
@@ -33,9 +34,15 @@ export const loadPdfPagesAsImages = async (
       };
 
       await page.render(renderContext).promise;
-      pageImages.push(canvas.toDataURL('image/png'));
+
+      // Utiliser le format JPEG avec compression
+      const compressedImage = canvas.toDataURL('image/jpeg', quality);
+      pageImages.push(compressedImage);
     }
 
+    console.log(
+      `Compression terminée : ${pageImages.length} pages converties en images`
+    );
     return pageImages;
   } catch (error) {
     console.error('Erreur lors du chargement du PDF :', error);
