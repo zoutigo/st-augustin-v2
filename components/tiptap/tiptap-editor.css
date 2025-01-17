@@ -168,3 +168,19 @@ td.resizing {
     flex-direction: column !important;
   }
 }
+
+.pdf-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%; /* Limite la largeur au conteneur parent */
+}
+
+.pdf-container iframe {
+  width: 100%;
+  max-width: 100%; /* Assure que l'iframe ne dépasse pas la largeur */
+  height: 600px; /* Hauteur fixe, vous pouvez ajuster selon vos besoins */
+  border: none; /* Supprime les bordures */
+}

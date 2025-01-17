@@ -21,9 +21,12 @@ export const createBlogPost = async (
 
     console.log('serialized post:', serializegPost);
     const blogPost = await db.blogPost.create({
+      // data: {
+      //   ...values,
+      //   content: serializegPost,
+      // },
       data: {
         ...values,
-        content: serializegPost,
       },
     });
     if (!blogPost) {
@@ -58,7 +61,7 @@ export const updateBlogPost = async (
       where: { id: blogPostId },
       data: {
         ...values,
-        content: JSON.stringify(values.content),
+        // content: JSON.stringify(values.content),
       },
     });
 

@@ -67,26 +67,6 @@ export const getBlogPostsByEntitySlug = async (
       return { error: `Aucun blogpost trouvé pour l'entité : ${entitySlug}` };
     }
 
-    // Désérialiser le champ content pour chaque blogpost
-    // const deserializedBlogPosts = blogPosts.map((post) => {
-    //   try {
-    //     return {
-    //       ...post,
-    //       content: post.content ? JSON.parse(post.content) : null, // Désérialisation du contenu
-    //     };
-    //   } catch (error) {
-    //     console.error(
-    //       `Erreur lors de la désérialisation du contenu pour le blogPost ID ${post.id}:`,
-    //       error
-    //     );
-    //     return {
-    //       ...post,
-    //       content: null, // Mettre le contenu à null en cas d'erreur de désérialisation
-    //     };
-    //   }
-    // });
-
-    // Retourner les blogposts triés
     return blogPosts;
   } catch (error) {
     console.error('Erreur lors de la récupération des blogposts:', error);
@@ -106,24 +86,6 @@ export const getAllBlogPosts = async (): Promise<
       },
     });
 
-    // Désérialiser le champ content pour chaque blogpost
-    // const deserializedBlogPosts = blogposts.map((post) => {
-    //   try {
-    //     return {
-    //       ...post,
-    //       content: post.content ? JSON.parse(post.content) : null, // Désérialisation du contenu
-    //     };
-    //   } catch (error) {
-    //     console.error(
-    //       `Erreur lors de la désérialisation du contenu pour le blogPost ID ${post.id}:`,
-    //       error
-    //     );
-    //     return {
-    //       ...post,
-    //       content: null, // Mettre le contenu à null en cas d'erreur de désérialisation
-    //     };
-    //   }
-    // });
     return blogposts;
   } catch (error) {
     return { error: 'Failed to fetch posts' };

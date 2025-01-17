@@ -27,54 +27,6 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
     command();
   };
 
-  // const handleFile = (file: File | null) => {
-  //   if (file) {
-  //     const MAX_FILE_SIZE = 10 * 1024 * 1024; // Limite : 10 Mo
-
-  //     if (file.size > MAX_FILE_SIZE) {
-  //       console.error('Fichier trop volumineux');
-  //       alert(
-  //         `Le fichier dépasse la taille maximale autorisée : ${
-  //           MAX_FILE_SIZE / (1024 * 1024)
-  //         } Mo.`
-  //       );
-  //       return;
-  //     }
-
-  //     const reader = new FileReader();
-
-  //     reader.onload = () => {
-  //       const base64 = reader.result as string;
-
-  //       if (file.type === 'application/pdf') {
-  //         // Insérer le PDF avec un objet `<embed>` contenant les données Base64
-  //         editor
-  //           .chain()
-  //           .focus()
-  //           .insertContent(
-  //             `<embed src="data:application/pdf;base64,${
-  //               base64.split(',')[1]
-  //             }" type="application/pdf" width="100%" height="600px" />`
-  //           )
-  //           .run();
-  //       } else if (file.type.startsWith('image/')) {
-  //         // Insérer l'image
-  //         editor.chain().focus().setImage({ src: base64 }).run();
-  //       } else {
-  //         console.error('Type de fichier non pris en charge :', file.type);
-  //         alert('Ce type de fichier n’est pas pris en charge.');
-  //       }
-  //     };
-
-  //     reader.onerror = () => {
-  //       console.error('Erreur lors de la lecture du fichier');
-  //       alert('Une erreur est survenue lors de la lecture du fichier.');
-  //     };
-
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
   return (
     <div className="menu-bar">
       <div className="menu-bar-button-group">
