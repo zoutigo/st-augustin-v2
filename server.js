@@ -4,58 +4,52 @@ const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 
-// Configurations et variables d'environnement
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+// Charger et valider les variables d'environnement
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
-const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL?.trim();
+let NEXT_PUBLIC_BASE_URL =
+  process.env.NEXT_PUBLIC_BASE_URL?.trim()?.replace(/,+$/, '') ||
+  'http://localhost:3000';
 
-// Vérifications des variables d'environnement
-if (!NEXTAUTH_SECRET) {
-  throw new Error('NEXTAUTH_SECRET environment variable is not defined');
-}
-if (!NEXT_PUBLIC_BASE_URL || !/^https?:\/\/.+$/.test(NEXT_PUBLIC_BASE_URL)) {
+try {
+  new URL(NEXT_PUBLIC_BASE_URL); // Valide l'URL
+} catch {
   throw new Error(
-    'NEXT_PUBLIC_BASE_URL is not defined or is not a valid URL. Example: https://www.example.com'
+    `NEXT_PUBLIC_BASE_URL is not a valid URL: "${NEXT_PUBLIC_BASE_URL}". Example: https://www.example.com`
   );
 }
 
-// Log des variables pour débogage
-console.log('Environment Variables:');
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('PORT:', port);
-console.log('NEXT_PUBLIC_BASE_URL:', NEXT_PUBLIC_BASE_URL);
-console.log('NEXTAUTH_SECRET: [REDACTED]');
+if (!NEXTAUTH_SECRET) {
+  throw new Error('NEXTAUTH_SECRET environment variable is not defined');
+}
 
-// Démarrage de l'application
+// Logs pour le débogage
+console.log('Server Configuration:');
+console.log('NEXT_PUBLIC_BASE_URL:', NEXT_PUBLIC_BASE_URL);
+console.log('PORT:', port);
+
 app
   .prepare()
   .then(() => {
     createServer((req, res) => {
       try {
-        // Valider et parser l'URL
         const parsedUrl = new URL(req.url || '', NEXT_PUBLIC_BASE_URL);
+        console.log('Handling request:', parsedUrl.href);
+
         const pathname = parsedUrl.pathname;
         const query = Object.fromEntries(parsedUrl.searchParams);
-
-        console.log(`Handling request: ${pathname}`, query);
-
-        // Gérer la requête avec Next.js
         handle(req, res, { pathname, query });
-      } catch (err) {
-        // Log des erreurs
-        console.error('Error handling request:', req.url, err.message);
+      } catch (error) {
+        console.error('Error handling request:', req.url, error.message);
         res.statusCode = 400;
         res.end('Bad Request');
       }
     }).listen(port, (err) => {
-      if (err) {
-        console.error('Server startup error:', err.message);
-        process.exit(1);
-      }
+      if (err) throw err;
       console.log(
         `> Server listening at ${
           dev ? `http://localhost:${port}` : NEXT_PUBLIC_BASE_URL
@@ -64,7 +58,6 @@ app
     });
   })
   .catch((err) => {
-    // Gestion des erreurs de préparation
     console.error('Error during Next.js app preparation:', err.message);
     process.exit(1);
   });
