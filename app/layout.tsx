@@ -34,6 +34,9 @@ export const metadata: Metadata = {
   title: 'Ecole St Augustin Crémieu',
   description:
     "Informations et Actualités de l'Ecole Saint Augustin de Crémieu !",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default async function RootLayout({

@@ -13,8 +13,6 @@ import mime from 'mime-types'; // Pour vérifier le type MIME après l'enregistr
 const UPLOAD_DIR =
   process.env.EXTERNAL_UPLOAD_DIR || '/home/zoutigo/projets/nextjs/files';
 
-console.log('Chemin absolu des fichiers :', UPLOAD_DIR);
-
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 Mo
 const ALLOWED_MIME_TYPES = [
   'image/jpeg',

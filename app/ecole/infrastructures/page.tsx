@@ -7,6 +7,10 @@ import React from 'react';
 type Props = {};
 
 const InfratructurePage = async (props: Props) => {
+  const metadatas = {
+    title: 'Infrastures - Ecole Saint Augustin Crémieu',
+    description: 'Découvrez les infrastructures de l’école Saint Augustin!',
+  };
   const slug = 'ecole-infrastructures';
   const result = await getPageBySlug(slug);
 
@@ -17,7 +21,7 @@ const InfratructurePage = async (props: Props) => {
   const page: Page = result;
   return (
     <PageHolder>
-      <PageContent content={page.content} />
+      <PageContent content={page.content} {...metadatas} />
     </PageHolder>
   );
 };

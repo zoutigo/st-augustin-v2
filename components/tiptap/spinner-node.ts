@@ -59,7 +59,7 @@ export const SpinnerNode = Node.create<SpinnerNodeOptions>({
     return [
       'div',
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-      ['div', { class: 'spinner-content' }, '⏳ Loading...'], // Texte ou icône temporaire
+      ['div', { class: 'spinner-content' }, '⏳ Chargement...'], // Texte ou icône temporaire
     ];
   },
 

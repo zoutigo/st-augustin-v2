@@ -7,6 +7,11 @@ import React from 'react';
 type Props = {};
 
 const ProjetsPage = async (props: Props) => {
+  const metadatas = {
+    title: 'Projets - Ecole Saint Augustin Crémieu',
+    description:
+      'Découvrez les projets scolaire , pédagogique et pastoral de l’école Saint Augustin!',
+  };
   const slug = 'ecole-projets';
   const result = await getPageBySlug(slug);
 
@@ -18,7 +23,7 @@ const ProjetsPage = async (props: Props) => {
 
   return (
     <PageHolder>
-      <PageContent content={page.content} />
+      <PageContent content={page.content} {...metadatas} />
     </PageHolder>
   );
 };

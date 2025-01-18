@@ -5,6 +5,11 @@ import { Page } from '@prisma/client';
 import React from 'react';
 
 const InscriptionsPage = async (): Promise<JSX.Element> => {
+  const metadatas = {
+    title: 'Inscriptions - Ecole Saint Augustin Crémieu',
+    description:
+      "Découvrez les modalités d'inscription à l’école Saint Augustin!",
+  };
   const slug = 'ecole-inscriptions';
   const result = await getPageBySlug(slug);
 
@@ -16,7 +21,7 @@ const InscriptionsPage = async (): Promise<JSX.Element> => {
 
   return (
     <PageHolder>
-      <PageContent content={page.content} />
+      <PageContent content={page.content} {...metadatas} />
     </PageHolder>
   );
 };

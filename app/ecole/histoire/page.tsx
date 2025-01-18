@@ -5,6 +5,10 @@ import { Page } from '@prisma/client';
 import React from 'react';
 
 const Histoire = async (): Promise<JSX.Element> => {
+  const metadatas = {
+    title: 'Histoire - Ecole Saint Augustin Crémieu',
+    description: "Découvrez l'histoire de l’école Saint Augustin!",
+  };
   const slug = 'ecole-histoire';
   const result = await getPageBySlug(slug);
 
@@ -16,7 +20,7 @@ const Histoire = async (): Promise<JSX.Element> => {
 
   return (
     <PageHolder>
-      <PageContent content={page.content} />
+      <PageContent content={page.content} {...metadatas} />
     </PageHolder>
   );
 };
