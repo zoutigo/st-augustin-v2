@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env PORT=3001 npm run prisma:migrate:dev && npm install && next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "lint": "next lint",
     "prisma:migrate:dev": "npx prisma migrate dev && npx prisma generate",
     "prisma:migrate": "npx prisma migrate deploy",
