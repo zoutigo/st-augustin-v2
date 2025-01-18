@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server';
 import path from 'path';
 import { promises as fs } from 'fs';
@@ -6,45 +7,88 @@ import mime from 'mime-types';
 const EXTERNAL_UPLOAD_DIR =
   process.env.EXTERNAL_UPLOAD_DIR || '/home/zoutigo/projets/nextjs/files';
 
+if (!EXTERNAL_UPLOAD_DIR) {
+  throw new Error(
+    'EXTERNAL_UPLOAD_DIR is not defined in the environment variables'
+  );
+}
+
+/**
+ * Validate the given file path to prevent directory traversal attacks
+ * and ensure it adheres to expected patterns.
+ */
+const validateFilePath = (filePath: string): boolean => {
+  // Ensure the file path contains only allowed characters
+  const isPathValid = /^[a-zA-Z0-9_\-./]+$/.test(filePath);
+  return isPathValid;
+};
+
 export async function GET(
   request: Request,
   { params }: { params: { path: string[] } }
 ) {
+  console.log('Received params:', params);
+  console.log('EXTERNAL_UPLOAD_DIR:', EXTERNAL_UPLOAD_DIR);
+
   try {
     const filePathArray = params.path;
 
-    // Vérifiez que le paramètre path existe
     if (!filePathArray || filePathArray.length === 0) {
+      console.error('Invalid file path: no path provided');
       return NextResponse.json({ error: 'Invalid file path' }, { status: 400 });
     }
 
-    // Reconstituer le chemin du fichier à partir des paramètres
+    // Combine file path components
     const filePath = path.join(...filePathArray);
-    const safePath = path.normalize(filePath).replace(/^(\.\.(\/|\\|$))+/, ''); // Supprime les séquences '../'
+
+    // Validate the file path
+    if (!validateFilePath(filePath)) {
+      console.error('Invalid characters in file path:', filePath);
+      return NextResponse.json({ error: 'Invalid file path' }, { status: 400 });
+    }
+
+    // Normalize and construct the full path
+    const safePath = path.normalize(filePath).replace(/^(\.\.(\/|\\|$))+/, '');
     const fullPath = path.join(EXTERNAL_UPLOAD_DIR, safePath);
 
-    // Vérifiez que le fichier se trouve dans le répertoire autorisé
+    console.log('Safe path:', safePath);
+    console.log('Full path:', fullPath);
+
+    // Check if the resolved path is within the allowed directory
     if (!fullPath.startsWith(EXTERNAL_UPLOAD_DIR)) {
+      console.error('Access to the file is forbidden:', fullPath);
       return NextResponse.json(
         { error: 'Access to the file is forbidden' },
         { status: 403 }
       );
     }
 
-    // Lire le fichier
+    // Read the file from the disk
     const file = await fs.readFile(fullPath);
-
-    // Détecter le type MIME
     const mimeType = mime.lookup(fullPath) || 'application/octet-stream';
-    // Répondre avec le fichier
+
+    console.log('File found, serving with MIME type:', mimeType);
+
+    // Return the file with appropriate headers
     return new Response(file, {
       headers: {
         'Content-Type': mimeType,
         'Content-Disposition': `inline; filename="${path.basename(fullPath)}"`,
       },
     });
-  } catch (error) {
-    console.error('Error serving file:', error);
-    return NextResponse.json({ error: 'File not found' }, { status: 404 });
+  } catch (error: any) {
+    if (error.code === 'ENOENT') {
+      console.error('File not found:', error.message);
+      return NextResponse.json({ error: 'File not found' }, { status: 404 });
+    } else if (error.code === 'EACCES') {
+      console.error('Permission denied:', error.message);
+      return NextResponse.json({ error: 'Permission denied' }, { status: 403 });
+    } else {
+      console.error('Unexpected error:', error.message);
+      return NextResponse.json(
+        { error: 'Internal server error' },
+        { status: 500 }
+      );
+    }
   }
 }

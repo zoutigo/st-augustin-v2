@@ -3,13 +3,6 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import mime from 'mime-types'; // Pour vérifier le type MIME après l'enregistrement
 
-// Configuration
-// const UPLOAD_DIR = path.join(
-//   process.cwd(),
-//   '/home/zoutigo/projets/nextjs/files'
-// );
-
-// const UPLOAD_DIR = '/home/zoutigo/projets/nextjs/files';
 const UPLOAD_DIR =
   process.env.EXTERNAL_UPLOAD_DIR || '/home/zoutigo/projets/nextjs/files';
 
