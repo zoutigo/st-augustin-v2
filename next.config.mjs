@@ -5,16 +5,20 @@ import path from 'path';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
+  experimental: {
+    workerThreads: false, // Désactiver les threads pour limiter la charge
+    cpus: 1, // Forcer Next.js à utiliser un seul CPU
+  },
   typescript: {
     ignoreBuildErrors: true, // Ignore les erreurs TypeScript pendant le build
   },
-  trailingSlash: true,
+  trailingSlash: false,
   output: 'standalone',
   eslint: {
     ignoreDuringBuilds: true,
   },
   reactStrictMode: !isProduction,
-  swcMinify: true,
+  swcMinify: false,
   webpack: (config, { dev, isServer }) => {
     config.resolve.alias['@'] = path.resolve('./');
     if (!isServer) {
