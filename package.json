@@ -5,7 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "dev": "cross-env PORT=3001 npm run prisma:migrate:dev && npm install && next dev",
-    "build": "NODE_OPTIONS='--max-old-space-size=512' next build",
+    "build": "NODE_OPTIONS='--max-old-space-size=2048' next build",
     "start": "NODE_ENV=production node server.js",
     "lint": "next lint",
     "prisma:migrate:dev": "npx prisma migrate dev && npx prisma generate",
