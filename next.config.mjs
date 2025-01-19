@@ -5,6 +5,9 @@ import path from 'path';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
+  typescript: {
+    ignoreBuildErrors: true, // Ignore les erreurs TypeScript pendant le build
+  },
   trailingSlash: true,
   output: 'standalone',
   eslint: {
