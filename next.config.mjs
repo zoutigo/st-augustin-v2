@@ -13,7 +13,7 @@ const nextConfig = {
     ignoreBuildErrors: true, // Ignore les erreurs TypeScript pendant le build
   },
   trailingSlash: false,
-  output: 'standalone',
+
   eslint: {
     ignoreDuringBuilds: true,
   },
