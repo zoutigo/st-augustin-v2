@@ -45,7 +45,7 @@ jobs:
 
       # 5. Build project
       - name: Build
-        run: npm run build
+        run: NEXT_DISABLE_SWC_MINIFY=true NODE_OPTIONS='--max-old-space-size=4096' npm run build
 
       # 6. Lint code
       - name: Run Lint
