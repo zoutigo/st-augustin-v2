@@ -30,13 +30,12 @@ function formatLogArgs(args) {
     .join(' ');
 }
 
-// Overriding console methods for detailed logging with flush
+// Overriding console methods for detailed logging without flush
 function logToFile(level, ...args) {
   const formattedMessage = `${new Date().toISOString()} [${level}] ${formatLogArgs(
     args
   )}\n`;
   logStream.write(formattedMessage);
-  logStream.flush();
   process.stdout.write(formattedMessage);
 }
 
