@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env PORT=3001 npm run prisma:migrate:dev && npm install && next dev",
     "build": "NODE_OPTIONS='--max-old-space-size=2048' next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "NODE_ENV=production node server.js > /home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log 2>&1 &",
     "lint": "next lint",
     "prisma:migrate:dev": "npx prisma migrate dev && npx prisma generate",
     "prisma:migrate": "npx prisma migrate deploy",
