@@ -33,14 +33,17 @@ const nextConfig = {
 
     return config;
   },
-  async headers() {
-    return [
-      {
-        source: '/(.*)', // Applique à toutes les routes
-        headers: [{ key: 'X-Forwarded-Proto', value: 'https' }],
-      },
-    ];
+  async redirects() {
+    return [];
   },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/(.*)', // Applique à toutes les routes
+  //       headers: [{ key: 'X-Forwarded-Proto', value: 'https' }],
+  //     },
+  //   ];
+  // },
 };
 
 // const nextConfig = {
