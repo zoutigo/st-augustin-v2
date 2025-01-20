@@ -11,14 +11,38 @@ const logStream = fs.createWriteStream(
   { flags: 'a' }
 );
 
+// Function to safely convert arguments to string
+function formatLogArgs(args) {
+  return args
+    .map((arg) => {
+      if (typeof arg === 'object') {
+        try {
+          return JSON.stringify(arg, null, 2);
+        } catch (err) {
+          return '[Unserializable Object]';
+        }
+      }
+      return arg;
+    })
+    .join(' ');
+}
+
 // Overriding console methods for detailed logging
 console.log = function (...args) {
-  const stack = new Error().stack.split('\n').slice(2).join('\n');
   logStream.write(
-    new Date().toISOString() + ' [INFO] ' + args.join(' ') + '\n' + stack + '\n'
+    new Date().toISOString() + ' [INFO] ' + formatLogArgs(args) + '\n'
   );
   process.stdout.write(
-    new Date().toISOString() + ' [INFO] ' + args.join(' ') + '\n' + stack + '\n'
+    new Date().toISOString() + ' [INFO] ' + formatLogArgs(args) + '\n'
+  );
+};
+
+console.warn = function (...args) {
+  logStream.write(
+    new Date().toISOString() + ' [WARN] ' + formatLogArgs(args) + '\n'
+  );
+  process.stderr.write(
+    new Date().toISOString() + ' [WARN] ' + formatLogArgs(args) + '\n'
   );
 };
 
@@ -27,16 +51,16 @@ console.error = function (...args) {
   logStream.write(
     new Date().toISOString() +
       ' [ERROR] ' +
-      args.join(' ') +
-      '\n' +
+      formatLogArgs(args) +
+      '\nStack Trace:\n' +
       stack +
       '\n'
   );
   process.stderr.write(
     new Date().toISOString() +
       ' [ERROR] ' +
-      args.join(' ') +
-      '\n' +
+      formatLogArgs(args) +
+      '\nStack Trace:\n' +
       stack +
       '\n'
   );
