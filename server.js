@@ -30,7 +30,7 @@ function formatLogArgs(args) {
     .join(' ');
 }
 
-// Overriding console methods for detailed logging without flush
+// Overriding console methods for detailed logging
 function logToFile(level, ...args) {
   const formattedMessage = `${new Date().toISOString()} [${level}] ${formatLogArgs(
     args
@@ -127,6 +127,10 @@ app
     });
   })
   .catch((err) => {
-    console.error('Error during Next.js app preparation:', err);
+    console.error(
+      'Error during Next.js app preparation:',
+      err.message,
+      err.stack
+    );
     process.exit(1);
   });
