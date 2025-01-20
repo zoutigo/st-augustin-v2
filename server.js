@@ -3,6 +3,31 @@ require('dotenv').config();
 const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
+const fs = require('fs');
+
+// Redirection des logs vers un fichier
+const logStream = fs.createWriteStream(
+  '/home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log',
+  { flags: 'a' }
+);
+
+console.log = function (...args) {
+  logStream.write(
+    new Date().toISOString() + ' [INFO] ' + args.join(' ') + '\n'
+  );
+  process.stdout.write(
+    new Date().toISOString() + ' [INFO] ' + args.join(' ') + '\n'
+  );
+};
+
+console.error = function (...args) {
+  logStream.write(
+    new Date().toISOString() + ' [ERROR] ' + args.join(' ') + '\n'
+  );
+  process.stderr.write(
+    new Date().toISOString() + ' [ERROR] ' + args.join(' ') + '\n'
+  );
+};
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
