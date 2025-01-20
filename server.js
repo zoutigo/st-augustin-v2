@@ -4,24 +4,43 @@ const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 const fs = require('fs');
-const winston = require('winston');
 
-// Configuration de Winston pour les logs
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.printf(({ timestamp, level, message }) => {
-      return `${timestamp} [${level.toUpperCase()}] ${message}`;
-    })
-  ),
-  transports: [
-    new winston.transports.File({
-      filename: '/home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log',
-    }),
-    new winston.transports.Console(),
-  ],
-});
+// Redirection des logs vers un fichier
+const logStream = fs.createWriteStream(
+  '/home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log',
+  { flags: 'a' }
+);
+
+// Overriding console methods for detailed logging
+console.log = function (...args) {
+  const stack = new Error().stack.split('\n').slice(2).join('\n');
+  logStream.write(
+    new Date().toISOString() + ' [INFO] ' + args.join(' ') + '\n' + stack + '\n'
+  );
+  process.stdout.write(
+    new Date().toISOString() + ' [INFO] ' + args.join(' ') + '\n' + stack + '\n'
+  );
+};
+
+console.error = function (...args) {
+  const stack = new Error().stack.split('\n').slice(2).join('\n');
+  logStream.write(
+    new Date().toISOString() +
+      ' [ERROR] ' +
+      args.join(' ') +
+      '\n' +
+      stack +
+      '\n'
+  );
+  process.stderr.write(
+    new Date().toISOString() +
+      ' [ERROR] ' +
+      args.join(' ') +
+      '\n' +
+      stack +
+      '\n'
+  );
+};
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
@@ -37,55 +56,45 @@ let NEXT_PUBLIC_BASE_URL =
 try {
   new URL(NEXT_PUBLIC_BASE_URL); // Valide l'URL
 } catch (error) {
-  logger.error(`Invalid NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}`, {
-    stack: error.stack,
-  });
+  console.error(`Invalid NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}`, error);
   throw new Error(
     `NEXT_PUBLIC_BASE_URL is not a valid URL: "${NEXT_PUBLIC_BASE_URL}". Example: https://www.example.com`
   );
 }
 
 if (!NEXTAUTH_SECRET) {
-  logger.error('NEXTAUTH_SECRET is missing');
+  console.error('NEXTAUTH_SECRET is missing');
   throw new Error('NEXTAUTH_SECRET environment variable is not defined');
 }
 
 // Logs pour le débogage
-logger.info('Server Configuration:');
-logger.info(`NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}`);
-logger.info(`PORT: ${port}`);
+console.log('Server Configuration:');
+console.log('NEXT_PUBLIC_BASE_URL:', NEXT_PUBLIC_BASE_URL);
+console.log('PORT:', port);
 
 app
   .prepare()
   .then(() => {
     createServer((req, res) => {
       try {
-        logger.info(`Incoming request URL: ${req.url}`);
+        console.log('Incoming request URL:', req.url);
         const parsedUrl = new URL(req.url || '', NEXT_PUBLIC_BASE_URL);
-        logger.info(`Handling request: ${parsedUrl.href}`);
+        console.log('Handling request:', parsedUrl.href);
 
         const pathname = parsedUrl.pathname;
         const query = Object.fromEntries(parsedUrl.searchParams);
         handle(req, res, { pathname, query });
       } catch (error) {
-        logger.error('Error handling request', {
-          requestedUrl: req.url,
-          baseUrl: NEXT_PUBLIC_BASE_URL,
-          errorMessage: error.message,
-          stack: error.stack,
-        });
+        console.error('Error handling request:', req.url, error);
         res.statusCode = 400;
         res.end('Bad Request');
       }
     }).listen(port, (err) => {
       if (err) {
-        logger.error('Server startup error:', {
-          message: err.message,
-          stack: err.stack,
-        });
+        console.error('Server startup error:', err);
         throw err;
       }
-      logger.info(
+      console.log(
         `> Server listening at ${
           dev ? `http://localhost:${port}` : NEXT_PUBLIC_BASE_URL
         }`
@@ -93,9 +102,6 @@ app
     });
   })
   .catch((err) => {
-    logger.error('Error during Next.js app preparation:', {
-      message: err.message,
-      stack: err.stack,
-    });
+    console.error('Error during Next.js app preparation:', err);
     process.exit(1);
   });
