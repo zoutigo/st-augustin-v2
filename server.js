@@ -54,10 +54,9 @@ const handle = app.getRequestHandler();
 
 // Charger et valider les variables d'environnement
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
-let NEXT_PUBLIC_BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL?.trim()
-    ?.replace(/,+$/, '')
-    .replace(/\s+/g, '') || 'http://localhost:3000';
+let NEXT_PUBLIC_BASE_URL = dev
+  ? 'http://localhost:3000'
+  : 'https://www.ecole-st-augustin.fr';
 
 // Validate NEXT_PUBLIC_BASE_URL
 if (!/^https?:\/\/.+/.test(NEXT_PUBLIC_BASE_URL)) {
@@ -86,11 +85,6 @@ if (!NEXTAUTH_SECRET) {
 console.log('Server Configuration:');
 console.log('NEXT_PUBLIC_BASE_URL:', NEXT_PUBLIC_BASE_URL);
 console.log('PORT:', port);
-console.log(
-  'Raw environment NEXT_PUBLIC_BASE_URL:',
-  process.env.NEXT_PUBLIC_BASE_URL
-);
-console.log('Processed NEXT_PUBLIC_BASE_URL:', NEXT_PUBLIC_BASE_URL);
 
 app
   .prepare()
@@ -119,11 +113,7 @@ app
         console.error('Server startup error:', err);
         throw err;
       }
-      console.log(
-        `> Server listening at ${
-          dev ? `http://localhost:${port}` : NEXT_PUBLIC_BASE_URL
-        }`
-      );
+      console.log(`> Server listening at ${NEXT_PUBLIC_BASE_URL}`);
     });
   })
   .catch((err) => {

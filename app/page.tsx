@@ -7,7 +7,6 @@ import { Landing } from '@/components/landing/landing';
 // });
 export default function Home() {
   const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
-  console.log('NEXT_PUBLIC_BASE_URL_CLIENT:', process.env.NEXT_PUBLIC_BASE_URL);
 
   if (!NEXTAUTH_SECRET) {
     console.log('NEXTAUTH_SECRET environment variable is not defined');
