@@ -18,7 +18,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   reactStrictMode: !isProduction,
-  swcMinify: false,
+  swcMinify: true,
   webpack: (config, { dev, isServer }) => {
     config.resolve.alias['@'] = path.resolve('./');
     if (!isServer) {
