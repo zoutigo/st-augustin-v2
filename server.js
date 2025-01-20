@@ -29,41 +29,29 @@ function formatLogArgs(args) {
 
 // Overriding console methods for detailed logging
 console.log = function (...args) {
-  logStream.write(
-    new Date().toISOString() + ' [INFO] ' + formatLogArgs(args) + '\n'
-  );
-  process.stdout.write(
-    new Date().toISOString() + ' [INFO] ' + formatLogArgs(args) + '\n'
-  );
+  const formattedMessage =
+    new Date().toISOString() + ' [INFO] ' + formatLogArgs(args);
+  logStream.write(formattedMessage + '\n');
+  console.info(formattedMessage);
 };
 
 console.warn = function (...args) {
-  logStream.write(
-    new Date().toISOString() + ' [WARN] ' + formatLogArgs(args) + '\n'
-  );
-  process.stderr.write(
-    new Date().toISOString() + ' [WARN] ' + formatLogArgs(args) + '\n'
-  );
+  const formattedMessage =
+    new Date().toISOString() + ' [WARN] ' + formatLogArgs(args);
+  logStream.write(formattedMessage + '\n');
+  console.warn(formattedMessage);
 };
 
 console.error = function (...args) {
   const stack = new Error().stack.split('\n').slice(2).join('\n');
-  logStream.write(
+  const formattedMessage =
     new Date().toISOString() +
-      ' [ERROR] ' +
-      formatLogArgs(args) +
-      '\nStack Trace:\n' +
-      stack +
-      '\n'
-  );
-  process.stderr.write(
-    new Date().toISOString() +
-      ' [ERROR] ' +
-      formatLogArgs(args) +
-      '\nStack Trace:\n' +
-      stack +
-      '\n'
-  );
+    ' [ERROR] ' +
+    formatLogArgs(args) +
+    '\nStack Trace:\n' +
+    stack;
+  logStream.write(formattedMessage + '\n');
+  console.error(formattedMessage);
 };
 
 const port = parseInt(process.env.PORT || '3000', 10);
@@ -104,6 +92,11 @@ if (!NEXTAUTH_SECRET) {
 console.log('Server Configuration:');
 console.log('NEXT_PUBLIC_BASE_URL:', NEXT_PUBLIC_BASE_URL);
 console.log('PORT:', port);
+console.log(
+  'Raw environment NEXT_PUBLIC_BASE_URL:',
+  process.env.NEXT_PUBLIC_BASE_URL
+);
+console.log('Processed NEXT_PUBLIC_BASE_URL:', NEXT_PUBLIC_BASE_URL);
 
 app
   .prepare()

@@ -45,6 +45,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  console.log(
+    'Raw environment NEXT_PUBLIC_BASE_URL:',
+    process.env.NEXT_PUBLIC_BASE_URL
+  );
 
   return (
     <SessionProvider session={session}>
