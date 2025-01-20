@@ -58,15 +58,15 @@ let NEXT_PUBLIC_BASE_URL = dev
   ? 'http://localhost:3000'
   : 'https://www.ecole-st-augustin.fr';
 
-// Validate NEXT_PUBLIC_BASE_URL
-if (!/^https?:\/\/.+/.test(NEXT_PUBLIC_BASE_URL)) {
-  console.error(
-    `Invalid URL format in NEXT_PUBLIC_BASE_URL: "${NEXT_PUBLIC_BASE_URL}"`
-  );
-  process.exit(1);
-}
-
 try {
+  if (
+    !NEXT_PUBLIC_BASE_URL.startsWith('http://') &&
+    !NEXT_PUBLIC_BASE_URL.startsWith('https://')
+  ) {
+    throw new Error(
+      `Invalid protocol in NEXT_PUBLIC_BASE_URL: "${NEXT_PUBLIC_BASE_URL}"`
+    );
+  }
   new URL(NEXT_PUBLIC_BASE_URL);
 } catch (error) {
   console.error(
@@ -92,7 +92,10 @@ app
     createServer((req, res) => {
       try {
         console.log('Raw request URL:', req.url);
-        const parsedUrl = new URL(req.url || '', NEXT_PUBLIC_BASE_URL);
+        const rawUrl = req.url || '/';
+        const parsedUrl = rawUrl.startsWith('http')
+          ? new URL(rawUrl)
+          : new URL(rawUrl, NEXT_PUBLIC_BASE_URL);
         console.log('Handling request:', parsedUrl.href);
 
         const pathname = parsedUrl.pathname;
