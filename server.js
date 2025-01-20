@@ -56,7 +56,7 @@ const handle = app.getRequestHandler();
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
 let NEXT_PUBLIC_BASE_URL = dev
   ? 'http://localhost:3000'
-  : 'https://www.ecole-st-augustin.fr';
+  : 'http://www.ecole-st-augustin.fr';
 
 try {
   if (

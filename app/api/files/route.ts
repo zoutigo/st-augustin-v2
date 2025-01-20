@@ -19,7 +19,7 @@ const VALID_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.pdf', '.gif', '.webp'];
 
 const DEFAULT_BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://www.ecole-st-augustin.fr'
+    ? 'http://www.ecole-st-augustin.fr'
     : 'http://localhost:3001';
 
 // Fonction utilitaire pour nettoyer les noms de fichiers
