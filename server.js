@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 require('dotenv').config();
 const { createServer } = require('http');
-const { parse } = require('url');
 const next = require('next');
 const fs = require('fs');
 
-// Redirection des logs vers un fichier
-const logStream = fs.createWriteStream(
-  '/home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log',
-  { flags: 'a' }
-);
+// Redirection des logs vers un fichier avec vérification d'accès
+const logFilePath = '/home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log';
+let logStream;
+try {
+  logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
+} catch (err) {
+  console.error('Failed to open log file:', logFilePath, err);
+  process.exit(1);
+}
 
 // Function to safely convert arguments to string
 function formatLogArgs(args) {
@@ -27,33 +30,24 @@ function formatLogArgs(args) {
     .join(' ');
 }
 
-// Overriding console methods for detailed logging
-console.log = function (...args) {
-  const formattedMessage =
-    new Date().toISOString() + ' [INFO] ' + formatLogArgs(args);
-  logStream.write(formattedMessage + '\n');
-  console.info(formattedMessage);
-};
+// Overriding console methods for detailed logging with flush
+function logToFile(level, ...args) {
+  const formattedMessage = `${new Date().toISOString()} [${level}] ${formatLogArgs(
+    args
+  )}\n`;
+  logStream.write(formattedMessage);
+  logStream.flush();
+  process.stdout.write(formattedMessage);
+}
 
-console.warn = function (...args) {
-  const formattedMessage =
-    new Date().toISOString() + ' [WARN] ' + formatLogArgs(args);
-  logStream.write(formattedMessage + '\n');
-  console.warn(formattedMessage);
-};
-
-console.error = function (...args) {
+console.log = (...args) => logToFile('INFO', ...args);
+console.warn = (...args) => logToFile('WARN', ...args);
+console.error = (...args) => {
   const stack = new Error().stack.split('\n').slice(2).join('\n');
-  const formattedMessage =
-    new Date().toISOString() +
-    ' [ERROR] ' +
-    formatLogArgs(args) +
-    '\nStack Trace:\n' +
-    stack;
-  logStream.write(formattedMessage + '\n');
-  console.error(formattedMessage);
+  logToFile('ERROR', ...args, '\nStack Trace:\n' + stack);
 };
 
+// Configuration du serveur
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -71,21 +65,22 @@ if (!/^https?:\/\/.+/.test(NEXT_PUBLIC_BASE_URL)) {
   console.error(
     `Invalid URL format in NEXT_PUBLIC_BASE_URL: "${NEXT_PUBLIC_BASE_URL}"`
   );
-  throw new Error('NEXT_PUBLIC_BASE_URL must start with http:// or https://');
+  process.exit(1);
 }
 
 try {
   new URL(NEXT_PUBLIC_BASE_URL);
 } catch (error) {
-  console.error(`Invalid NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}`, error);
-  throw new Error(
-    `NEXT_PUBLIC_BASE_URL is not a valid URL: "${NEXT_PUBLIC_BASE_URL}". Example: https://www.example.com`
+  console.error(
+    `Invalid NEXT_PUBLIC_BASE_URL: "${NEXT_PUBLIC_BASE_URL}"`,
+    error
   );
+  process.exit(1);
 }
 
 if (!NEXTAUTH_SECRET) {
   console.error('NEXTAUTH_SECRET is missing');
-  throw new Error('NEXTAUTH_SECRET environment variable is not defined');
+  process.exit(1);
 }
 
 // Logs pour le débogage
