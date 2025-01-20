@@ -9,6 +9,8 @@ import {
 } from '@/routes';
 
 export async function middleware(req: NextRequest) {
+  console.log(`[Middleware] Incoming request: ${req.nextUrl.href}`);
+
   const secret = process.env.NEXTAUTH_SECRET;
 
   if (!secret) {

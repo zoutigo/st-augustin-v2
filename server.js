@@ -4,30 +4,24 @@ const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 const fs = require('fs');
+const winston = require('winston');
 
-// Redirection des logs vers un fichier
-const logStream = fs.createWriteStream(
-  '/home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log',
-  { flags: 'a' }
-);
-
-console.log = function (...args) {
-  logStream.write(
-    new Date().toISOString() + ' [INFO] ' + args.join(' ') + '\n'
-  );
-  process.stdout.write(
-    new Date().toISOString() + ' [INFO] ' + args.join(' ') + '\n'
-  );
-};
-
-console.error = function (...args) {
-  logStream.write(
-    new Date().toISOString() + ' [ERROR] ' + args.join(' ') + '\n'
-  );
-  process.stderr.write(
-    new Date().toISOString() + ' [ERROR] ' + args.join(' ') + '\n'
-  );
-};
+// Configuration de Winston pour les logs
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.printf(({ timestamp, level, message }) => {
+      return `${timestamp} [${level.toUpperCase()}] ${message}`;
+    })
+  ),
+  transports: [
+    new winston.transports.File({
+      filename: '/home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log',
+    }),
+    new winston.transports.Console(),
+  ],
+});
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
@@ -42,40 +36,56 @@ let NEXT_PUBLIC_BASE_URL =
 
 try {
   new URL(NEXT_PUBLIC_BASE_URL); // Valide l'URL
-} catch {
+} catch (error) {
+  logger.error(`Invalid NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}`, {
+    stack: error.stack,
+  });
   throw new Error(
     `NEXT_PUBLIC_BASE_URL is not a valid URL: "${NEXT_PUBLIC_BASE_URL}". Example: https://www.example.com`
   );
 }
 
 if (!NEXTAUTH_SECRET) {
+  logger.error('NEXTAUTH_SECRET is missing');
   throw new Error('NEXTAUTH_SECRET environment variable is not defined');
 }
 
 // Logs pour le débogage
-console.log('Server Configuration:');
-console.log('NEXT_PUBLIC_BASE_URL:', NEXT_PUBLIC_BASE_URL);
-console.log('PORT:', port);
+logger.info('Server Configuration:');
+logger.info(`NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}`);
+logger.info(`PORT: ${port}`);
 
 app
   .prepare()
   .then(() => {
     createServer((req, res) => {
       try {
+        logger.info(`Incoming request URL: ${req.url}`);
         const parsedUrl = new URL(req.url || '', NEXT_PUBLIC_BASE_URL);
-        console.log('Handling request:', parsedUrl.href);
+        logger.info(`Handling request: ${parsedUrl.href}`);
 
         const pathname = parsedUrl.pathname;
         const query = Object.fromEntries(parsedUrl.searchParams);
         handle(req, res, { pathname, query });
       } catch (error) {
-        console.error('Error handling request:', req.url, error.message);
+        logger.error('Error handling request', {
+          requestedUrl: req.url,
+          baseUrl: NEXT_PUBLIC_BASE_URL,
+          errorMessage: error.message,
+          stack: error.stack,
+        });
         res.statusCode = 400;
         res.end('Bad Request');
       }
     }).listen(port, (err) => {
-      if (err) throw err;
-      console.log(
+      if (err) {
+        logger.error('Server startup error:', {
+          message: err.message,
+          stack: err.stack,
+        });
+        throw err;
+      }
+      logger.info(
         `> Server listening at ${
           dev ? `http://localhost:${port}` : NEXT_PUBLIC_BASE_URL
         }`
@@ -83,6 +93,9 @@ app
     });
   })
   .catch((err) => {
-    console.error('Error during Next.js app preparation:', err.message);
+    logger.error('Error during Next.js app preparation:', {
+      message: err.message,
+      stack: err.stack,
+    });
     process.exit(1);
   });
