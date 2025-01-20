@@ -59,10 +59,7 @@ let NEXT_PUBLIC_BASE_URL = dev
   : 'http://www.ecole-st-augustin.fr';
 
 try {
-  if (
-    !NEXT_PUBLIC_BASE_URL.startsWith('http://') &&
-    !NEXT_PUBLIC_BASE_URL.startsWith('https://')
-  ) {
+  if (!/^https?:\/\//.test(NEXT_PUBLIC_BASE_URL)) {
     throw new Error(
       `Invalid protocol in NEXT_PUBLIC_BASE_URL: "${NEXT_PUBLIC_BASE_URL}"`
     );
@@ -93,17 +90,27 @@ app
       try {
         console.log('Raw request URL:', req.url);
         const rawUrl = req.url || '/';
-        const parsedUrl = rawUrl.startsWith('http')
-          ? new URL(rawUrl)
-          : new URL(rawUrl, NEXT_PUBLIC_BASE_URL);
+
+        // Vérification et nettoyage de l'URL
+        const cleanedUrl = rawUrl.replace(/^https?,\s*/, 'http://');
+        console.log('Cleaned URL:', cleanedUrl);
+
+        const parsedUrl = cleanedUrl.startsWith('http')
+          ? new URL(cleanedUrl)
+          : new URL(cleanedUrl, NEXT_PUBLIC_BASE_URL);
+
         console.log('Handling request:', parsedUrl.href);
 
         const pathname = parsedUrl.pathname;
         const query = Object.fromEntries(parsedUrl.searchParams);
         handle(req, res, { pathname, query });
       } catch (error) {
+        const cleanedUrl = req.url
+          ? req.url.replace(/^https?,\s*/, 'http://')
+          : '/';
         console.error('Error handling request:', {
           url: req.url,
+          cleanedUrl,
           baseUrl: NEXT_PUBLIC_BASE_URL,
           message: error.message,
           stack: error.stack,
