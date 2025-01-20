@@ -18,6 +18,10 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   reactStrictMode: !isProduction,
+  productionBrowserSourceMaps: true,
+  onError: (err) => {
+    console.error('Next.js encountered an error:', err);
+  },
   swcMinify: true,
   webpack: (config, { dev, isServer }) => {
     config.resolve.alias['@'] = path.resolve('./');
