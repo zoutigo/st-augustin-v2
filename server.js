@@ -74,11 +74,20 @@ const handle = app.getRequestHandler();
 // Charger et valider les variables d'environnement
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
 let NEXT_PUBLIC_BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL?.trim()?.replace(/,+$/, '') ||
-  'http://localhost:3000';
+  process.env.NEXT_PUBLIC_BASE_URL?.trim()
+    ?.replace(/,+$/, '')
+    .replace(/\s+/g, '') || 'http://localhost:3000';
+
+// Validate NEXT_PUBLIC_BASE_URL
+if (!/^https?:\/\/.+/.test(NEXT_PUBLIC_BASE_URL)) {
+  console.error(
+    `Invalid URL format in NEXT_PUBLIC_BASE_URL: "${NEXT_PUBLIC_BASE_URL}"`
+  );
+  throw new Error('NEXT_PUBLIC_BASE_URL must start with http:// or https://');
+}
 
 try {
-  new URL(NEXT_PUBLIC_BASE_URL); // Valide l'URL
+  new URL(NEXT_PUBLIC_BASE_URL);
 } catch (error) {
   console.error(`Invalid NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}`, error);
   throw new Error(
@@ -101,7 +110,7 @@ app
   .then(() => {
     createServer((req, res) => {
       try {
-        console.log('Incoming request URL:', req.url);
+        console.log('Raw request URL:', req.url);
         const parsedUrl = new URL(req.url || '', NEXT_PUBLIC_BASE_URL);
         console.log('Handling request:', parsedUrl.href);
 
@@ -109,7 +118,12 @@ app
         const query = Object.fromEntries(parsedUrl.searchParams);
         handle(req, res, { pathname, query });
       } catch (error) {
-        console.error('Error handling request:', req.url, error);
+        console.error('Error handling request:', {
+          url: req.url,
+          baseUrl: NEXT_PUBLIC_BASE_URL,
+          message: error.message,
+          stack: error.stack,
+        });
         res.statusCode = 400;
         res.end('Bad Request');
       }
