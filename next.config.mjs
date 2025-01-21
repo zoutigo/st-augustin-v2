@@ -5,12 +5,18 @@ import path from 'path';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
+  env: {
+    NEXTAUTH_URL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://www.ecole-st-augustin.fr'
+        : 'http://localhost:3001',
+  },
   experimental: {
     workerThreads: false, // Désactiver les threads pour limiter la charge
     cpus: 1, // Forcer Next.js à utiliser un seul CPU
   },
   typescript: {
-    ignoreBuildErrors: true, // Ignore les erreurs TypeScript pendant le build
+    ignoreBuildErrors: false, // Ignore les erreurs TypeScript pendant le build
   },
   trailingSlash: false,
 
