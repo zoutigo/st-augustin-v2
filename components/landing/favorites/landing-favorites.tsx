@@ -11,10 +11,10 @@ import {
 export const LandingFavorites = () => {
   const favorites = [
     {
-      title: 'Horaires',
-      text: "Retrouvez ici toutes nos créneaux , ainsi que les différentes périodes de fermeture de l'école.",
+      title: 'Garderie',
+      text: 'Retrouvez ici toutes les information sur la garderie étude.',
       icon: LuClock3,
-      path: '/ecole/horaires',
+      path: '/vie-scolaire/garderie',
     },
     {
       title: 'Classes',
@@ -32,7 +32,7 @@ export const LandingFavorites = () => {
       title: 'Cantine',
       text: 'Toutes les informations concernant la cantine, les menus et nos prestataires restauration.',
       icon: RiRestaurantFill,
-      path: '/ecole/cantine',
+      path: '/vie-scolaire/cantine',
     },
   ];
   return (
