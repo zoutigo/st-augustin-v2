@@ -34,6 +34,9 @@ export const metadata: Metadata = {
   title: 'Ecole St Augustin Crémieu',
   description:
     "Informations et Actualités de l'Ecole Saint Augustin de Crémieu !",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default async function RootLayout({
@@ -52,7 +55,7 @@ export default async function RootLayout({
           <Navbar />
           <NavigationModal />
 
-          <Toaster />
+          <Toaster position="top-right" />
           <div className="flex flex-col min-h-screen">
             <div className="flex-grow">
               <ReactQueryProvider>{children}</ReactQueryProvider>

@@ -7,7 +7,8 @@ import { BiSolidChevronDown, BiSolidChevronUp } from 'react-icons/bi';
 import { useAppStore } from '@/lib/store';
 import { useState } from 'react';
 import { ModalNavBlocSub } from './modal-nav-bloc-sub';
-import { on } from 'events';
+
+import { useCurrentUser } from '@/hooks/use-current-user';
 
 interface ModalNavBlocProps {
   route: NavRoute;
@@ -19,18 +20,22 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
   const { isMenuOpen, toggleMenu, closeMenu } = useAppStore(); // Utilisez Zustand
 
   const router = useRouter();
+  const user = useCurrentUser();
+  const gotologin = !user && slug === 'espace-prive';
 
   const onClickLink = () => {
     closeMenu();
-    router.push(path, {});
+    const modifiedPath = gotologin ? '/auth/login' : path;
+    router.push(modifiedPath, {});
   };
   const onClickIcon = () => {
     toggleModalNavBock(!isOpenModalNavBock);
   };
 
-  const handleToggleModalNavBocck = () => {
+  const handleToggleModalNavBock = () => {
     toggleModalNavBock(false); // Ferme le modal
   };
+
   return (
     <div id="modal-navbloc-grid" className="my-2 min-h-12">
       <div className="grid grid-cols-12 gap-2 h-full">
@@ -39,7 +44,7 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
           onClick={onClickLink}
         >
           <span className="font-semibold font-cursive tracking-widest text-2xl text-secondary uppercase">
-            {name}
+            {gotologin ? 'Login' : name}
           </span>
         </div>
         <div className="col-span-2 bg-transparent shadow-sm p-y-1 h-full">
@@ -47,6 +52,7 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
             size={'sm'}
             variant={'outline'}
             className="min-w-full min-h-full"
+            disabled={!subroutes || subroutes.length === 0 || gotologin}
             onClick={onClickIcon}
           >
             {!isOpenModalNavBock && (
@@ -64,7 +70,7 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
             <ModalNavBlocSub
               key={subroute.slug}
               subroute={subroute}
-              handleToggleModalNavBocck={handleToggleModalNavBocck}
+              handleToggleModalNavBock={handleToggleModalNavBock}
             />
           ))}
       </div>

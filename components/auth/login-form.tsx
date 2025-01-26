@@ -39,84 +39,29 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-    setError('');
-    setSuccess('');
+  // const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+  //   setError('');
+  //   setSuccess('');
 
-    startTransition(() => {
-      if (user) {
-        return setError('You are already logged in');
-      }
-      login(values).then((data) => {
-        setError(data?.error);
-        // setSuccess(data?.success);
-      });
-    });
-  };
+  //   startTransition(() => {
+  //     if (user) {
+  //       return setError('You are already logged in');
+  //     }
+  //     login(values).then((data) => {
+  //       setError(data?.error);
+  //       // setSuccess(data?.success);
+  //     });
+  //   });
+  // };
 
   return (
     <CardWrapper
-      headerLabel="Welcome Back"
-      backButtonLabel="Vous allez decouvrir de belles choses"
-      backButtonHref="/auth/register"
+      headerLabel=""
+      backButtonLabel="Accédez aux informations privées de l'école"
+      backButtonHref="/"
       showSocial
     >
-      Its time to login !!
-      {/* <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-4">
-            <FormField
-              name="email"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="lisa.mbele@example.com"
-                      type="email"
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="password"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="******"
-                      type="password"
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <Button
-                    size={'sm'}
-                    variant={'link'}
-                    asChild
-                    className="px-0 font-normal"
-                  >
-                    <Link href={'/auth/reset'}>Forgot password ?</Link>
-                  </Button>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <FormSuccess message={success} />
-          <FormError message={error} />
-          <Button type="submit" className="w-full" disabled={isPending}>
-            Login
-          </Button>
-        </form>
-      </Form> */}
+      {"Pour le momont , seule l'athentification google est possible"}
     </CardWrapper>
   );
 };

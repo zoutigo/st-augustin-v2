@@ -27,8 +27,8 @@ const tailwindConfig: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ['Poppins', 'Raleway', 'sans-serif'],
-        cursive: ['Comfortaa', 'cursive'],
+        sans: ['var(--font-poppins)', 'var(--font-raleway)', 'sans-serif'],
+        cursive: ['var(--font-comfortaa)', 'cursive'],
       },
       fontSize: {
         h1: '12em',

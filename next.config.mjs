@@ -5,10 +5,35 @@ import path from 'path';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+    ],
+  },
+  env: {
+    NEXTAUTH_URL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://www.ecole-st-augustin.fr'
+        : 'http://localhost:3001',
+  },
+  experimental: {
+    workerThreads: false, // Désactiver les threads pour limiter la charge
+    cpus: 1, // Forcer Next.js à utiliser un seul CPU
+  },
+  typescript: {
+    ignoreBuildErrors: false, // Ignore les erreurs TypeScript pendant le build
+  },
+  trailingSlash: false,
+
   eslint: {
     ignoreDuringBuilds: true,
   },
   reactStrictMode: !isProduction,
+  productionBrowserSourceMaps: true,
+
   swcMinify: true,
   webpack: (config, { dev, isServer }) => {
     config.resolve.alias['@'] = path.resolve('./');
@@ -22,6 +47,17 @@ const nextConfig = {
 
     return config;
   },
+  async redirects() {
+    return [];
+  },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/(.*)', // Applique à toutes les routes
+  //       headers: [{ key: 'X-Forwarded-Proto', value: 'https' }],
+  //     },
+  //   ];
+  // },
 };
 
 // const nextConfig = {

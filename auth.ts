@@ -73,17 +73,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       if (token.sub && session.user) {
+        const existingUser = await getUserById(token.sub);
+        if (!existingUser) {
+          return {
+            ...session,
+            user: undefined, // ou une valeur vide conforme au type attendu
+          }; // Supprime la session si l'utilisateur n'existe plus
+        }
+
         session.user.id = token.sub;
       }
 
       if (token.role && session.user) {
         session.user.role = token.role as UserRole;
-        session.user.grade = token.role as UserGrade;
+        session.user.grade = token.grade as UserGrade;
       }
 
       if (session.user) {
         session.user.name = token.name;
         session.user.email = token.email as string;
+        session.user.lastname = token.lastname as string;
+        session.user.firstname = token.firstname as string;
+        session.user.phone = token.phone as string;
         session.user.isOAuth = token.isOAuth as boolean;
       }
 
@@ -102,7 +113,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // this will update automatically sessios datas when user is updated
       token.name = existingUser.name;
       token.email = existingUser.email;
+      token.lastname = existingUser.lastname as string;
+      token.firstname = existingUser.firstname as string;
+      token.phone = existingUser.phone as string;
       token.role = existingUser.role;
+      token.role = existingUser.role || UserRole.USER;
+      token.grade = existingUser.grade || UserGrade.NONE;
 
       return token;
     },

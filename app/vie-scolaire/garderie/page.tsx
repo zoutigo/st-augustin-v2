@@ -5,6 +5,10 @@ import { Page } from '@prisma/client';
 import React from 'react';
 
 const GarderiePage = async () => {
+  const metadatas = {
+    title: 'Garderie - Ecole Saint Augustin Crémieu',
+    description: 'Découvrez les modalités de garderie l’école Saint Augustin!',
+  };
   const slug = 'vie-scolaire-garderie';
   const result = await getPageBySlug(slug);
 
@@ -16,7 +20,7 @@ const GarderiePage = async () => {
 
   return (
     <PageHolder>
-      <PageContent content={page.content} />
+      <PageContent content={page.content} {...metadatas} />
     </PageHolder>
   );
 };

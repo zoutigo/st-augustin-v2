@@ -43,9 +43,9 @@ const NavigationModal = () => {
             <ModalNavBloc key={route.slug} route={route} />
           ))}
           <Button
-            variant={'destructive'}
+            variant={'default'}
             onClick={closeMenu}
-            className="w-full"
+            className="w-full bg-red-400 text-secondary uppercase mt-[1rem] tracking-widest font-cursive"
           >
             <span className="uppercase text-2xl">Fermer la navigation</span>
           </Button>

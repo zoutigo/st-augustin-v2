@@ -154,3 +154,15 @@ export const createModalSchema = z
   });
 
 export const updateModalSchema = createModalSchema;
+
+export const userProfileUpdateSchema = z.object({
+  firstname: z.string().min(2, 'Le prénom doit contenir au moins 2 caractères'),
+  lastname: z.string().min(2, 'Le nom doit contenir au moins 2 caractères'),
+  phone: z
+    .string()
+    .min(10, 'Le numéro de téléphone doit contenir 10 chiffres')
+    .regex(
+      /^[0-9]+$/,
+      'Le numéro de téléphone ne doit contenir que des chiffres'
+    ),
+});
