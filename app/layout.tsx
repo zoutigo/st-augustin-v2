@@ -55,7 +55,7 @@ export default async function RootLayout({
           <Navbar />
           <NavigationModal />
 
-          <Toaster />
+          <Toaster position="top-right" />
           <div className="flex flex-col min-h-screen">
             <div className="flex-grow">
               <ReactQueryProvider>{children}</ReactQueryProvider>
