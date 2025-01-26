@@ -117,7 +117,7 @@ export default function EditProfilePage() {
               Email
             </label>
             <Input
-              value={user.email}
+              value={user.email ?? 'mail manquant'}
               disabled
               className="w-full bg-gray-200 text-gray-600 cursor-not-allowed"
             />

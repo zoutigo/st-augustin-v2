@@ -6,7 +6,7 @@ import React from 'react';
 
 const ClientPage = () => {
   const user = useCurrentUser();
-  return <UserInfo user={user} label="📞 Client Component" />;
+  return user ? <UserInfo user={user} label="📞 Client Component" /> : null;
 };
 
 export default ClientPage;

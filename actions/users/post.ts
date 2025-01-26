@@ -26,7 +26,7 @@ export const updateUserProfile = async (
   try {
     // Mise à jour du profil dans la base de données
     const updatedUser = await db.user.update({
-      where: { email: user.email },
+      where: { email: user.email! },
       data: {
         ...validatedFields.data,
       },
