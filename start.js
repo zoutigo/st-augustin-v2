@@ -1,5 +1,7 @@
-import dotenv from 'dotenv';
-import { exec } from 'node:child_process';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const dotenv = require('dotenv');
+const { exec } = require('child_process');
+const fs = require('fs');
 
 dotenv.config(); // Charger les variables d'environnement
 
