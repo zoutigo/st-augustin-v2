@@ -71,6 +71,12 @@ const nextConfig = {
       },
     ];
   },
+  logger: {
+    level: 'info', // Pour voir les logs d'information
+    error: console.error,
+    warn: console.warn,
+    info: console.info,
+  },
   // async headers() {
   //   return [
   //     {
