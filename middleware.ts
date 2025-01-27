@@ -9,6 +9,15 @@ import {
 } from '@/routes';
 
 export async function middleware(req: NextRequest) {
+  let url;
+
+  if (process.env.NODE_ENV === 'production') {
+    const host = req.headers.get('x-forwarded-host') || req.nextUrl.host;
+    const protocol = req.headers.get('x-forwarded-proto') || 'https';
+    url = `${protocol}://${host}${req.nextUrl.pathname}${req.nextUrl.search}`;
+  } else {
+    url = req.nextUrl.href; // En développement, utilise l'URL telle quelle
+  }
   console.log(`[Middleware] Incoming request: ${req.nextUrl.href}`);
 
   const secret = process.env.NEXTAUTH_SECRET;
