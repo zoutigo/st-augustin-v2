@@ -5,11 +5,16 @@ import path from 'path';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+    ],
+  },
   env: {
-    NEXTAUTH_URL:
-      process.env.NODE_ENV === 'production'
-        ? 'https://www.ecole-st-augustin.fr'
-        : 'http://localhost:3001',
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
   experimental: {
     workerThreads: false, // Désactiver les threads pour limiter la charge
@@ -42,6 +47,28 @@ const nextConfig = {
   async redirects() {
     return [];
   },
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
+          },
+        ],
+      },
+    ];
+  },
+
   // async headers() {
   //   return [
   //     {

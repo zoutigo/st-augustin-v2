@@ -54,22 +54,15 @@ const handle = app.getRequestHandler();
 
 // Charger et valider les variables d'environnement
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
-let NEXT_PUBLIC_BASE_URL = dev
-  ? 'http://localhost:3000'
-  : 'https://www.ecole-st-augustin.fr';
+const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
 try {
-  if (!/^https?:\/\//.test(NEXT_PUBLIC_BASE_URL)) {
-    throw new Error(
-      `Invalid protocol in NEXT_PUBLIC_BASE_URL: "${NEXT_PUBLIC_BASE_URL}"`
-    );
+  if (!/^https?:\/\//.test(NEXTAUTH_URL)) {
+    throw new Error(`Invalid protocol in NEXTAUTH_URL: "${NEXTAUTH_URL}"`);
   }
-  new URL(NEXT_PUBLIC_BASE_URL);
+  new URL(NEXTAUTH_URL);
 } catch (error) {
-  console.error(
-    `Invalid NEXT_PUBLIC_BASE_URL: "${NEXT_PUBLIC_BASE_URL}"`,
-    error
-  );
+  console.error(`Invalid NEXTAUTH_URL: "${NEXTAUTH_URL}"`, error);
   process.exit(1);
 }
 
@@ -80,7 +73,7 @@ if (!NEXTAUTH_SECRET) {
 
 // Logs pour le débogage
 console.log('Server Configuration:');
-console.log('NEXT_PUBLIC_BASE_URL:', NEXT_PUBLIC_BASE_URL);
+console.log('NEXTAUTH_URL:', NEXTAUTH_URL);
 console.log('PORT:', port);
 
 app
@@ -97,7 +90,7 @@ app
 
         const parsedUrl = cleanedUrl.startsWith('http')
           ? new URL(cleanedUrl)
-          : new URL(cleanedUrl, NEXT_PUBLIC_BASE_URL);
+          : new URL(cleanedUrl, NEXTAUTH_URL);
 
         console.log('Handling request:', parsedUrl.href);
 
@@ -111,7 +104,7 @@ app
         console.error('Error handling request:', {
           url: req.url,
           cleanedUrl,
-          baseUrl: NEXT_PUBLIC_BASE_URL,
+          baseUrl: NEXTAUTH_URL,
           message: error.message,
           stack: error.stack,
         });
@@ -123,7 +116,7 @@ app
         console.error('Server startup error:', err);
         throw err;
       }
-      console.log(`> Server listening at ${NEXT_PUBLIC_BASE_URL}`);
+      console.log(`> Server listening at ${NEXTAUTH_URL}`);
     });
   })
   .catch((err) => {

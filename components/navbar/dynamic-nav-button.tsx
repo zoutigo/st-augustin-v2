@@ -1,9 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import React, { useState, useRef, useCallback } from 'react';
+import { Button } from '../ui/button';
 import { SubRoute } from '@/types/nav-routes';
 import { getPathColor } from '@/lib/get-path-color';
-import React, { useState, useRef } from 'react';
+import { useHandleLogout } from '@/hooks/use-handle-logout';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import { useCurrentGrade } from '@/hooks/use-current-grade';
+import { useRouter } from 'next/navigation';
 
 interface NavButtonProps {
   name: string;
@@ -18,24 +23,62 @@ export const DynamicNavButton = ({
   path,
   subroutes,
   isActive,
+  slug,
 }: NavButtonProps) => {
-  const [showDropDown, setShowDropdown] = useState(false); // État pour contrôler la visibilité du sous-menu
-  const buttonRef = useRef<HTMLDivElement | null>(null); // Référence au bouton principal
+  const { handleLogout } = useHandleLogout();
+  const user = useCurrentUser();
+  const grade = useCurrentGrade();
+  const router = useRouter();
+
+  const dashboardAllowedGrades = ['ADMIN', 'MANAGER', 'MODERATOR'];
+  const dashboardIsAllowed = dashboardAllowedGrades.includes(grade || '');
+
+  const [showDropDown, setShowDropdown] = useState(false);
+  const buttonRef = useRef<HTMLDivElement | null>(null);
 
   const hoverClass = getPathColor(path);
 
   const handleMainButtonClick = () => {
-    setShowDropdown(!showDropDown); // Basculer le menu
-    buttonRef.current?.blur(); // Retirer le focus du bouton principal
+    setShowDropdown((prev) => !prev);
+    buttonRef.current?.blur();
   };
 
-  const handleSubrouteClick = () => {
-    setShowDropdown(false); // Fermer le sous-menu après un clic
-  };
+  const handleSubrouteClick = useCallback(() => {
+    setShowDropdown(false);
+  }, []);
+
+  const handleNavigation = useCallback(
+    (e: React.MouseEvent, subroutePath: string, isLogout?: boolean) => {
+      e.preventDefault();
+      setShowDropdown(false);
+      if (isLogout) {
+        handleLogout();
+      } else {
+        router.push(subroutePath);
+      }
+    },
+    [router, handleLogout]
+  );
+
+  // Afficher le bouton de connexion si l'utilisateur est déconnecté pour l'espace privé
+  if (!user && slug === 'espace-prive') {
+    return (
+      <div className="col-span-1 relative group z-50 bg-transparent box-border">
+        <Link
+          href="/auth/login"
+          className="text-secondary uppercase h-[4rem] w-full flex items-center justify-center"
+        >
+          <Button className="w-full text-secondary font-semibold uppercase text-2xl md:text-sm lg:text-xl tracking-widest xl:tracking-widest hover:opacity-80">
+            Login
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div
-      className={`col-span-1 relative group z-50 bg-transparent box-border`}
+      className="col-span-1 relative group z-50 bg-transparent box-border"
       onMouseEnter={() => setShowDropdown(true)}
       onMouseLeave={() => setShowDropdown(false)}
     >
@@ -43,44 +86,58 @@ export const DynamicNavButton = ({
         ref={buttonRef}
         onClick={handleMainButtonClick}
         className={`text-2xl md:text-sm lg:text-xl text-secondary uppercase tracking-widest h-[4rem] w-full flex items-center justify-center xl:tracking-widest ${
-          isActive ? `border-b-4` : ''
+          isActive ? 'border-b-4' : ''
         } hover:bg-${hoverClass} hover:text-white`}
       >
         <Link href={path}>{name}</Link>
       </div>
+
       {showDropDown && subroutes && (
-        <div className="absolute w-full bg-transparent ">
-          {subroutes.map((subroute) => (
-            <div
-              key={subroute.slug}
-              className={`relative group2 bg-gray-100 w-full my-1 box-border hover:bg-${hoverClass}`}
-            >
-              <div className="text-2xl md:text-sm lg:text-xl tracking-wider text-secondary  h-[4rem] flex items-center justify-center ">
-                <Link
-                  href={subroute.path}
-                  onClick={handleSubrouteClick} // Ferme le menu au clic
-                >
-                  {subroute.name}
-                </Link>
-              </div>
-              <div className="absolute w-full top-0 left-full bg-transparent z-50">
-                {subroute.finalroutes &&
-                  subroute.finalroutes.map((finalroute) => (
-                    <div
-                      key={finalroute.slug}
-                      className={`text-2xl md:text-sm lg:text-xl tracking-wider text-secondary h-[4rem] w-full flex items-center justify-center bg-gray-100 mx-1 mb-1 box-border hover:bg-${hoverClass}`}
+        <div className="absolute w-full bg-transparent">
+          {subroutes
+            .filter(
+              (subroute) =>
+                !(subroute.slug === 'dashboard' && !dashboardIsAllowed)
+            )
+            .map((subroute) => (
+              <div
+                key={subroute.slug}
+                className={`relative group2 bg-gray-100 w-full my-1 box-border hover:bg-${hoverClass}`}
+              >
+                <div className="text-2xl md:text-sm lg:text-xl tracking-wider text-secondary h-[4rem] flex items-center justify-center">
+                  {subroute.slug === 'logout' ? (
+                    <button
+                      onClick={(e) => handleNavigation(e, '', true)}
+                      className="w-full h-full flex items-center justify-center"
                     >
-                      <Link
-                        href={finalroute.path}
-                        onClick={handleSubrouteClick} // Ferme également au clic sur un sous-sous-menu
+                      {subroute.name}
+                    </button>
+                  ) : (
+                    <Link href={subroute.path} onClick={handleSubrouteClick}>
+                      {subroute.name}
+                    </Link>
+                  )}
+                </div>
+
+                {subroute.finalroutes && (
+                  <div className="absolute w-full top-0 left-full bg-transparent z-50">
+                    {subroute.finalroutes.map((finalroute) => (
+                      <div
+                        key={finalroute.slug}
+                        className={`text-2xl md:text-sm lg:text-xl tracking-wider text-secondary h-[4rem] w-full flex items-center justify-center bg-gray-100 mx-1 mb-1 box-border hover:bg-${hoverClass}`}
                       >
-                        {finalroute.name}
-                      </Link>
-                    </div>
-                  ))}
+                        <Link
+                          href={finalroute.path}
+                          onClick={handleSubrouteClick}
+                        >
+                          {finalroute.name}
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </div>

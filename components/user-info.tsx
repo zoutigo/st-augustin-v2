@@ -3,7 +3,7 @@
 import { ExtendedUser } from '@/types/next-auth';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 interface UserInfoprops {
-  user?: ExtendedUser;
+  user?: ExtendedUser | null;
   label: string;
 }
 

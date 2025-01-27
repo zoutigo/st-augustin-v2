@@ -43,11 +43,16 @@ const NavigationModal = () => {
             <ModalNavBloc key={route.slug} route={route} />
           ))}
           <Button
-            variant={'destructive'}
+            variant={'default'}
             onClick={closeMenu}
-            className="w-full"
+            className="w-full bg-red-400 text-secondary uppercase tracking-widest font-cursive 
+             py-3 px-6 md:py-4 md:px-8 lg:py-5 lg:px-10 
+             text-lg md:text-xl lg:text-2xl 
+             mt-4 md:mt-6 lg:mt-8"
           >
-            <span className="uppercase text-2xl">Fermer la navigation</span>
+            <span className="uppercase text-lg md:text-xl lg:text-2xl">
+              Fermer la navigation
+            </span>
           </Button>
         </div>
       </DialogContent>
