@@ -16,11 +16,7 @@ const ALLOWED_MIME_TYPES = [
   'image/webp',
 ];
 const VALID_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.pdf', '.gif', '.webp'];
-
-const DEFAULT_BASE_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://www.ecole-st-augustin.fr'
-    : 'http://localhost:3001';
+const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
 // Fonction utilitaire pour nettoyer les noms de fichiers
 const sanitizeFileName = (fileName: string): string => {
@@ -108,7 +104,7 @@ export const POST = async (req: Request) => {
     await fs.chmod(filePath, 0o644);
     console.log(`[${requestId}] Permissions définies pour:`, filePath);
 
-    const fileUrl = `${DEFAULT_BASE_URL}/api/external-files/${sanitizedFileName}`;
+    const fileUrl = `${NEXTAUTH_URL}/api/external-files/${sanitizedFileName}`;
     return NextResponse.json({
       url: fileUrl,
       name: sanitizedFileName,
