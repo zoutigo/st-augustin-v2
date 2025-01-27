@@ -12,7 +12,6 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import { db } from './lib/db';
 
 const authConfig: NextAuthConfig = {
-  trustHost: true,
   providers: [
     Facebook({
       clientId: process.env.AUTH_FACEBOOK_ID || '',

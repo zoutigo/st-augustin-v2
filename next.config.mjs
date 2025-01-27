@@ -14,10 +14,7 @@ const nextConfig = {
     ],
   },
   env: {
-    NEXTAUTH_URL:
-      process.env.NODE_ENV === 'production'
-        ? 'https://www.ecole-st-augustin.fr'
-        : 'http://localhost:3001',
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
   experimental: {
     workerThreads: false, // Désactiver les threads pour limiter la charge
