@@ -1,5 +1,6 @@
 import { getPageBySlug } from '@/actions/pages/get';
 import { PageHolder } from '@/components/page-holder';
+import { PageCard } from '@/components/pageCard';
 import PageContent from '@/components/tiptap/page-content';
 import { Page } from '@prisma/client';
 import React from 'react';
@@ -18,7 +19,9 @@ const Ecole = async (props: Props) => {
 
   return (
     <PageHolder>
-      <PageContent content={page.content} />
+      <PageCard slug="ecole" description="" />
+
+      {/* <PageContent content={page.content} /> */}
     </PageHolder>
   );
 };

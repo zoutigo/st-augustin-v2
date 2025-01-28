@@ -1,13 +1,13 @@
 import { PageHolder } from '@/components/page-holder';
-
+import { PageCard } from '@/components/pageCard';
 import React from 'react';
 
 type Props = {};
 
-const Classes = async (props: Props) => {
+const Classes: React.FC<Props> = async () => {
   return (
     <PageHolder>
-      <div> les classes</div>
+      <PageCard slug="classes" description="" />
     </PageHolder>
   );
 };

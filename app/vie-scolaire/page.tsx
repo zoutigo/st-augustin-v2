@@ -1,12 +1,12 @@
 import { PageHolder } from '@/components/page-holder';
+import { PageCard } from '@/components/pageCard';
 
 import React from 'react';
 
 const VieScolairePage = async () => {
   return (
     <PageHolder>
-      {'Vie Scolaire'}
-      {/* <PageContent content={page.content} /> */}
+      <PageCard slug="vie-scolaire" description="" />
     </PageHolder>
   );
 };

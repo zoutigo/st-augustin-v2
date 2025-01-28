@@ -38,7 +38,7 @@ export const NavRoutes: NavRoute[] = [
     subroutes: [
       {
         name: 'Inscriptions',
-        slug: 'informations-incriptions',
+        slug: 'ecole-inscriptions',
         path: '/ecole/inscriptions',
       },
       {
