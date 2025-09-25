@@ -4,7 +4,7 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "dev": "cross-env PORT=3001 npm run prisma:migrate:dev && npm install && next dev",
+    "dev": "npm run prisma:migrate:dev && npm install && next dev -p 3000",
     "build": "NODE_OPTIONS='--max-old-space-size=2048' next build",
     "start": "node start.js",
     "lint": "next lint",

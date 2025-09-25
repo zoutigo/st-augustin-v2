@@ -6,6 +6,8 @@ import mime from 'mime-types';
 
 const EXTERNAL_UPLOAD_DIR =
   process.env.EXTERNAL_UPLOAD_DIR || '/home/zoutigo/projets/nextjs/files';
+// Always resolve to an absolute path to avoid './uploads' vs 'uploads' mismatches
+const BASE_UPLOAD_DIR = path.resolve(EXTERNAL_UPLOAD_DIR);
 
 if (!EXTERNAL_UPLOAD_DIR) {
   throw new Error(
@@ -29,6 +31,7 @@ export async function GET(
 ) {
   console.log('Received params:', params);
   console.log('EXTERNAL_UPLOAD_DIR:', EXTERNAL_UPLOAD_DIR);
+  console.log('BASE_UPLOAD_DIR (resolved):', BASE_UPLOAD_DIR);
 
   try {
     const filePathArray = params.path;
@@ -49,13 +52,18 @@ export async function GET(
 
     // Normalize and construct the full path
     const safePath = path.normalize(filePath).replace(/^(\.\.(\/|\\|$))+/, '');
-    const fullPath = path.join(EXTERNAL_UPLOAD_DIR, safePath);
+    // Resolve the full path inside the base directory
+    const fullPath = path.resolve(BASE_UPLOAD_DIR, safePath);
 
     console.log('Safe path:', safePath);
     console.log('Full path:', fullPath);
 
     // Check if the resolved path is within the allowed directory
-    if (!fullPath.startsWith(EXTERNAL_UPLOAD_DIR)) {
+    // Ensure computed path stays within the allowed directory
+    const baseWithSep = BASE_UPLOAD_DIR.endsWith(path.sep)
+      ? BASE_UPLOAD_DIR
+      : BASE_UPLOAD_DIR + path.sep;
+    if (!fullPath.startsWith(baseWithSep)) {
       console.error('Access to the file is forbidden:', fullPath);
       return NextResponse.json(
         { error: 'Access to the file is forbidden' },
