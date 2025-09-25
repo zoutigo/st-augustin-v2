@@ -24,16 +24,18 @@ const ModalPage = async () => {
 
   return (
     <div>
-      <div className="flex ">
-        <h1 className="text-2xl font-bold mb-4 flex-grow">Liste des modales</h1>
-        <Button variant={'default'} className="text-secondary text-xl">
-          <Link href={'/espace-prive/dashboard/modals/create'} passHref>
+      <div className="flex items-center mb-4">
+        <h1 className="text-2xl font-bold flex-grow">Liste des modales</h1>
+        <Link href={'/espace-prive/dashboard/modals/create'} passHref>
+          <Button variant="secondary" className="text-base font-semibold">
             Créer une nouvelle modale
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </div>
-      {error && <p className="text-red-500">{error}</p>}
-      <DataTable data={modal} columns={ModalsColumns} />
+      {error && <p className="text-red-500 mb-2">{error}</p>}
+      <div className="rounded-md border border-gray-200 shadow-sm">
+        <DataTable data={modal} columns={ModalsColumns} />
+      </div>
     </div>
   );
 };

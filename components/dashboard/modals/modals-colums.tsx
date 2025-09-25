@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
@@ -36,12 +37,27 @@ export const ModalsColumns: ColumnDef<Modal>[] = [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
+      const router = useRouter();
+      const id = row.original.id;
+      const handleDelete = async () => {
+        const ok = window.confirm('Supprimer cette modale ?');
+        if (!ok) return;
+        const res = await fetch(`/api/modals/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          router.refresh();
+        } else {
+          alert("La suppression n'a pas réussi.");
+        }
+      };
       return (
-        <Button className="text-secondary">
-          <Link href={`/espace-prive/dashboard/modals/${row.original.id}/edit`}>
-            Modifier
+        <div className="flex gap-2">
+          <Link href={`/espace-prive/dashboard/modals/${id}/edit`}>
+            <Button variant="secondary">Modifier</Button>
           </Link>
-        </Button>
+          <Button variant="destructive" className="text-white" onClick={handleDelete}>
+            Supprimer
+          </Button>
+        </div>
       );
     },
   },

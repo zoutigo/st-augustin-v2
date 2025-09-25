@@ -11,8 +11,7 @@ interface StyledNavProps extends React.HTMLProps<HTMLDivElement> {
 }
 
 const StyledNav = styled.nav<StyledNavProps>`
-  background-color: ${(props) =>
-    props.$dynamicColor}; /* Couleur dynamique au survol */
+  background-color: ${(props) => props.$dynamicColor};
 `;
 
 const Breadcrumb = () => {
@@ -27,20 +26,44 @@ const Breadcrumb = () => {
     return getColorByName(buttonHoverColor);
   }, [pathname]);
 
+  const formatLabel = (slug: string) => {
+    const mappings: Record<string, string> = {
+      'espace-prive': 'Espace-Privé',
+      dashboard: 'Dashboard',
+      modals: 'Modals',
+      blogposts: 'Posts',
+      entities: 'Entités',
+      pages: 'Pages',
+    };
+    if (mappings[slug]) return mappings[slug];
+    return slug
+      .split('-')
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+  };
+
   return (
     <StyledNav
       $dynamicColor={dynamicColor()}
-      className={`bg-${dynamicColor()} h-[4rem] text-3xl text-secondary  capitalize font-bold font-cursive w-full flex opacity-25 rounded-sm`}
+      className="h-[3.5rem] w-full flex items-center rounded-md shadow-sm mb-4"
     >
-      <ul className="flex space-x-2 items-center pl-[2rem]">
+      <ul className="flex space-x-2 items-center pl-6 text-base text-gray-900 font-semibold">
         {pathSegments.map((segment, index) => {
           const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
+          const label = formatLabel(segment);
+          const isLast = index === pathSegments.length - 1;
           return (
-            <li key={href} className="text-xl">
-              <Link href={href} className="text-blue-500">
-                {segment}
-              </Link>
-              {index < pathSegments.length - 1 && <span> / </span>}
+            <li key={href} className="flex items-center">
+              {!isLast ? (
+                <Link href={href} className="hover:underline hover:text-gray-800">
+                  {label}
+                </Link>
+              ) : (
+                <span className="text-gray-800">{label}</span>
+              )}
+              {index < pathSegments.length - 1 && (
+                <span className="mx-2 text-gray-700">/</span>
+              )}
             </li>
           );
         })}
