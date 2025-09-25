@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Entity } from '@prisma/client';
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
+import { useRouter } from 'next/navigation';
+import { Pencil, Trash2 } from 'lucide-react';
 
 export const EntitiesColumns: ColumnDef<Entity>[] = [
   {
@@ -15,11 +17,7 @@ export const EntitiesColumns: ColumnDef<Entity>[] = [
       </Link>
     ),
   },
-  {
-    accessorKey: 'id',
-    header: 'Id',
-    cell: ({ row }) => <div>{row.original.id} </div>,
-  },
+  // ID column hidden for cleaner UI
   {
     accessorKey: 'slug',
     header: 'Slug',
@@ -39,14 +37,31 @@ export const EntitiesColumns: ColumnDef<Entity>[] = [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
+      const router = useRouter();
+      const id = row.original.id;
+      const handleDelete = async () => {
+        const ok = window.confirm("Supprimer cette entité ?\nCela peut casser des liens d'articles.");
+        if (!ok) return;
+        const res = await fetch(`/api/entities/${id}`, { method: 'DELETE' });
+        if (res.ok) router.refresh();
+        else alert("La suppression n'a pas réussi.");
+      };
       return (
-        <Button className="text-secondary">
-          <Link
-            href={`/espace-prive/dashboard/entities/${row.original.id}/edit`}
-          >
-            Modifier
+        <div className="flex gap-1">
+          <Link href={`/espace-prive/dashboard/entities/${id}/edit`}>
+            <Button variant="ghost" size="icon" aria-label="Modifier">
+              <Pencil className="h-4 w-4" />
+            </Button>
           </Link>
-        </Button>
+          <Button
+            variant="destructive"
+            size="icon"
+            aria-label="Supprimer"
+            onClick={handleDelete}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       );
     },
   },

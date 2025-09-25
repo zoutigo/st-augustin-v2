@@ -3,6 +3,8 @@ import Link from 'next/link';
 
 import { Page } from '@prisma/client';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { Pencil, Trash2 } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 
 export const PageColumns: ColumnDef<Page>[] = [
@@ -34,12 +36,31 @@ export const PageColumns: ColumnDef<Page>[] = [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
+      const router = useRouter();
+      const id = row.original.id;
+      const handleDelete = async () => {
+        const ok = window.confirm('Supprimer cette page ?');
+        if (!ok) return;
+        const res = await fetch(`/api/pages/${id}`, { method: 'DELETE' });
+        if (res.ok) router.refresh();
+        else alert("La suppression n'a pas réussi.");
+      };
       return (
-        <Button className="text-secondary">
-          <Link href={`/espace-prive/dashboard/pages/${row.original.id}/edit`}>
-            Modifier
+        <div className="flex gap-1">
+          <Link href={`/espace-prive/dashboard/pages/${id}/edit`}>
+            <Button variant="ghost" size="icon" aria-label="Modifier">
+              <Pencil className="h-4 w-4" />
+            </Button>
           </Link>
-        </Button>
+          <Button
+            variant="destructive"
+            size="icon"
+            aria-label="Supprimer"
+            onClick={handleDelete}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       );
     },
   },
