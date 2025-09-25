@@ -25,11 +25,13 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 25 100% 80%;
-    --primary-foreground: 25 100% 80%;
+    /* Use dark foreground on light primary background for contrast */
+    --primary-foreground: 222.2 84% 4.9%;
     --primary-dark: 54 77% 75%;
     --primary-light: 38 100% 91%;
     --secondary: 202 40% 27%;
-    --secondary-foreground: 202 40% 27%;
+    /* Use light foreground on dark secondary background */
+    --secondary-foreground: 210 40% 98%;
     --secondary-dark: 205 100% 9%;
     --secondary-light: 217 16% 72%;
     --muted: 210 40% 96.1%;

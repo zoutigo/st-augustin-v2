@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Pencil, Trash2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
@@ -16,11 +17,7 @@ export const ModalsColumns: ColumnDef<Modal>[] = [
       </Link>
     ),
   },
-  {
-    accessorKey: 'id',
-    header: 'Id',
-    cell: ({ row }) => <div>{row.original.id} </div>,
-  },
+  // ID column hidden for cleaner UI
 
   {
     accessorKey: 'startDate',
@@ -50,12 +47,19 @@ export const ModalsColumns: ColumnDef<Modal>[] = [
         }
       };
       return (
-        <div className="flex gap-2">
+        <div className="flex gap-1">
           <Link href={`/espace-prive/dashboard/modals/${id}/edit`}>
-            <Button variant="secondary">Modifier</Button>
+            <Button variant="ghost" size="icon" aria-label="Modifier">
+              <Pencil className="h-4 w-4" />
+            </Button>
           </Link>
-          <Button variant="destructive" className="text-white" onClick={handleDelete}>
-            Supprimer
+          <Button
+            variant="destructive"
+            size="icon"
+            aria-label="Supprimer"
+            onClick={handleDelete}
+          >
+            <Trash2 className="h-4 w-4" />
           </Button>
         </div>
       );

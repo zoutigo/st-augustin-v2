@@ -3,6 +3,8 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
+import { useRouter } from 'next/navigation';
+import { Pencil, Trash2 } from 'lucide-react';
 import { BlogPostWithEntity } from '@/types/model';
 
 export const BlogpostsColumns: ColumnDef<BlogPostWithEntity>[] = [
@@ -15,11 +17,7 @@ export const BlogpostsColumns: ColumnDef<BlogPostWithEntity>[] = [
       </Link>
     ),
   },
-  {
-    accessorKey: 'id',
-    header: 'Id',
-    cell: ({ row }) => <div>{row.original.id} </div>,
-  },
+  // ID column hidden for cleaner UI
   {
     accessorKey: 'entity',
     header: 'Entité',
@@ -39,14 +37,31 @@ export const BlogpostsColumns: ColumnDef<BlogPostWithEntity>[] = [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
+      const router = useRouter();
+      const id = row.original.id;
+      const handleDelete = async () => {
+        const ok = window.confirm('Supprimer ce post ?');
+        if (!ok) return;
+        const res = await fetch(`/api/blogposts/${id}`, { method: 'DELETE' });
+        if (res.ok) router.refresh();
+        else alert("La suppression n'a pas réussi.");
+      };
       return (
-        <Button className="text-secondary">
-          <Link
-            href={`/espace-prive/dashboard/blogposts/${row.original.id}/edit`}
-          >
-            Modifier
+        <div className="flex gap-1">
+          <Link href={`/espace-prive/dashboard/blogposts/${id}/edit`}>
+            <Button variant="ghost" size="icon" aria-label="Modifier">
+              <Pencil className="h-4 w-4" />
+            </Button>
           </Link>
-        </Button>
+          <Button
+            variant="destructive"
+            size="icon"
+            aria-label="Supprimer"
+            onClick={handleDelete}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       );
     },
   },
