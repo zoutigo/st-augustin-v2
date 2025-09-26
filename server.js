@@ -61,6 +61,15 @@ const handle = app.getRequestHandler();
 const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
 const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
+// For NextAuth v5, ensure new env names are present in prod
+if (!process.env.AUTH_URL && NEXTAUTH_URL) {
+  process.env.AUTH_URL = NEXTAUTH_URL;
+}
+if (!process.env.AUTH_SECRET && NEXTAUTH_SECRET) {
+  process.env.AUTH_SECRET = NEXTAUTH_SECRET;
+}
+process.env.AUTH_TRUST_HOST = process.env.AUTH_TRUST_HOST || 'true';
+
 try {
   if (!/^https?:\/\//.test(NEXTAUTH_URL)) {
     throw new Error(`Invalid protocol in NEXTAUTH_URL: "${NEXTAUTH_URL}"`);
@@ -79,6 +88,7 @@ if (!NEXTAUTH_SECRET) {
 // Logs pour le débogage
 console.log('Server Configuration:');
 console.log('NEXTAUTH_URL:', NEXTAUTH_URL);
+console.log('AUTH_URL:', process.env.AUTH_URL);
 console.log('PORT:', port);
 
 // Seed default pages before starting the server (non-blocking if it fails)
