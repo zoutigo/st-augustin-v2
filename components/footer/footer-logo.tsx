@@ -2,9 +2,9 @@ import React from 'react';
 
 export const FooterLogo: React.FC = () => {
   return (
-    <div className="md:col-span-1 flex items-center justify-end md:justify-center p-6">
+    <div className="md:col-span-1 flex items-center justify-center md:justify-center p-3 h-16 sm:h-20 md:h-auto">
       <svg
-        className="h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36"
+        className="h-14 sm:h-16 md:h-20 lg:h-24 xl:h-28"
         version="1.1"
         baseProfile="tiny"
         xmlns="http://www.w3.org/2000/svg"
