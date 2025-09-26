@@ -23,7 +23,7 @@ export const FooterContactcard = () => {
           </div>
           <div className="col-span-10">
             <p className="text-justify"> Place du 8 Mai 1945</p>
-            <p> 38460 Creémoieu</p>
+            <p> 38460 Crémieu</p>
           </div>
         </div>
         <div className="my-[2rem] grid grid-cols-12">

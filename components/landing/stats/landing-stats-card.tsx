@@ -24,7 +24,7 @@ export const LandingStatsCard: React.FC<LandingStatsCardProps> = ({
       }}
     >
       <div
-        className="relative rounded-full flex flex-col items-center justify-center shadow-md w-[clamp(60px,16vw,140px)] h-[clamp(60px,16vw,140px)]"
+        className="relative rounded-full flex flex-col items-center justify-center shadow-md w-[clamp(60px,16vw,140px)] h-[clamp(60px,16vw,140px)] animate-pop-in motion-safe:animate-float-slow"
         style={{ backgroundColor: color }}
       >
         <div className="text-[clamp(16px,4vw,36px)] text-secondary font-extrabold font-serif leading-none">
