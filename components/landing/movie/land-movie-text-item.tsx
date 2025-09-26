@@ -6,9 +6,9 @@ interface LandMovieTextItemProps {
 
 export const LandMovieTextItem = ({ text }: LandMovieTextItemProps) => {
   return (
-    <div className="md:my-10 lg:my-14 xl:my-16">
+    <div className="my-4 md:my-6 lg:my-8">
       <span
-        className="text-[3rem] sm:text-[3rem] md:text-[5rem] lg:text-[10rem] font-black uppercase leading-none text-transparent ml-[100px] bg-clip-text transition-all duration-500 ease-out"
+        className="block break-words text-[clamp(1.75rem,8vw,6rem)] md:text-[clamp(2.5rem,6vw,8rem)] font-black uppercase leading-[0.9] text-transparent bg-clip-text transition-all duration-500 ease-out"
         style={{
           WebkitTextStroke: '2px hsl(var(--secondary))', // Contours du texte visibles
           WebkitBackgroundClip: 'text',
