@@ -3,7 +3,10 @@ const dotenv = require('dotenv');
 const { exec } = require('child_process');
 const fs = require('fs');
 
-dotenv.config(); // Charger les variables d'environnement
+// Ne charger .env qu'en développement pour ne pas écraser l'env du serveur
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const logPath =
   process.env.NEXTAUTH_URL === 'https://www.ecole-st-augustin.fr'

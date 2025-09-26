@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-require('dotenv').config();
+// Ne charger .env qu'en développement pour ne pas écraser l'env du serveur
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 const { createServer } = require('http');
 const next = require('next');
 const fs = require('fs');
