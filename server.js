@@ -3,6 +3,7 @@ require('dotenv').config();
 const { createServer } = require('http');
 const next = require('next');
 const fs = require('fs');
+const { ensureDefaultPages } = require('./lib/ensure-default-pages');
 
 // Redirection des logs vers un fichier avec vérification d'accès
 const logFilePath = '/home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log';
@@ -76,8 +77,14 @@ console.log('Server Configuration:');
 console.log('NEXTAUTH_URL:', NEXTAUTH_URL);
 console.log('PORT:', port);
 
+// Seed default pages before starting the server (non-blocking if it fails)
 app
   .prepare()
+  .then(() => {
+    return ensureDefaultPages()
+      .then(() => console.log('> Default pages ensured'))
+      .catch((e) => console.error('> Failed to ensure default pages', e));
+  })
   .then(() => {
     createServer((req, res) => {
       try {
