@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 
 interface LandingStatsCardProps {
@@ -19,16 +20,17 @@ export const LandingStatsCard: React.FC<LandingStatsCardProps> = ({
       style={{
         top: positions[0],
         left: positions[1],
+        transform: 'translate(-50%, -50%)',
       }}
     >
       <div
-        className="relative w-[170px] h-[170px] rounded-full flex items-center justify-center"
+        className="relative rounded-full flex flex-col items-center justify-center shadow-md w-[clamp(60px,16vw,140px)] h-[clamp(60px,16vw,140px)] animate-pop-in motion-safe:animate-float-slow"
         style={{ backgroundColor: color }}
       >
-        <div className="absolute top-0 text-6xl text-secondary font-semibold font-serif mt-7">
+        <div className="text-[clamp(16px,4vw,36px)] text-secondary font-extrabold font-serif leading-none">
           {count}
         </div>
-        <div className="absolute top-[90px] capitalize text-xl mt-3">
+        <div className="capitalize text-[clamp(10px,2.8vw,18px)] leading-tight">
           {name}
         </div>
       </div>

@@ -2,11 +2,12 @@ import Image from 'next/image';
 import { LandingStatsCard } from './landing-stats-card';
 
 export const LandingStats = () => {
+  // Positions exprimées en pourcentage (centre du cercle)
   const matrix = [
-    ['10vh', '8vw'],
-    ['45vh', '35vw'],
-    ['20vh', '55vw'],
-    ['35vh', '77vw'],
+    ['22%', '18%'],
+    ['66%', '36%'],
+    ['38%', '60%'],
+    ['58%', '80%'],
   ];
 
   const statitems = [
@@ -37,7 +38,7 @@ export const LandingStats = () => {
   ];
 
   return (
-    <div className="min-h-[70vh] bg-no-repeat bg-right-top flex items-center relative">
+    <div className="min-h-[70vh] bg-no-repeat bg-right-top flex items-center relative overflow-hidden">
       <Image
         src="/images/home-figures.JPG"
         alt="Background Image"
