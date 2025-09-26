@@ -1,4 +1,12 @@
 import NextAuth from 'next-auth';
+// Ensure NextAuth v5 env in all environments (especially on cPanel)
+if (!process.env.AUTH_URL && process.env.NEXTAUTH_URL) {
+  process.env.AUTH_URL = process.env.NEXTAUTH_URL;
+}
+if (!process.env.AUTH_SECRET && process.env.NEXTAUTH_SECRET) {
+  process.env.AUTH_SECRET = process.env.NEXTAUTH_SECRET;
+}
+process.env.AUTH_TRUST_HOST = process.env.AUTH_TRUST_HOST || 'true';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import authConfig from '@/auth.config';
 import { db } from '@/lib/db';

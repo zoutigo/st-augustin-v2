@@ -1,0 +1,54 @@
+<IfModule mod_passenger.c>
+  PassengerLogFile /home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log
+  PassengerLogLevel 3
+</IfModule>
+
+# Activer le moteur de réécriture
+RewriteEngine On
+
+# Rediriger tout le trafic HTTP vers HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Redirection vers le répertoire du projet si la requête ne commence pas par /prod.ecole-st-augustin.fr/v2/app/
+RewriteCond %{HTTP_HOST} ^(www\.)?ecole-st-augustin\.fr$ [NC]
+RewriteCond %{REQUEST_URI} !^/prod.ecole-st-augustin.fr/v2/app/
+RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|otf|mp4|webm|ogg|pdf|json|txt|xml|webp)$ [NC]
+RewriteRule ^(.*)$ /prod.ecole-st-augustin.fr/v2/app/$1 [L]
+
+# Servir directement les fichiers statiques sans toucher aux routes Next.js
+RewriteCond %{REQUEST_URI} 
+^/prod.ecole-st-augustin.fr/v2/app/.*\.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|otf|mp4|webm|ogg|pdf|json|txt|xml|webp)$ [NC]
+RewriteRule .* - [L]
+
+# Empêcher l'accès direct au dossier app si nécessaire
+RewriteCond %{REQUEST_URI} ^/prod.ecole-st-augustin.fr/v2/app/
+RewriteRule .* - [L]
+
+# Redirection 301 des anciens domaines vers HTTPS
+RewriteCond %{HTTP_HOST} ^(www\.)?st-augustin-cremieu\.com$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^(www\.)?st-augustin-cremieu\.com\.bdeh8989\.odns\.fr$ [NC]
+RewriteRule ^/?$ https://www.ecole-st-augustin.fr/ [R=301,L]
+
+# Ajouter des en-têtes de sécurité et configuration CORS
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+
+# Gérer les requêtes Next.js API en acceptant les OPTIONS pour CORS
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+
+# Empêcher l'accès direct aux dossiers et fichiers sensibles
+RewriteRule ^(.git|.env|node_modules|package.json|yarn.lock|composer.lock|phpunit.xml)$ - [F,L]
+
+# Gérer les erreurs personnalisées
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html
+
