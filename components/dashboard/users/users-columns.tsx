@@ -9,8 +9,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useRouter } from 'next/navigation';
-import { Medal, Shield } from 'lucide-react';
+import { Medal, Shield, Trash2 } from 'lucide-react';
 import type { UserGrade, UserRole } from '@prisma/client';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 
 export type UserRow = {
   id: string;
@@ -118,9 +119,12 @@ export const UsersColumns: ColumnDef<UserRow>[] = [
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+          {/* Exemple: suppression d'utilisateur si besoin plus tard */}
+          {/* <ConfirmDialog title="Supprimer l'utilisateur" description="Action irréversible." confirmText="Supprimer" onConfirm={async ()=>{ await fetch(`/api/users/${id}`,{method:'DELETE'}); router.refresh();}}> 
+            <Button variant="destructive" size="icon" aria-label="Supprimer"><Trash2 className="h-4 w-4"/></Button>
+          </ConfirmDialog> */}
         </div>
       );
     },
   },
 ];
-

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
 import { Pencil, Trash2 } from 'lucide-react';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 
 export const EntitiesColumns: ColumnDef<Entity>[] = [
   {
@@ -40,8 +41,6 @@ export const EntitiesColumns: ColumnDef<Entity>[] = [
       const router = useRouter();
       const id = row.original.id;
       const handleDelete = async () => {
-        const ok = window.confirm("Supprimer cette entité ?\nCela peut casser des liens d'articles.");
-        if (!ok) return;
         const res = await fetch(`/api/entities/${id}`, { method: 'DELETE' });
         if (res.ok) router.refresh();
         else alert("La suppression n'a pas réussi.");
@@ -53,14 +52,16 @@ export const EntitiesColumns: ColumnDef<Entity>[] = [
               <Pencil className="h-4 w-4" />
             </Button>
           </Link>
-          <Button
-            variant="destructive"
-            size="icon"
-            aria-label="Supprimer"
-            onClick={handleDelete}
+          <ConfirmDialog
+            title="Supprimer l'entité"
+            description="Cette action est irréversible et peut casser des liens. Confirmez la suppression."
+            confirmText="Supprimer"
+            onConfirm={handleDelete}
           >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+            <Button variant="destructive" size="icon" aria-label="Supprimer">
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </ConfirmDialog>
         </div>
       );
     },
