@@ -25,7 +25,10 @@ export const createModal = async (
 
     return { success: 'Le modal a été créé.' };
   } catch (error) {
-    return { error: "Quelque chose n'a pas fonctionné" };
+    console.error('createModal error:', error);
+    const message =
+      error instanceof Error ? error.message : "Quelque chose n'a pas fonctionné";
+    return { error: message };
   }
 };
 
@@ -56,6 +59,11 @@ export const updateModal = async (
     }
     return { success: `Le modal ${values.title} a bien été modifié` };
   } catch (error) {
-    return { error: "Quelque chose n'a pas fonctionné sur le server" };
+    console.error('updateModal error:', error);
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Quelque chose n'a pas fonctionné sur le server";
+    return { error: message };
   }
 };
