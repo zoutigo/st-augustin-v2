@@ -26,7 +26,7 @@ export const getModalById = async (
 
 export const getAllModals = async (): Promise<Modal[] | { error: string }> => {
   try {
-    const modals = await db.modal.findMany();
+    const modals = await db.modal.findMany({ orderBy: { createdAt: 'desc' } });
     return modals;
   } catch (error) {
     return { error: 'Failed to fetch posts' };

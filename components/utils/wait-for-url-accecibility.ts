@@ -1,8 +1,8 @@
 // Fonction utilitaire pour vérifier l'accessibilité d'une URL avec plusieurs essais
 export const waitForUrlAccessibility = async (
   url: string,
-  maxAttempts: number = 20,
-  interval: number = 1000
+  maxAttempts: number = 10,
+  interval: number = 500
 ): Promise<boolean> => {
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {

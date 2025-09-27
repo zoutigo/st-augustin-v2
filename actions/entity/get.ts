@@ -62,7 +62,9 @@ export const getEntityBySlug = async (
 
 export const getAllEntities = async (): Promise<Entity[]> => {
   try {
-    const entities = await db.entity.findMany();
+    const entities = await db.entity.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
 
     return entities.map((entity) => ({
       ...entity,

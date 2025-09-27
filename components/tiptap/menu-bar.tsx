@@ -54,7 +54,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
         </ToggleButton>
         <FileUploadButton
           onFileSelect={(file) => handleFile(file, editor)}
-          buttonText="Upload Image"
+          buttonText="Ajouter image/PDF"
         />
       </div>
 

@@ -119,11 +119,11 @@ export const createModalSchema = z
     id: z.string().optional(),
     title: z.string().min(1, 'Le titre est requis'),
     content: z.string().min(1, 'Le contenu est requis'),
-    startDate: z.date({
+    startDate: z.coerce.date({
       required_error: 'La date de début est requise',
       invalid_type_error: 'La date de début doit être une date valide',
     }),
-    endDate: z.date({
+    endDate: z.coerce.date({
       required_error: 'La date de fin est requise',
       invalid_type_error: 'La date de fin doit être une date valide',
     }),

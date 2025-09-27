@@ -1,22 +1,19 @@
 import { loadPdfPagesAsImages } from '../tiptap/load-pdf';
 import { removeTemporarySpinner } from './remove-temporary-spinner';
 import { waitForUrlAccessibility } from './wait-for-url-accecibility';
+import {
+  ALLOWED_MIME_TYPES,
+  MAX_FILE_SIZE_BYTES,
+  humanAllowedTypes,
+} from './upload-constraints';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const handleFile = async (file: File | null, editor: any) => {
   if (file) {
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 Mo
-    const ALLOWED_MIME_TYPES = [
-      'image/jpeg',
-      'image/png',
-      'application/pdf',
-      'image/gif',
-      'image/jpg',
-      'image/webp',
-    ];
+    const MAX_FILE_SIZE = MAX_FILE_SIZE_BYTES; // 10 Mo
 
     if (!ALLOWED_MIME_TYPES.includes(file.type)) {
-      alert('Le type de fichier n’est pas supporté.');
+      alert(`Type de fichier non supporté. Types acceptés: ${humanAllowedTypes}`);
       return;
     }
 

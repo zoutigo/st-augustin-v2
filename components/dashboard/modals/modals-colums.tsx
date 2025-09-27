@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Pencil, Trash2 } from 'lucide-react';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
@@ -37,30 +38,32 @@ export const ModalsColumns: ColumnDef<Modal>[] = [
       const router = useRouter();
       const id = row.original.id;
       const handleDelete = async () => {
-        const ok = window.confirm('Supprimer cette modale ?');
-        if (!ok) return;
         const res = await fetch(`/api/modals/${id}`, { method: 'DELETE' });
-        if (res.ok) {
-          router.refresh();
-        } else {
-          alert("La suppression n'a pas réussi.");
-        }
+        if (res.ok) router.refresh();
+        else alert("La suppression n'a pas réussi.");
       };
       return (
-        <div className="flex gap-1">
+        <div className="flex justify-center gap-2">
           <Link href={`/espace-prive/dashboard/modals/${id}/edit`}>
             <Button variant="ghost" size="icon" aria-label="Modifier">
-              <Pencil className="h-4 w-4" />
+              <Pencil className="h-4 w-4 text-blue-600" />
             </Button>
           </Link>
-          <Button
-            variant="destructive"
-            size="icon"
-            aria-label="Supprimer"
-            onClick={handleDelete}
+          <ConfirmDialog
+            title="Supprimer la modale"
+            description="Cette action est irréversible. Confirmez la suppression."
+            confirmText="Supprimer"
+            onConfirm={handleDelete}
           >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+            <Button
+              variant="destructive"
+              size="icon"
+              aria-label="Supprimer"
+              className="bg-destructive/90 hover:bg-destructive"
+            >
+              <Trash2 className="h-4 w-4 text-destructive-foreground" />
+            </Button>
+          </ConfirmDialog>
         </div>
       );
     },
