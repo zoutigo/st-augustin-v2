@@ -16,7 +16,7 @@ const ALLOWED_MIME_TYPES = [
   'image/webp',
 ];
 const VALID_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.pdf', '.gif', '.webp'];
-const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
+// Build relative URL so it works on any host (prod/dev) without relying on env
 
 // Fonction utilitaire pour nettoyer les noms de fichiers
 const sanitizeFileName = (fileName: string): string => {
@@ -104,7 +104,8 @@ export const POST = async (req: Request) => {
     await fs.chmod(filePath, 0o644);
     console.log(`[${requestId}] Permissions définies pour:`, filePath);
 
-    const fileUrl = `${NEXTAUTH_URL}/api/external-files/${sanitizedFileName}`;
+    // Return a path relative to the current origin to avoid hard-coded host
+    const fileUrl = `/api/external-files/${sanitizedFileName}`;
     return NextResponse.json({
       url: fileUrl,
       name: sanitizedFileName,
