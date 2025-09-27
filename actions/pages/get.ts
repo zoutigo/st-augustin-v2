@@ -69,7 +69,9 @@ export const getPageBySlug = async (
 
 export const getAllPages = async (): Promise<Page[] | { error: string }> => {
   try {
-    const pages = await db.page.findMany();
+    const pages = await db.page.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
     return pages;
   } catch (error) {
     return { error: 'Failed to fetch pages' };

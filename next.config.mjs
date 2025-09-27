@@ -19,6 +19,10 @@ const nextConfig = {
   experimental: {
     workerThreads: false, // Désactiver les threads pour limiter la charge
     cpus: 1, // Forcer Next.js à utiliser un seul CPU
+    // Augmenter la taille maximale du corps pour les Server Actions
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
   },
   typescript: {
     ignoreBuildErrors: false, // Ignore les erreurs TypeScript pendant le build

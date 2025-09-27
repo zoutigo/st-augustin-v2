@@ -84,6 +84,7 @@ export const getAllBlogPosts = async (): Promise<
       include: {
         entity: true,
       },
+      orderBy: { createdAt: 'desc' },
     });
 
     return blogposts;
