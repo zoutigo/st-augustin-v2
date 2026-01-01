@@ -89,7 +89,7 @@ export const PageForm: React.FC<PageFormProps> = ({
                 name="slug"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Slug :</FormLabel>
+                    <FormLabel>Slugs :</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
