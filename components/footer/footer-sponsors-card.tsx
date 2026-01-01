@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 
 interface SponsorLinkProps {
   path: string;
@@ -8,8 +7,8 @@ interface SponsorLinkProps {
 
 const SponsorLink = ({ title, path }: SponsorLinkProps) => {
   return (
-    <div className="mt-1 mb-[1rem] capitalize text-sm sm:text-base md:text-lg">
-      <Link href={path} target="_blank" passHref>
+    <div className="mt-1 mb-3 capitalize text-sm sm:text-base md:text-lg">
+      <Link href={path} target="_blank" className="hover:text-white">
         {title}
       </Link>
     </div>
@@ -32,15 +31,15 @@ export const FooterSponsorCard = () => {
     },
   ];
   return (
-    <Card className="bg-transparent border-transparent text-white md:col-span-2 text-sm sm:text-base md:text-lg">
-      <CardHeader className="uppercase text-xl sm:text-2xl font-semibold tracking-wider flex justify-start">
+    <div className="md:col-span-2 text-white/90 text-sm sm:text-base md:text-lg">
+      <h3 className="uppercase text-xl sm:text-2xl font-semibold tracking-wide mb-3">
         Nos partenaires
-      </CardHeader>
-      <CardContent>
+      </h3>
+      <div className="space-y-2">
         {sponsors.map((sponsor) => (
           <SponsorLink key={sponsor.path} {...sponsor} />
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

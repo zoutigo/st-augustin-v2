@@ -37,9 +37,9 @@ export const PageCard = ({ slug, description }: PageCardProps) => {
             <Image
               src={`/images/${slug}.jpg`}
               alt={name}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-t-lg"
+              fill
+              className="object-cover rounded-t-lg"
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
             />
           </CardHeader>
           <CardContent className="p-6">

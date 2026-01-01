@@ -18,8 +18,6 @@ const nextConfig = {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
   experimental: {
-    workerThreads: false, // Désactiver les threads pour limiter la charge
-    cpus: 1, // Forcer Next.js à utiliser un seul CPU
     // Augmenter la taille maximale du corps pour les Server Actions
     serverActions: {
       bodySizeLimit: '10mb',
@@ -42,21 +40,6 @@ const nextConfig = {
     if (!isServer) {
       config.resolve.fallback.fs = false;
     }
-    // Reduce dev file watchers to avoid EMFILE on some systems
-    if (dev) {
-      // next dev uses webpackDevMiddleware under the hood
-      // Use glob strings to satisfy webpack schema
-      config.watchOptions = {
-        ignored: ['**/node_modules/**', '**/.git/**', '**/.next/**'],
-        aggregateTimeout: 300,
-        poll: 1000,
-      };
-    }
-    if (!dev) {
-      // Limiter le nombre de threads pour éviter de surcharger le serveur
-      config.parallelism = 2;
-    }
-
     return config;
   },
   async redirects() {
@@ -83,15 +66,6 @@ const nextConfig = {
       },
     ];
   },
-
-  // async headers() {
-  //   return [
-  //     {
-  //       source: '/(.*)', // Applique à toutes les routes
-  //       headers: [{ key: 'X-Forwarded-Proto', value: 'https' }],
-  //     },
-  //   ];
-  // },
 };
 
 // const nextConfig = {

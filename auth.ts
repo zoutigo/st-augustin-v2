@@ -13,6 +13,22 @@ import { db } from "@/lib/db";
 import { getUserByEmail, getUserById } from "./data/user";
 import { UserGrade, UserRole } from "@prisma/client";
 import { getAccountByUserId } from "./data/account";
+import crypto from "crypto";
+
+const resolveAuthSecret = () => {
+  const existing = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET;
+  if (existing) return existing;
+
+  const devSecret = `dev-secret-${crypto.randomUUID()}`;
+  // Keep vars aligned to avoid mismatch across edge/node contexts
+  process.env.AUTH_SECRET = devSecret;
+  process.env.NEXTAUTH_SECRET = devSecret;
+  console.warn(
+    "[auth] AUTH_SECRET/NEXTAUTH_SECRET absents, génération d'un secret de développement éphémère. Définissez NEXTAUTH_SECRET/AUTH_SECRET en prod.",
+  );
+  return devSecret;
+};
+const AUTH_SECRET = resolveAuthSecret();
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(db),
@@ -20,6 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/auth/login",
     error: "/auth/error",
   },
+  secret: AUTH_SECRET,
   debug: true,
   logger: {
     error(code, ...message) {
