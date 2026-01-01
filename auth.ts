@@ -20,6 +20,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/auth/login",
     error: "/auth/error",
   },
+  debug: true,
+  logger: {
+    error(code, ...message) {
+      console.error("NEXTAUTH_ERROR", code, message);
+    },
+    warn(code, ...message) {
+      console.warn("NEXTAUTH_WARN", code, message);
+    },
+  },
   events: {
     async linkAccount({ user }) {
       await db.user.update({
