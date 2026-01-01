@@ -4,6 +4,8 @@ import PageContent from "@/components/tiptap/page-content";
 import { Page } from "@prisma/client";
 import React from "react";
 
+export const revalidate = 3600;
+
 const Equipe = async (): Promise<JSX.Element> => {
   const metadatas = {
     title: "Equipe pedagogique - Ecole Saint Augustin Crémieu",

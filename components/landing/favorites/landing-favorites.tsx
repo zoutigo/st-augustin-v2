@@ -1,6 +1,3 @@
-"use client";
-
-import { useMemo } from "react";
 import { SiGoogleclassroom } from "react-icons/si";
 import { RiRestaurantFill } from "react-icons/ri";
 import { LuClock3 } from "react-icons/lu";
@@ -14,41 +11,38 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export const LandingFavorites = () => {
-  const favorites = useMemo<LandingFavoriteCardProps[]>(
-    () => [
-      {
-        title: "Garderie",
-        text: "Horaires, activités et accueil après la classe.",
-        icon: LuClock3,
-        path: "/vie-scolaire/garderie",
-        accent: "bg-white/80 text-secondary",
-      },
-      {
-        title: "Classes",
-        text: "Découvrez chaque classe de la Petite Section au CM2.",
-        icon: SiGoogleclassroom,
-        path: "/classes",
-        accent: "bg-secondary text-white",
-      },
-      {
-        title: "Ecole",
-        text: "Nos valeurs, notre histoire et l'équipe pédagogique.",
-        icon: BiSolidSchool,
-        path: "/ecole",
-        accent: "bg-primary text-secondary",
-      },
-      {
-        title: "Cantine",
-        text: "Menus et infos pratiques sur la restauration.",
-        icon: RiRestaurantFill,
-        path: "/vie-scolaire/cantine",
-        accent: "bg-white/80 text-secondary",
-      },
-    ],
-    [],
-  );
+const favorites: LandingFavoriteCardProps[] = [
+  {
+    title: "Garderie",
+    text: "Horaires, activités et accueil après la classe.",
+    icon: LuClock3,
+    path: "/vie-scolaire/garderie",
+    accent: "bg-white/80 text-secondary",
+  },
+  {
+    title: "Classes",
+    text: "Découvrez chaque classe de la Petite Section au CM2.",
+    icon: SiGoogleclassroom,
+    path: "/classes",
+    accent: "bg-secondary text-white",
+  },
+  {
+    title: "Ecole",
+    text: "Nos valeurs, notre histoire et l'équipe pédagogique.",
+    icon: BiSolidSchool,
+    path: "/ecole",
+    accent: "bg-primary text-secondary",
+  },
+  {
+    title: "Cantine",
+    text: "Menus et infos pratiques sur la restauration.",
+    icon: RiRestaurantFill,
+    path: "/vie-scolaire/cantine",
+    accent: "bg-white/80 text-secondary",
+  },
+];
 
+export const LandingFavorites = () => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-r from-primary via-white to-secondary/10 py-10 px-4 md:py-14 md:px-10 rounded-3xl shadow-inner">
       <div className="max-w-6xl mx-auto flex flex-col gap-6 md:gap-8">

@@ -26,6 +26,8 @@ export const ColorPalette: React.FC<ColorPaletteProps> = ({
       {editorColors.map((color) => (
         <button
           key={color}
+          aria-label={`Couleur ${color}`}
+          type="button"
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();

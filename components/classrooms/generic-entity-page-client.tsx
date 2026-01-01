@@ -63,54 +63,31 @@ export const GenericEntityPageClient: React.FC<
 
   return (
     <PageHolder>
-      <div className="flex flex-col lg:flex-row lg:space-x-8 space-y-4 lg:space-y-0">
+      <div
+        className={`grid gap-6 ${
+          isClassroom ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-[2fr_1fr]"
+        }`}
+      >
         {/* Section principale */}
-        <div className="lg:w-2/3">
+        <div className={isClassroom ? "w-full" : "w-full"}>
           <PageContent content={entity.description} />
         </div>
 
-        {/* Section blogposts */}
-        <div className="lg:w-1/3">
-          <EntityBlogPostList
-            title={blogpostsTitle}
-            blogposts={blogposts}
-            postsPerPage={4}
-            onPostSelect={handlePostSelect}
-          />
-
-          {/* Bouton et section des fournitures */}
-          {isClassroom && (
-            <div className="mt-4">
-              <Button
-                onClick={toggleFournitureList}
-                className="text-secondary"
-                disabled={isLoading}
-              >
-                {showFournitureList
-                  ? "Masquer les fournitures"
-                  : "Liste des fournitures"}
-              </Button>
-
-              {isLoading ? (
-                <div className="flex justify-center items-center mt-4">
-                  <Spinner size="h-8 w-8" className="text-primary" />
-                </div>
-              ) : (
-                showFournitureList && (
-                  <div className="mt-4 p-4 bg-gray-100 rounded">
-                    <PageContent
-                      content={fournitureContent || "Aucune donnée disponible."}
-                    />
-                  </div>
-                )
-              )}
-            </div>
-          )}
-        </div>
+        {/* Section blogposts (sauf pour les classes) */}
+        {!isClassroom && (
+          <div className="lg:w-1/3">
+            <EntityBlogPostList
+              title={blogpostsTitle}
+              blogposts={blogposts}
+              postsPerPage={4}
+              onPostSelect={handlePostSelect}
+            />
+          </div>
+        )}
       </div>
 
-      {/* Affichage du post sélectionné */}
-      {selectedPost && selectedPost.content && (
+      {/* Affichage du post sélectionné (uniquement si liste affichée) */}
+      {!isClassroom && selectedPost && selectedPost.content && (
         <div className="mt-8 p-4 border border-gray-300 rounded-lg bg-white shadow-md">
           <h2 className="text-xl font-bold mb-4 text-secondary">
             {capitalizeFirstLetter(selectedPost.title)}

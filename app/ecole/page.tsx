@@ -1,13 +1,12 @@
 import { getPageBySlug } from "@/actions/pages/get";
 import { PageHolder } from "@/components/page-holder";
 import { PageCard } from "@/components/pageCard";
-import PageContent from "@/components/tiptap/page-content";
 import { Page } from "@prisma/client";
 import React from "react";
 
-type Props = {};
+export const revalidate = 3600;
 
-const Ecole = async (props: Props) => {
+const Ecole = async () => {
   const slug = "ecole";
   const result = await getPageBySlug(slug);
 
@@ -20,8 +19,6 @@ const Ecole = async (props: Props) => {
   return (
     <PageHolder>
       <PageCard slug="ecole" description="" />
-
-      {/* <PageContent content={page.content} /> */}
     </PageHolder>
   );
 };

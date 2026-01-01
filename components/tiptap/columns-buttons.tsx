@@ -232,9 +232,36 @@ const ColumnButtons: React.FC<ColumnButtonsProps> = ({ editor }) => {
   return (
     <div>
       <div className="menu-bar-button-group-list">
-        <button onClick={insertLayoutColumns}>Insert Layout Columns</button>
-        <button onClick={deleteLayoutColumn}>Delete Layout Column</button>
-        <button onClick={deleteLayoutColumns}>Delete Layout Columns</button>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            insertLayoutColumns();
+          }}
+        >
+          Insert Layout Columns
+        </button>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteLayoutColumn();
+          }}
+        >
+          Delete Layout Column
+        </button>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteLayoutColumns();
+          }}
+        >
+          Delete Layout Columns
+        </button>
       </div>
       <div className="menu-bar-button-group-list">
         <p>Block Color</p>

@@ -14,6 +14,7 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableCell from "@tiptap/extension-table-cell";
 import { PDFNode } from "./pdf-node-extension";
 import { SpinnerNode } from "./spinner-node";
+import { FontSize } from "./font-size";
 
 // ✅ **Table Cell Personnalisée**
 const CustomTableCell = TableCell.extend({
@@ -189,6 +190,7 @@ export const extensions = [
   TableHeader,
   CustomTableCell,
   TextColor,
+  FontSize,
   PDFNode,
   SpinnerNode,
 ];
