@@ -324,6 +324,16 @@ jobs:
 
           mkdir -p "$O2_TARGET_DIR/files"
 
+          # Keep persistent uploads and images from server-side public and link into standalone public
+          mkdir -p "$O2_TARGET_DIR/public/uploads"
+          rm -rf "$O2_TARGET_DIR/.next/standalone/public/uploads"
+          ln -sfn ../../public/uploads "$O2_TARGET_DIR/.next/standalone/public/uploads"
+
+          # Keep persistent images from server-side public/images and link into standalone public
+          mkdir -p "$O2_TARGET_DIR/public/images"
+          rm -rf "$O2_TARGET_DIR/.next/standalone/public/images"
+          ln -sfn ../../public/images "$O2_TARGET_DIR/.next/standalone/public/images"
+
           npm ci --include=dev
           npx --no-install prisma generate
           npx --no-install prisma migrate deploy
