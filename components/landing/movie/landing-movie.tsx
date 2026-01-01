@@ -12,7 +12,10 @@ export const LandingMovie = () => {
         <source src="/videos/landing.mp4" type="video/mp4" />
         Votre navigateur ne supporte pas la vidéo.
       </video>
-      <div className="absolute inset-0 flex items-center xs:hidden">
+      <div
+        className="absolute inset-0 hidden md:flex items-center"
+        data-testid="landing-movie-texts"
+      >
         <div className="w-full max-w-6xl mx-auto px-4 sm:px-8">
           <LandMovieTextItem text="ecole" />
           <LandMovieTextItem text="saint augustin" />

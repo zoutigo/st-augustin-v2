@@ -8,7 +8,7 @@ export const LandMovieTextItem = ({ text }: LandMovieTextItemProps) => {
   return (
     <div className="my-4 md:my-6 lg:my-8">
       <span
-        className="block break-words text-[clamp(1.75rem,8vw,6rem)] md:text-[clamp(2.5rem,6vw,8rem)] font-black uppercase leading-[0.9] text-transparent bg-clip-text transition-all duration-500 ease-out"
+        className="block break-words text-[clamp(1.75rem,8vw,5rem)] md:text-[clamp(3rem,6vw,9rem)] font-black uppercase leading-[0.9] text-transparent bg-clip-text transition-all duration-500 ease-out"
         style={{
           WebkitTextStroke: "2px hsl(var(--secondary))", // Contours du texte visibles
           WebkitBackgroundClip: "text",
