@@ -1,5 +1,5 @@
 export const useSession = jest.fn(() => {
-  return { data: null, status: 'unauthenticated' };
+  return { data: null, status: "unauthenticated" };
 });
 
 export const signIn = jest.fn();

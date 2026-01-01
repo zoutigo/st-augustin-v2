@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 export const Spinner: React.FC<{ size?: string; className?: string }> = ({
-  size = 'h-6 w-6',
-  className = '',
+  size = "h-6 w-6",
+  className = "",
 }) => {
   return (
     <div

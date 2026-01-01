@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { Card, CardHeader, CardContent, CardFooter } from '../ui/card';
+import Link from "next/link";
+import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 
 interface SponsorLinkProps {
   path: string;

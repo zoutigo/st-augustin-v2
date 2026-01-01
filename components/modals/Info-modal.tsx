@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Button } from '../ui/button';
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '../ui/dialog';
-import { useQuery } from '@tanstack/react-query';
-import { getModalToDisplay } from '@/actions/modals/get';
-import PageContent from '../tiptap/page-content';
-import { useModal } from '@/hooks/use-modal';
+} from "../ui/dialog";
+import { useQuery } from "@tanstack/react-query";
+import { getModalToDisplay } from "@/actions/modals/get";
+import PageContent from "../tiptap/page-content";
+import { useModal } from "@/hooks/use-modal";
 
 // Typage des modales
 interface Modal {
@@ -32,10 +32,10 @@ export const ModalInfo = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['modalToDisplay'],
+    queryKey: ["modalToDisplay"],
     queryFn: async () => {
       const modal = await getModalToDisplay();
-      console.log('useQuery - Modal fetched:', modal);
+      console.log("useQuery - Modal fetched:", modal);
       return modal;
     },
   });

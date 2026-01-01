@@ -1,6 +1,6 @@
-import 'tailwindcss/tailwind-config';
+import "tailwindcss/tailwind-config";
 
-declare module 'tailwindcss/tailwind-config' {
+declare module "tailwindcss/tailwind-config" {
   interface TailwindColors {
     ecole: string;
     espaceprive: string;

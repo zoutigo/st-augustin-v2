@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { useIsSmallScreen } from '@/hooks/use-is-small-screen';
-import { useAppStore } from '@/lib/store';
-import { NavRoutes } from '@/routes';
-import { DialogDescription } from '@radix-ui/react-dialog';
-import { ModalNavBloc } from '../navbar/modal-nav-bloc';
-import { Button } from '../ui/button';
+} from "@/components/ui/dialog";
+import { useIsSmallScreen } from "@/hooks/use-is-small-screen";
+import { useAppStore } from "@/lib/store";
+import { NavRoutes } from "@/routes";
+import { DialogDescription } from "@radix-ui/react-dialog";
+import { ModalNavBloc } from "../navbar/modal-nav-bloc";
+import { Button } from "../ui/button";
 
 const NavigationModal = () => {
   const { isMenuOpen, closeMenu } = useAppStore(); // Utilisez le store pour contrôler la modale
@@ -27,7 +27,7 @@ const NavigationModal = () => {
             !top-0  p-0 m-0 !h-full !w-full bg-white flex flex-col
             transition-transform duration-300 max-w-[90vw]
              overflow-auto max-h-[90vh]
-            ${isMenuOpen ? 'translate-y-0' : 'translate-y-full'}
+            ${isMenuOpen ? "translate-y-0" : "translate-y-full"}
           `}
       >
         <DialogHeader className="p-4">
@@ -43,7 +43,7 @@ const NavigationModal = () => {
             <ModalNavBloc key={route.slug} route={route} />
           ))}
           <Button
-            variant={'default'}
+            variant={"default"}
             onClick={closeMenu}
             className="w-full bg-red-400 text-secondary uppercase tracking-widest font-cursive 
              py-3 px-6 md:py-4 md:px-8 lg:py-5 lg:px-10 

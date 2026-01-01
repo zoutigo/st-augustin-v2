@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export const useIsSmallScreen = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -10,9 +10,9 @@ export const useIsSmallScreen = () => {
 
     checkScreenSize(); // Vérifie la taille au chargement
 
-    window.addEventListener('resize', checkScreenSize); // Écoute les changements de taille
+    window.addEventListener("resize", checkScreenSize); // Écoute les changements de taille
 
-    return () => window.removeEventListener('resize', checkScreenSize); // Nettoyage
+    return () => window.removeEventListener("resize", checkScreenSize); // Nettoyage
   }, []);
 
   return isSmallScreen;

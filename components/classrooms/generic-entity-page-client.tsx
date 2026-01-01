@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React, { useCallback, useState } from 'react';
-import { EntityBlogPostList } from '@/components/dashboard/entities/entity-blogposts-list';
-import { PageHolder } from '@/components/page-holder';
-import PageContent from '@/components/tiptap/page-content';
-import { BlogPost, Entity } from '@prisma/client';
-import { getPageBySlug } from '@/actions/pages/get';
-import { Button } from '@/components/ui/button';
-import { Spinner } from '../utils/spinner';
-import { capitalizeFirstLetter } from '../utils/capitalize-first.letter';
+import React, { useCallback, useState } from "react";
+import { EntityBlogPostList } from "@/components/dashboard/entities/entity-blogposts-list";
+import { PageHolder } from "@/components/page-holder";
+import PageContent from "@/components/tiptap/page-content";
+import { BlogPost, Entity } from "@prisma/client";
+import { getPageBySlug } from "@/actions/pages/get";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "../utils/spinner";
+import { capitalizeFirstLetter } from "../utils/capitalize-first.letter";
 
 interface GenericEntityPageClientProps {
   entity: Entity;
@@ -22,7 +22,7 @@ export const GenericEntityPageClient: React.FC<
 > = ({ entity, blogposts, blogpostsTitle, isClassroom }) => {
   const [showFournitureList, setShowFournitureList] = useState(false);
   const [fournitureContent, setFournitureContent] = useState<string | null>(
-    null
+    null,
   );
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
@@ -37,21 +37,21 @@ export const GenericEntityPageClient: React.FC<
 
       try {
         const fournituresPage = await getPageBySlug(
-          `fournitures-${entity.slug}`
+          `fournitures-${entity.slug}`,
         );
 
-        if ('error' in fournituresPage) {
+        if ("error" in fournituresPage) {
           setFournitureContent(
-            'Une erreur est survenue lors du chargement des fournitures.'
+            "Une erreur est survenue lors du chargement des fournitures.",
           );
         } else if (!fournituresPage.content) {
-          setFournitureContent('Aucune donnée disponible.');
+          setFournitureContent("Aucune donnée disponible.");
         } else {
           setFournitureContent(fournituresPage.content);
         }
       } catch (error) {
         setFournitureContent(
-          'Une erreur inattendue est survenue lors du chargement des fournitures.'
+          "Une erreur inattendue est survenue lors du chargement des fournitures.",
         );
       } finally {
         setIsLoading(false);
@@ -87,8 +87,8 @@ export const GenericEntityPageClient: React.FC<
                 disabled={isLoading}
               >
                 {showFournitureList
-                  ? 'Masquer les fournitures'
-                  : 'Liste des fournitures'}
+                  ? "Masquer les fournitures"
+                  : "Liste des fournitures"}
               </Button>
 
               {isLoading ? (
@@ -99,7 +99,7 @@ export const GenericEntityPageClient: React.FC<
                 showFournitureList && (
                   <div className="mt-4 p-4 bg-gray-100 rounded">
                     <PageContent
-                      content={fournitureContent || 'Aucune donnée disponible.'}
+                      content={fournitureContent || "Aucune donnée disponible."}
                     />
                   </div>
                 )

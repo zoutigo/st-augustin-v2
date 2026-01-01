@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 // import { auth, signOut } from '@/auth';
-import { Button } from '@/components/ui/button';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { useCurrentUser } from '@/hooks/use-current-user';
+import { Button } from "@/components/ui/button";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession, signOut } from 'next-auth/react';
-import React, { useState, useTransition } from 'react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { settings } from '@/actions/settings';
-import { SettingsSchema } from '@/schemas';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession, signOut } from "next-auth/react";
+import React, { useState, useTransition } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { settings } from "@/actions/settings";
+import { SettingsSchema } from "@/schemas";
 import {
   Form,
   FormField,
@@ -20,20 +20,20 @@ import {
   FormLabel,
   FormDescription,
   FormMessage,
-} from '@/components/ui/form';
-import { FormSuccess } from '@/components/form-success';
-import { FormError } from '@/components/form-error';
+} from "@/components/ui/form";
+import { FormSuccess } from "@/components/form-success";
+import { FormError } from "@/components/form-error";
 
-import { Input } from '@/components/ui/input';
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { UserGrade, UserRole } from '@prisma/client';
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { UserGrade, UserRole } from "@prisma/client";
 
 type Props = {};
 
@@ -59,11 +59,11 @@ type Props = {};
 // };
 const SettingsPage = (props: Props) => {
   const user = useCurrentUser();
-  console.log('user', user);
+  console.log("user", user);
   const [isPending, startTransition] = useTransition();
   const { update } = useSession();
-  const [error, setError] = useState<string | undefined>('');
-  const [success, setSuccess] = useState<string | undefined>('');
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
   const form = useForm<z.infer<typeof SettingsSchema>>({
     resolver: zodResolver(SettingsSchema),
@@ -88,7 +88,7 @@ const SettingsPage = (props: Props) => {
             setSuccess(data.success);
           }
         })
-        .catch(() => setError('Something went wrong !'));
+        .catch(() => setError("Something went wrong !"));
     });
   };
   // const onClick = () => {
@@ -236,7 +236,7 @@ const SettingsPage = (props: Props) => {
             <FormError message={error} />
             <FormSuccess message={success} />
             <Button type="submit" className="w-full" disabled={isPending}>
-              Save{' '}
+              Save{" "}
             </Button>
           </form>
         </Form>

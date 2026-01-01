@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 const domain = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -25,7 +25,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   await nodemailerTranspYahoo.sendMail({
     to: email,
     from: nodemailerOptionsYahoo.from,
-    subject: 'Confirm your email',
+    subject: "Confirm your email",
     html: `<p>Click <a href="${confirmLink}">here</a> to confirm email  </p>`,
   });
 };
@@ -34,7 +34,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
   await nodemailerTranspYahoo.sendMail({
     to: email,
     from: nodemailerOptionsYahoo.from,
-    subject: 'Reset your password',
+    subject: "Reset your password",
     html: `<p>Click <a href="${resetLink}">here</a> reset your password </p>`,
   });
 };

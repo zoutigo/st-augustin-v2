@@ -1,13 +1,13 @@
-'use server';
+"use server";
 
-import { db } from '@/lib/db';
-import { Modal } from '@prisma/client';
+import { db } from "@/lib/db";
+import { Modal } from "@prisma/client";
 
 export const getModalById = async (
-  modalId: string
+  modalId: string,
 ): Promise<Modal | { error: string }> => {
   if (!modalId) {
-    return { error: 'Veillez indiquer le numéro du modal ' };
+    return { error: "Veillez indiquer le numéro du modal " };
   }
   try {
     const modal = await db.modal.findUnique({
@@ -16,20 +16,20 @@ export const getModalById = async (
       },
     });
     if (!modal) {
-      return { error: 'Modal not found' };
+      return { error: "Modal not found" };
     }
     return modal;
   } catch (error) {
-    return { error: 'Failed to fetch page' };
+    return { error: "Failed to fetch page" };
   }
 };
 
 export const getAllModals = async (): Promise<Modal[] | { error: string }> => {
   try {
-    const modals = await db.modal.findMany({ orderBy: { createdAt: 'desc' } });
+    const modals = await db.modal.findMany({ orderBy: { createdAt: "desc" } });
     return modals;
   } catch (error) {
-    return { error: 'Failed to fetch posts' };
+    return { error: "Failed to fetch posts" };
   }
 };
 
@@ -44,7 +44,7 @@ export const getModalToDisplay = async () => {
         },
       },
       orderBy: {
-        startDate: 'desc', // Trie par date de début décroissante
+        startDate: "desc", // Trie par date de début décroissante
       },
     });
 
@@ -54,7 +54,7 @@ export const getModalToDisplay = async () => {
 
     return null; // Retourne null si aucune modale n'est disponible
   } catch (error) {
-    console.error('Error fetching modals:', error);
-    throw new Error('Failed to fetch modals.');
+    console.error("Error fetching modals:", error);
+    throw new Error("Failed to fetch modals.");
   }
 };

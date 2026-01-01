@@ -1,7 +1,7 @@
-import React from 'react';
-import PageContent from '@/components/tiptap/page-content';
-import { Page } from '@prisma/client';
-import { getPageById } from '@/actions/pages/get';
+import React from "react";
+import PageContent from "@/components/tiptap/page-content";
+import { Page } from "@prisma/client";
+import { getPageById } from "@/actions/pages/get";
 
 interface PageDetailProps {
   params: {
@@ -12,7 +12,7 @@ interface PageDetailProps {
 const PageDetail = async ({ params }: PageDetailProps) => {
   const result = await getPageById(params.pageId);
 
-  if ('error' in result) {
+  if ("error" in result) {
     return <p className="text-red-500">{result.error}</p>;
   }
 

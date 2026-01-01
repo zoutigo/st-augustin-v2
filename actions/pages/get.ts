@@ -1,15 +1,15 @@
-'use server';
+"use server";
 
 // bonne pioche
 
-import { db } from '@/lib/db';
-import { Page } from '@prisma/client';
+import { db } from "@/lib/db";
+import { Page } from "@prisma/client";
 
 export const getPageById = async (
-  pageId: string
+  pageId: string,
 ): Promise<Page | { error: string }> => {
   if (!pageId) {
-    return { error: 'Veillez indiquer le numéro de page' };
+    return { error: "Veillez indiquer le numéro de page" };
   }
   try {
     const page = await db.page.findUnique({
@@ -18,19 +18,19 @@ export const getPageById = async (
       },
     });
     if (!page) {
-      return { error: 'Page not found' };
+      return { error: "Page not found" };
     }
     return page;
   } catch (error) {
-    return { error: 'Failed to fetch page' };
+    return { error: "Failed to fetch page" };
   }
 };
 
 export const getPageByName = async (
-  pageName: string
+  pageName: string,
 ): Promise<Page | { error: string }> => {
   if (!pageName) {
-    return { error: 'Veillez indiquer le nom de page' };
+    return { error: "Veillez indiquer le nom de page" };
   }
   try {
     const page = await db.page.findUnique({
@@ -39,18 +39,18 @@ export const getPageByName = async (
       },
     });
     if (!page) {
-      return { error: 'Page not found' };
+      return { error: "Page not found" };
     }
     return page;
   } catch (error) {
-    return { error: 'Failed to fetch page' };
+    return { error: "Failed to fetch page" };
   }
 };
 export const getPageBySlug = async (
-  slug: string
+  slug: string,
 ): Promise<Page | { error: string }> => {
   if (!slug) {
-    return { error: 'Veillez indiquer le nom de page' };
+    return { error: "Veillez indiquer le nom de page" };
   }
   try {
     const page = await db.page.findUnique({
@@ -59,21 +59,21 @@ export const getPageBySlug = async (
       },
     });
     if (!page) {
-      return { error: 'Page not found' };
+      return { error: "Page not found" };
     }
     return page;
   } catch (error) {
-    return { error: 'Failed to fetch page' };
+    return { error: "Failed to fetch page" };
   }
 };
 
 export const getAllPages = async (): Promise<Page[] | { error: string }> => {
   try {
     const pages = await db.page.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
     return pages;
   } catch (error) {
-    return { error: 'Failed to fetch pages' };
+    return { error: "Failed to fetch pages" };
   }
 };

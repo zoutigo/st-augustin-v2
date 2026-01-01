@@ -1,19 +1,19 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { getToken } from 'next-auth/jwt';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
   publicRoutes,
-} from '@/routes';
+} from "@/routes";
 
 export async function middleware(req: NextRequest) {
   let url;
 
-  if (process.env.NODE_ENV === 'production') {
-    const host = req.headers.get('x-forwarded-host') || req.nextUrl.host;
-    const protocol = req.headers.get('x-forwarded-proto') || 'https';
+  if (process.env.NODE_ENV === "production") {
+    const host = req.headers.get("x-forwarded-host") || req.nextUrl.host;
+    const protocol = req.headers.get("x-forwarded-proto") || "https";
     url = `${protocol}://${host}${req.nextUrl.pathname}${req.nextUrl.search}`;
   } else {
     url = req.nextUrl.href; // En développement, utilise l'URL telle quelle
@@ -23,10 +23,10 @@ export async function middleware(req: NextRequest) {
   const secret = process.env.NEXTAUTH_SECRET;
 
   if (!secret) {
-    throw new Error('NEXTAUTH_SECRET environment variable is not defined');
+    throw new Error("NEXTAUTH_SECRET environment variable is not defined");
   }
 
-  const token = await getToken({ req, secret, salt: 'sfdsgdgdgdhhrg' });
+  const token = await getToken({ req, secret, salt: "sfdsgdgdgdhhrg" });
   const isLoggedIn = !!token;
 
   const { nextUrl } = req;
@@ -35,11 +35,11 @@ export async function middleware(req: NextRequest) {
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   // Allow access to /api/files without authentication
-  if (nextUrl.pathname.startsWith('/api/files')) {
+  if (nextUrl.pathname.startsWith("/api/files")) {
     return NextResponse.next();
   }
   // Allow access to /api/files without authentication
-  if (nextUrl.pathname.startsWith('/api/external-files')) {
+  if (nextUrl.pathname.startsWith("/api/external-files")) {
     return NextResponse.next();
   }
 
@@ -73,5 +73,5 @@ export async function middleware(req: NextRequest) {
 //   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 // };
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

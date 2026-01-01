@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import React, { useState, useRef, useCallback } from 'react';
-import { Button } from '../ui/button';
-import { SubRoute } from '@/types/nav-routes';
-import { getPathColor } from '@/lib/get-path-color';
-import { useHandleLogout } from '@/hooks/use-handle-logout';
-import { useCurrentUser } from '@/hooks/use-current-user';
-import { useCurrentGrade } from '@/hooks/use-current-grade';
-import { useRouter } from 'next/navigation';
+import Link from "next/link";
+import React, { useState, useRef, useCallback } from "react";
+import { Button } from "../ui/button";
+import { SubRoute } from "@/types/nav-routes";
+import { getPathColor } from "@/lib/get-path-color";
+import { useHandleLogout } from "@/hooks/use-handle-logout";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { useCurrentGrade } from "@/hooks/use-current-grade";
+import { useRouter } from "next/navigation";
 
 interface NavButtonProps {
   name: string;
@@ -30,8 +30,8 @@ export const DynamicNavButton = ({
   const grade = useCurrentGrade();
   const router = useRouter();
 
-  const dashboardAllowedGrades = ['ADMIN', 'MANAGER', 'MODERATOR'];
-  const dashboardIsAllowed = dashboardAllowedGrades.includes(grade || '');
+  const dashboardAllowedGrades = ["ADMIN", "MANAGER", "MODERATOR"];
+  const dashboardIsAllowed = dashboardAllowedGrades.includes(grade || "");
 
   const [showDropDown, setShowDropdown] = useState(false);
   const buttonRef = useRef<HTMLDivElement | null>(null);
@@ -57,11 +57,11 @@ export const DynamicNavButton = ({
         router.push(subroutePath);
       }
     },
-    [router, handleLogout]
+    [router, handleLogout],
   );
 
   // Afficher le bouton de connexion si l'utilisateur est déconnecté pour l'espace privé
-  if (!user && slug === 'espace-prive') {
+  if (!user && slug === "espace-prive") {
     return (
       <div className="col-span-1 relative group z-50 bg-transparent box-border">
         <Link
@@ -86,7 +86,7 @@ export const DynamicNavButton = ({
         ref={buttonRef}
         onClick={handleMainButtonClick}
         className={`text-2xl md:text-sm lg:text-xl text-secondary uppercase tracking-widest h-[4rem] w-full flex items-center justify-center xl:tracking-widest ${
-          isActive ? 'border-b-4' : ''
+          isActive ? "border-b-4" : ""
         } hover:bg-${hoverClass} hover:text-white`}
       >
         <Link href={path}>{name}</Link>
@@ -97,7 +97,7 @@ export const DynamicNavButton = ({
           {subroutes
             .filter(
               (subroute) =>
-                !(subroute.slug === 'dashboard' && !dashboardIsAllowed)
+                !(subroute.slug === "dashboard" && !dashboardIsAllowed),
             )
             .map((subroute) => (
               <div
@@ -105,9 +105,9 @@ export const DynamicNavButton = ({
                 className={`relative group2 bg-gray-100 w-full my-1 box-border hover:bg-${hoverClass}`}
               >
                 <div className="text-2xl md:text-sm lg:text-xl tracking-wider text-secondary h-[4rem] flex items-center justify-center">
-                  {subroute.slug === 'logout' ? (
+                  {subroute.slug === "logout" ? (
                     <button
-                      onClick={(e) => handleNavigation(e, '', true)}
+                      onClick={(e) => handleNavigation(e, "", true)}
                       className="w-full h-full flex items-center justify-center"
                     >
                       {subroute.name}

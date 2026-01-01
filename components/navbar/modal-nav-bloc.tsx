@@ -1,14 +1,14 @@
-import { NavRoute } from '@/types/nav-routes';
+import { NavRoute } from "@/types/nav-routes";
 
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 
-import { useRouter } from 'next/navigation';
-import { BiSolidChevronDown, BiSolidChevronUp } from 'react-icons/bi';
-import { useAppStore } from '@/lib/store';
-import { useState } from 'react';
-import { ModalNavBlocSub } from './modal-nav-bloc-sub';
+import { useRouter } from "next/navigation";
+import { BiSolidChevronDown, BiSolidChevronUp } from "react-icons/bi";
+import { useAppStore } from "@/lib/store";
+import { useState } from "react";
+import { ModalNavBlocSub } from "./modal-nav-bloc-sub";
 
-import { useCurrentUser } from '@/hooks/use-current-user';
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 interface ModalNavBlocProps {
   route: NavRoute;
@@ -21,11 +21,11 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
 
   const router = useRouter();
   const user = useCurrentUser();
-  const gotologin = !user && slug === 'espace-prive';
+  const gotologin = !user && slug === "espace-prive";
 
   const onClickLink = () => {
     closeMenu();
-    const modifiedPath = gotologin ? '/auth/login' : path;
+    const modifiedPath = gotologin ? "/auth/login" : path;
     router.push(modifiedPath, {});
   };
   const onClickIcon = () => {
@@ -44,13 +44,13 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
           onClick={onClickLink}
         >
           <span className="font-semibold font-cursive tracking-widest text-2xl text-secondary uppercase">
-            {gotologin ? 'Login' : name}
+            {gotologin ? "Login" : name}
           </span>
         </div>
         <div className="col-span-2 bg-transparent shadow-sm p-y-1 h-full">
           <Button
-            size={'sm'}
-            variant={'outline'}
+            size={"sm"}
+            variant={"outline"}
             className="min-w-full min-h-full"
             disabled={!subroutes || subroutes.length === 0 || gotologin}
             onClick={onClickIcon}

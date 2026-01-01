@@ -1,10 +1,10 @@
-import { SubRoute } from '@/types/nav-routes';
-import { useRouter } from 'next/navigation';
-import { Button } from '../ui/button';
-import { useAppStore } from '@/lib/store';
-import { useHandleLogout } from '@/hooks/use-handle-logout';
-import { memo, useCallback } from 'react';
-import { useCurrentGrade } from '@/hooks/use-current-grade';
+import { SubRoute } from "@/types/nav-routes";
+import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import { useAppStore } from "@/lib/store";
+import { useHandleLogout } from "@/hooks/use-handle-logout";
+import { memo, useCallback } from "react";
+import { useCurrentGrade } from "@/hooks/use-current-grade";
 
 interface ModalNavBlocSubProps {
   subroute: SubRoute;
@@ -21,8 +21,8 @@ export const ModalNavBlocSub = memo(function ModalNavBlocSub({
   const { handleLogout } = useHandleLogout();
   const grade = useCurrentGrade();
 
-  const dashboardAllowedGrades = ['ADMIN', 'MANAGER', 'MODERATOR'];
-  const dashboardIsAllowed = dashboardAllowedGrades.includes(grade || '');
+  const dashboardAllowedGrades = ["ADMIN", "MANAGER", "MODERATOR"];
+  const dashboardIsAllowed = dashboardAllowedGrades.includes(grade || "");
 
   const handleNavigation = useCallback(
     (e: React.MouseEvent, subroutePath: string, isLogout?: boolean) => {
@@ -36,11 +36,11 @@ export const ModalNavBlocSub = memo(function ModalNavBlocSub({
         router.push(subroutePath);
       }
     },
-    [closeMenu, handleToggleModalNavBock, handleLogout, router]
+    [closeMenu, handleToggleModalNavBock, handleLogout, router],
   );
 
   // Ne pas afficher la route du dashboard si l'accès est interdit
-  if (slug === 'dashboard' && !dashboardIsAllowed) {
+  if (slug === "dashboard" && !dashboardIsAllowed) {
     return null;
   }
 
@@ -49,7 +49,7 @@ export const ModalNavBlocSub = memo(function ModalNavBlocSub({
       <Button
         variant="outline"
         className="w-full justify-start pl-12 mt-1 min-h-12 items-center bg-primary-light"
-        onClick={(e) => handleNavigation(e, path, slug === 'logout')}
+        onClick={(e) => handleNavigation(e, path, slug === "logout")}
       >
         <span className="text-2xl tracking-widest capitalize text-secondary">
           {name}
@@ -76,4 +76,4 @@ export const ModalNavBlocSub = memo(function ModalNavBlocSub({
   );
 });
 
-ModalNavBlocSub.displayName = 'ModalNavBlocSub';
+ModalNavBlocSub.displayName = "ModalNavBlocSub";

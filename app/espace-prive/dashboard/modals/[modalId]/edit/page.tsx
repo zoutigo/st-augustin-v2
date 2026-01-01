@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import { getModalById } from '@/actions/modals/get';
-import { updateModal } from '@/actions/modals/post';
-import { ModalForm } from '@/components/dashboard/modals/modal-form';
-import { useCustomMutation } from '@/hooks/useCustomMutation';
-import { createModalSchema } from '@/schemas';
-import { Modal } from '@prisma/client';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { z } from 'zod';
+import { getModalById } from "@/actions/modals/get";
+import { updateModal } from "@/actions/modals/post";
+import { ModalForm } from "@/components/dashboard/modals/modal-form";
+import { useCustomMutation } from "@/hooks/useCustomMutation";
+import { createModalSchema } from "@/schemas";
+import { Modal } from "@prisma/client";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import { z } from "zod";
 
 const EditModalPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [error, setError] = useState<string | undefined>('');
-  const [success, setSuccess] = useState<string | undefined>('');
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const params = useParams();
   const { modalId } = params;
 
   const { data: modalData, isLoading } = useQuery<Modal>({
-    queryKey: ['modal', modalId],
+    queryKey: ["modal", modalId],
     queryFn: async () => {
       const result = await getModalById(modalId as string);
-      if ('error' in result) {
+      if ("error" in result) {
         throw new Error(result.error);
       }
       return result as Modal;
@@ -37,32 +37,32 @@ const EditModalPage = () => {
     z.infer<typeof createModalSchema>,
     unknown
   >(
-    { queryKey: ['modal', modalId] },
+    { queryKey: ["modal", modalId] },
     (values) => updateModal(modalId as string, values),
     {
       onSuccess: [
         () =>
           queryClient.invalidateQueries({
-            queryKey: ['modal', modalId],
+            queryKey: ["modal", modalId],
           }),
-        () => router.push('/espace-prive/dashboard/modals'),
+        () => router.push("/espace-prive/dashboard/modals"),
       ],
       onError: [
         (err: unknown) => {
           if (err instanceof Error) {
             setError(
-              err.message || "Quelque chose n'a pas fonctionné en front"
+              err.message || "Quelque chose n'a pas fonctionné en front",
             );
           } else {
             setError("Quelque chose n'a pas fonctionné en front");
           }
         },
       ],
-    }
+    },
   );
 
   const handleSubmit = (values: z.infer<typeof createModalSchema>) => {
-    setError('');
+    setError("");
     mutation.mutate(values);
   };
 

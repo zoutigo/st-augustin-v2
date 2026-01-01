@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,8 @@ import {
   DialogTitle,
   DialogDescription,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 interface ConfirmDialogProps {
   title?: string;
@@ -22,10 +22,10 @@ interface ConfirmDialogProps {
 }
 
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
-  title = 'Confirmation',
-  description = 'Êtes-vous sûr de vouloir continuer ?',
-  confirmText = 'Confirmer',
-  cancelText = 'Annuler',
+  title = "Confirmation",
+  description = "Êtes-vous sûr de vouloir continuer ?",
+  confirmText = "Confirmer",
+  cancelText = "Annuler",
   onConfirm,
   children,
 }) => {
@@ -51,10 +51,18 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-2">
-          <Button variant="ghost" onClick={() => setOpen(false)} disabled={loading}>
+          <Button
+            variant="ghost"
+            onClick={() => setOpen(false)}
+            disabled={loading}
+          >
             {cancelText}
           </Button>
-          <Button variant="destructive" onClick={handleConfirm} disabled={loading}>
+          <Button
+            variant="destructive"
+            onClick={handleConfirm}
+            disabled={loading}
+          >
             {confirmText}
           </Button>
         </DialogFooter>
@@ -62,4 +70,3 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     </Dialog>
   );
 };
-

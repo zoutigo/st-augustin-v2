@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { FaUser } from 'react-icons/fa';
-import { LogOut } from 'lucide-react';
-import { useCurrentUser } from '@/hooks/use-current-user';
-import { LogoutButton } from './logout-button';
-import { logout } from '@/actions/logout';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { FaUser } from "react-icons/fa";
+import { LogOut } from "lucide-react";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { LogoutButton } from "./logout-button";
+import { logout } from "@/actions/logout";
 
 export const UserButton = () => {
   const user = useCurrentUser();
@@ -22,7 +22,7 @@ export const UserButton = () => {
         <Avatar>
           <AvatarImage src={user?.image || undefined} />
           <AvatarFallback className="bg-sky-500">
-            {' '}
+            {" "}
             <FaUser className="text-white" />
           </AvatarFallback>
         </Avatar>

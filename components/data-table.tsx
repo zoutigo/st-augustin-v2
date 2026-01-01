@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -14,7 +14,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 
 interface DataTableProps<T> {
   data: T[];
@@ -22,11 +22,18 @@ interface DataTableProps<T> {
   pageSize?: number;
 }
 
-export function DataTable<T>({ data, columns, pageSize = 10 }: DataTableProps<T>) {
+export function DataTable<T>({
+  data,
+  columns,
+  pageSize = 10,
+}: DataTableProps<T>) {
   const [page, setPage] = React.useState(1);
   const totalPages = Math.max(1, Math.ceil(data.length / pageSize));
   const start = (page - 1) * pageSize;
-  const visibleData = React.useMemo(() => data.slice(start, start + pageSize), [data, start, pageSize]);
+  const visibleData = React.useMemo(
+    () => data.slice(start, start + pageSize),
+    [data, start, pageSize],
+  );
 
   const table = useReactTable({
     data: visibleData,
@@ -51,7 +58,7 @@ export function DataTable<T>({ data, columns, pageSize = 10 }: DataTableProps<T>
                     ? null
                     : flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                 </TableHead>
               ))}

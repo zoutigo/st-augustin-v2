@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEditor, EditorContent } from '@tiptap/react';
-import { useEffect, useRef } from 'react';
-import './tiptap-editor.css'; // Importer le fichier CSS
-import MenuBar from './menu-bar';
+import { useEditor, EditorContent } from "@tiptap/react";
+import { useEffect, useRef } from "react";
+import "./tiptap-editor.css"; // Importer le fichier CSS
+import MenuBar from "./menu-bar";
 
-import { extensions } from './extensions';
+import { extensions } from "./extensions";
 
 interface TiptapEditorProps {
   initialContent?: string;

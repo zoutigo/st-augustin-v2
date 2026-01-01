@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Node, mergeAttributes } from '@tiptap/core';
+import { Node, mergeAttributes } from "@tiptap/core";
 
 export interface PDFNodeOptions {
   HTMLAttributes: Record<string, any>;
 }
 
-declare module '@tiptap/core' {
+declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     pdf: {
       /**
@@ -17,16 +17,16 @@ declare module '@tiptap/core' {
 }
 
 export const PDFNode = Node.create<PDFNodeOptions>({
-  name: 'pdf',
+  name: "pdf",
 
-  group: 'block',
+  group: "block",
 
   atom: true,
 
   addOptions() {
     return {
       HTMLAttributes: {
-        class: 'pdf-wrapper',
+        class: "pdf-wrapper",
       },
     };
   },
@@ -42,16 +42,16 @@ export const PDFNode = Node.create<PDFNodeOptions>({
   parseHTML() {
     return [
       {
-        tag: 'iframe[src]',
+        tag: "iframe[src]",
       },
     ];
   },
 
   renderHTML({ HTMLAttributes }) {
     return [
-      'div',
-      mergeAttributes(this.options.HTMLAttributes, { class: 'pdf-container' }),
-      ['iframe', mergeAttributes(HTMLAttributes, { frameborder: 0 })],
+      "div",
+      mergeAttributes(this.options.HTMLAttributes, { class: "pdf-container" }),
+      ["iframe", mergeAttributes(HTMLAttributes, { frameborder: 0 })],
     ];
   },
 

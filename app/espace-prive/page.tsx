@@ -1,5 +1,5 @@
-import { PageHolder } from '@/components/page-holder';
-import React from 'react';
+import { PageHolder } from "@/components/page-holder";
+import React from "react";
 
 type Props = {};
 

@@ -1,5 +1,5 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 
 interface LandingStatsCardProps {
   name: string;
@@ -20,7 +20,7 @@ export const LandingStatsCard: React.FC<LandingStatsCardProps> = ({
       style={{
         top: positions[0],
         left: positions[1],
-        transform: 'translate(-50%, -50%)',
+        transform: "translate(-50%, -50%)",
       }}
     >
       <div

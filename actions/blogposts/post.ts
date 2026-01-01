@@ -1,25 +1,25 @@
-'use server';
+"use server";
 
-import { z } from 'zod';
-import { db } from '@/lib/db';
-import { createBlogpostSchema, updateBlogPostSchema } from '@/schemas';
+import { z } from "zod";
+import { db } from "@/lib/db";
+import { createBlogpostSchema, updateBlogPostSchema } from "@/schemas";
 
 export const createBlogPost = async (
-  values: z.infer<typeof createBlogpostSchema>
+  values: z.infer<typeof createBlogpostSchema>,
 ) => {
   const validatedFields = createBlogpostSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: 'Les champs ne sont pas correctement remplis' };
+    return { error: "Les champs ne sont pas correctement remplis" };
   }
 
   try {
     const serializegPost =
-      typeof values.content === 'string'
+      typeof values.content === "string"
         ? values.content
         : JSON.stringify(values.content);
 
-    console.log('serialized post:', serializegPost);
+    console.log("serialized post:", serializegPost);
     const blogPost = await db.blogPost.create({
       // data: {
       //   ...values,
@@ -33,9 +33,9 @@ export const createBlogPost = async (
       return { error: "Ca n'a pas marché" };
     }
 
-    return { success: 'Le post a été créé.' };
+    return { success: "Le post a été créé." };
   } catch (error) {
-    console.error('error:', error);
+    console.error("error:", error);
     return {
       error: ` Quelque chose n'a pas fonctionné : ${JSON.stringify(error)}`,
     };
@@ -44,16 +44,16 @@ export const createBlogPost = async (
 
 export const updateBlogPost = async (
   blogPostId: string,
-  values: z.infer<typeof updateBlogPostSchema>
+  values: z.infer<typeof updateBlogPostSchema>,
 ): Promise<{ success: string } | { error: string }> => {
   const validatedFields = updateBlogPostSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: 'Les champs ne sont pas correctement renseignés' };
+    return { error: "Les champs ne sont pas correctement renseignés" };
   }
 
   if (!blogPostId) {
-    return { error: 'the blog post id is missing' };
+    return { error: "the blog post id is missing" };
   }
 
   try {
@@ -66,7 +66,7 @@ export const updateBlogPost = async (
     });
 
     if (!blogPost) {
-      return { error: 'Quelque chose a mal tourné' };
+      return { error: "Quelque chose a mal tourné" };
     }
     return { success: `Le post ${values.title} a bien été modifié` };
   } catch (error) {

@@ -1,16 +1,16 @@
-'use server';
+"use server";
 
-import { z } from 'zod';
-import { db } from '@/lib/db';
-import { createEntitySchema, updateEntitySchema } from '@/schemas';
+import { z } from "zod";
+import { db } from "@/lib/db";
+import { createEntitySchema, updateEntitySchema } from "@/schemas";
 
 export const createEntity = async (
-  values: z.infer<typeof createEntitySchema>
+  values: z.infer<typeof createEntitySchema>,
 ) => {
   const validatedFields = createEntitySchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: 'Les champs ne sont pas correctement remplis' };
+    return { error: "Les champs ne sont pas correctement remplis" };
   }
 
   try {
@@ -31,17 +31,17 @@ export const createEntity = async (
 
 export const updateEntity = async (
   entityId: string,
-  values: z.infer<typeof updateEntitySchema>
+  values: z.infer<typeof updateEntitySchema>,
 ): Promise<{ success: string } | { error: string }> => {
   const validatedFields = updateEntitySchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: 'Les champs ne sont pas correctement renseignés' };
+    return { error: "Les champs ne sont pas correctement renseignés" };
   }
 
   const { name } = values;
   if (!entityId) {
-    return { error: 'the categor id is missing' };
+    return { error: "the categor id is missing" };
   }
 
   try {
@@ -53,7 +53,7 @@ export const updateEntity = async (
     });
 
     if (!entity) {
-      return { error: 'Quelque chose a mal tourné' };
+      return { error: "Quelque chose a mal tourné" };
     }
     return { success: `L'entité ${name} a bien été modifiée` };
   } catch (error) {

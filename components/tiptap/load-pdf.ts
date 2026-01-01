@@ -1,11 +1,11 @@
-import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
+import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 
 // Définissez explicitement la version pour le Worker PDF.js
 // const pdfjsVersion = '4.10.38';
 // // GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsVersion}/pdf.worker.min.js`;
 // GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs`;
 
-GlobalWorkerOptions.workerSrc = '/libs/pdfjs/pdf.worker.min.mjs';
+GlobalWorkerOptions.workerSrc = "/libs/pdfjs/pdf.worker.min.mjs";
 
 /**
  * Charge un PDF et retourne un tableau d'images représentant ses pages
@@ -13,7 +13,7 @@ GlobalWorkerOptions.workerSrc = '/libs/pdfjs/pdf.worker.min.mjs';
  */
 export const loadPdfPagesAsImages = async (
   pdfUrl: string,
-  quality: number = 0.6 // Valeur par défaut pour la qualité
+  quality: number = 0.6, // Valeur par défaut pour la qualité
 ): Promise<string[]> => {
   try {
     const pdf = await getDocument(pdfUrl).promise;
@@ -23,8 +23,8 @@ export const loadPdfPagesAsImages = async (
       const page = await pdf.getPage(i);
       const viewport = page.getViewport({ scale: 1.5 });
 
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
       canvas.width = viewport.width;
       canvas.height = viewport.height;
 
@@ -36,16 +36,16 @@ export const loadPdfPagesAsImages = async (
       await page.render(renderContext).promise;
 
       // Utiliser le format JPEG avec compression
-      const compressedImage = canvas.toDataURL('image/jpeg', quality);
+      const compressedImage = canvas.toDataURL("image/jpeg", quality);
       pageImages.push(compressedImage);
     }
 
     console.log(
-      `Compression terminée : ${pageImages.length} pages converties en images`
+      `Compression terminée : ${pageImages.length} pages converties en images`,
     );
     return pageImages;
   } catch (error) {
-    console.error('Erreur lors du chargement du PDF :', error);
-    throw new Error('Échec du chargement du PDF');
+    console.error("Erreur lors du chargement du PDF :", error);
+    throw new Error("Échec du chargement du PDF");
   }
 };

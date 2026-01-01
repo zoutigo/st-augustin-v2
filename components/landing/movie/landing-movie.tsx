@@ -1,4 +1,4 @@
-import { LandMovieTextItem } from './land-movie-text-item';
+import { LandMovieTextItem } from "./land-movie-text-item";
 
 export const LandingMovie = () => {
   return (

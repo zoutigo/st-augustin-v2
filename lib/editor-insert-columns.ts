@@ -1,5 +1,5 @@
-import { Editor } from '@tiptap/react';
-import { TextSelection } from 'prosemirror-state';
+import { Editor } from "@tiptap/react";
+import { TextSelection } from "prosemirror-state";
 
 interface editorInsertColumnsProps {
   editor: Editor | null;
@@ -13,31 +13,31 @@ export const editorInsertColumns = ({ editor }: editorInsertColumnsProps) => {
     .chain()
     .focus()
     .insertContent({
-      type: 'columns',
+      type: "columns",
       content: [
         {
-          type: 'column',
+          type: "column",
           content: [
             {
-              type: 'paragraph',
+              type: "paragraph",
               content: [
                 {
-                  type: 'text',
-                  text: 'Column 1 content',
+                  type: "text",
+                  text: "Column 1 content",
                 },
               ],
             },
           ],
         },
         {
-          type: 'column',
+          type: "column",
           content: [
             {
-              type: 'paragraph',
+              type: "paragraph",
               content: [
                 {
-                  type: 'text',
-                  text: 'Column 2 content',
+                  type: "text",
+                  text: "Column 2 content",
                 },
               ],
             },
@@ -50,7 +50,7 @@ export const editorInsertColumns = ({ editor }: editorInsertColumnsProps) => {
   // Définir la sélection de texte à l'intérieur de la première colonne
   const firstColumnPos = editor.view.state.doc.resolve(2); // Position après l'ouverture de la première colonne
   editor.view.dispatch(
-    editor.view.state.tr.setSelection(TextSelection.near(firstColumnPos))
+    editor.view.state.tr.setSelection(TextSelection.near(firstColumnPos)),
   );
   editor.view.focus();
 };

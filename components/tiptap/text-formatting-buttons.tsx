@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Editor } from '@tiptap/react';
+import React, { useState } from "react";
+import { Editor } from "@tiptap/react";
 import {
   FaBold,
   FaItalic,
@@ -14,8 +14,8 @@ import {
   FaAlignRight,
   FaAlignJustify,
   FaParagraph,
-} from 'react-icons/fa';
-import { ColorPalette } from './color-palette';
+} from "react-icons/fa";
+import { ColorPalette } from "./color-palette";
 
 interface TextFormattingButtonsProps {
   editor: Editor;
@@ -42,7 +42,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         const { from, to } = selection;
 
         if (from === to) {
-          console.warn('No text selected. Cannot apply color.');
+          console.warn("No text selected. Cannot apply color.");
           return false;
         }
 
@@ -50,12 +50,12 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         tr.addMark(from, to, state.schema.marks.textColor.create({ color }));
 
         if (!tr.docChanged) {
-          console.warn('Transaction did not change the document.');
+          console.warn("Transaction did not change the document.");
           return false;
         }
 
         if (!dispatch) {
-          console.warn('Dispatch function is not available!');
+          console.warn("Dispatch function is not available!");
           return false;
         }
 
@@ -82,24 +82,24 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         const { from, to } = selection;
 
         if (from === to) {
-          console.warn('No text selected. Cannot clear color.');
+          console.warn("No text selected. Cannot clear color.");
           return false;
         }
 
         tr.removeMark(from, to, state.schema.marks.textColor);
 
         if (!tr.docChanged) {
-          console.warn('Transaction did not change the document.');
+          console.warn("Transaction did not change the document.");
           return false;
         }
 
         if (!dispatch) {
-          console.warn('Dispatch function is not available!');
+          console.warn("Dispatch function is not available!");
           return false;
         }
 
         dispatch(tr);
-        console.log('Cleared text color');
+        console.log("Cleared text color");
         return true;
       })
       .run();
@@ -112,7 +112,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           onClick={() =>
             handleButtonClick(() => editor.chain().focus().toggleBold().run())
           }
-          className={editor.isActive('bold') ? 'is-active' : ''}
+          className={editor.isActive("bold") ? "is-active" : ""}
         >
           <FaBold />
         </button>
@@ -121,7 +121,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           onClick={() =>
             handleButtonClick(() => editor.chain().focus().toggleItalic().run())
           }
-          className={editor.isActive('italic') ? 'is-active' : ''}
+          className={editor.isActive("italic") ? "is-active" : ""}
         >
           <FaItalic />
         </button>
@@ -129,10 +129,10 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().toggleUnderline().run()
+              editor.chain().focus().toggleUnderline().run(),
             )
           }
-          className={editor.isActive('underline') ? 'is-active' : ''}
+          className={editor.isActive("underline") ? "is-active" : ""}
         >
           <FaUnderline />
         </button>
@@ -140,10 +140,10 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().toggleBulletList().run()
+              editor.chain().focus().toggleBulletList().run(),
             )
           }
-          className={editor.isActive('bulletList') ? 'is-active' : ''}
+          className={editor.isActive("bulletList") ? "is-active" : ""}
         >
           <FaListUl />
         </button>
@@ -151,10 +151,10 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().toggleOrderedList().run()
+              editor.chain().focus().toggleOrderedList().run(),
             )
           }
-          className={editor.isActive('orderedList') ? 'is-active' : ''}
+          className={editor.isActive("orderedList") ? "is-active" : ""}
         >
           <FaListOl />
         </button>
@@ -162,11 +162,11 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().toggleHeading({ level: 1 }).run()
+              editor.chain().focus().toggleHeading({ level: 1 }).run(),
             )
           }
           className={
-            editor.isActive('heading', { level: 1 }) ? 'is-active' : ''
+            editor.isActive("heading", { level: 1 }) ? "is-active" : ""
           }
         >
           <FaHeading /> H1
@@ -176,11 +176,11 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().toggleHeading({ level: 2 }).run()
+              editor.chain().focus().toggleHeading({ level: 2 }).run(),
             )
           }
           className={
-            editor.isActive('heading', { level: 2 }) ? 'is-active' : ''
+            editor.isActive("heading", { level: 2 }) ? "is-active" : ""
           }
         >
           H2
@@ -189,11 +189,11 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().toggleHeading({ level: 3 }).run()
+              editor.chain().focus().toggleHeading({ level: 3 }).run(),
             )
           }
           className={
-            editor.isActive('heading', { level: 3 }) ? 'is-active' : ''
+            editor.isActive("heading", { level: 3 }) ? "is-active" : ""
           }
         >
           H3
@@ -203,7 +203,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           onClick={() =>
             handleButtonClick(() => editor.chain().focus().setParagraph().run())
           }
-          className={editor.isActive('paragraph') ? 'is-active' : ''}
+          className={editor.isActive("paragraph") ? "is-active" : ""}
         >
           <FaParagraph /> Paragraph
         </button>
@@ -212,7 +212,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           onClick={() =>
             handleButtonClick(() => editor.chain().focus().toggleStrike().run())
           }
-          className={editor.isActive('strike') ? 'is-active' : ''}
+          className={editor.isActive("strike") ? "is-active" : ""}
         >
           <FaStrikethrough />
         </button>
@@ -220,10 +220,10 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().toggleHighlight().run()
+              editor.chain().focus().toggleHighlight().run(),
             )
           }
-          className={editor.isActive('highlight') ? 'is-active' : ''}
+          className={editor.isActive("highlight") ? "is-active" : ""}
         >
           <FaHighlighter />
         </button>
@@ -231,10 +231,10 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().setTextAlign('left').run()
+              editor.chain().focus().setTextAlign("left").run(),
             )
           }
-          className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
+          className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}
         >
           <FaAlignLeft />
         </button>
@@ -242,11 +242,11 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().setTextAlign('center').run()
+              editor.chain().focus().setTextAlign("center").run(),
             )
           }
           className={
-            editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''
+            editor.isActive({ textAlign: "center" }) ? "is-active" : ""
           }
         >
           <FaAlignCenter />
@@ -255,10 +255,10 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().setTextAlign('right').run()
+              editor.chain().focus().setTextAlign("right").run(),
             )
           }
-          className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}
+          className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}
         >
           <FaAlignRight />
         </button>
@@ -266,11 +266,11 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={() =>
             handleButtonClick(() =>
-              editor.chain().focus().setTextAlign('justify').run()
+              editor.chain().focus().setTextAlign("justify").run(),
             )
           }
           className={
-            editor.isActive({ textAlign: 'justify' }) ? 'is-active' : ''
+            editor.isActive({ textAlign: "justify" }) ? "is-active" : ""
           }
         >
           <FaAlignJustify />
@@ -287,11 +287,11 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           type="button"
           onClick={clearTextColor}
           style={{
-            marginTop: '8px',
-            backgroundColor: '#fff',
-            border: '1px solid #ccc',
-            padding: '4px 8px',
-            borderRadius: '4px',
+            marginTop: "8px",
+            backgroundColor: "#fff",
+            border: "1px solid #ccc",
+            padding: "4px 8px",
+            borderRadius: "4px",
           }}
         >
           Clear Text Color

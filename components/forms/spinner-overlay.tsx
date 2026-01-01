@@ -1,5 +1,5 @@
-import React from 'react';
-import { ClipLoader } from 'react-spinners';
+import React from "react";
+import { ClipLoader } from "react-spinners";
 
 interface SpinnerOverlayProps {
   visible: boolean;
@@ -11,15 +11,15 @@ export const SpinnerOverlay: React.FC<SpinnerOverlayProps> = ({ visible }) => {
   return (
     <div
       style={{
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
         zIndex: 10,
       }}
     >

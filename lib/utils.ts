@@ -1,6 +1,6 @@
 // lib/utils.ts
-import { ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 /**
  * Combine des classes CSS conditionnelles avec la prise en charge de Tailwind Merge.

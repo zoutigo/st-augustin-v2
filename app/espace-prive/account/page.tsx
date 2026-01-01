@@ -1,9 +1,9 @@
-'use server';
+"use server";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button'; // Utilisation de shadcn button
-import { currentUser } from '@/lib/auth';
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button"; // Utilisation de shadcn button
+import { currentUser } from "@/lib/auth";
 
 export default async function ProfilePage() {
   const user = await currentUser();
@@ -44,37 +44,37 @@ export default async function ProfilePage() {
           )}
 
           <h2 className="text-2xl font-medium text-gray-800">
-            {user.firstname || 'Utilisateur'} {user.lastname || ''}
+            {user.firstname || "Utilisateur"} {user.lastname || ""}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
           <div className="p-4 border rounded-lg bg-gray-50">
             <p className="text-lg font-semibold">Nom :</p>
-            <p>{user.lastname || 'Non renseigné'}</p>
+            <p>{user.lastname || "Non renseigné"}</p>
           </div>
           <div className="p-4 border rounded-lg bg-gray-50">
             <p className="text-lg font-semibold">Prénom :</p>
-            <p>{user.firstname || 'Non renseigné'}</p>
+            <p>{user.firstname || "Non renseigné"}</p>
           </div>
           <div className="p-4 border rounded-lg bg-gray-50">
             <p className="text-lg font-semibold">Email :</p>
-            <p>{user.email || 'Non renseigné'}</p>
+            <p>{user.email || "Non renseigné"}</p>
           </div>
           <div className="p-4 border rounded-lg bg-gray-50">
             <p className="text-lg font-semibold">Téléphone :</p>
-            <p>{user.phone || 'Non renseigné'}</p>
+            <p>{user.phone || "Non renseigné"}</p>
           </div>
           <div className="p-4 border rounded-lg bg-gray-50">
             <p className="text-lg font-semibold">Rôle :</p>
             <p className="uppercase text-primary font-bold">
-              {user.role || 'Non défini'}
+              {user.role || "Non défini"}
             </p>
           </div>
           <div className="p-4 border rounded-lg bg-gray-50">
             <p className="text-lg font-semibold">Grade :</p>
             <p className="uppercase text-secondary font-bold">
-              {user.grade || 'Non défini'}
+              {user.grade || "Non défini"}
             </p>
           </div>
         </div>

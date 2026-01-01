@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Pagination,
   PaginationContent,
@@ -7,7 +7,7 @@ import {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
-} from '@/components/ui/pagination';
+} from "@/components/ui/pagination";
 
 interface CustomPaginationProps {
   currentPage: number;
@@ -30,8 +30,8 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
             onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
             className={
               currentPage === 1
-                ? 'text-gray-400 pointer-events-none'
-                : 'hover:text-primary'
+                ? "text-gray-400 pointer-events-none"
+                : "hover:text-primary"
             }
           >
             Précédente
@@ -44,7 +44,7 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
             <PaginationLink
               href="#"
               onClick={() => onPageChange(i + 1)}
-              className={currentPage === i + 1 ? 'font-bold text-primary' : ''}
+              className={currentPage === i + 1 ? "font-bold text-primary" : ""}
             >
               {i + 1}
             </PaginationLink>
@@ -65,8 +65,8 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
             onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
             className={
               currentPage === totalPages
-                ? 'text-gray-400 pointer-events-none'
-                : 'hover:text-primary'
+                ? "text-gray-400 pointer-events-none"
+                : "hover:text-primary"
             }
           >
             Suivant

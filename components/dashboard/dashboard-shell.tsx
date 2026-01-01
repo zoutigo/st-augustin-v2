@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Menu as MenuIcon } from 'lucide-react';
-import Sidebar from '@/components/dashboard/sidebar';
+import React from "react";
+import { Menu as MenuIcon } from "lucide-react";
+import Sidebar from "@/components/dashboard/sidebar";
 
-export const DashboardShell: React.FC<{ title?: string; children: React.ReactNode }> = ({
-  title = 'Tableau de bord',
-  children,
-}) => {
+export const DashboardShell: React.FC<{
+  title?: string;
+  children: React.ReactNode;
+}> = ({ title = "Tableau de bord", children }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -30,7 +30,9 @@ export const DashboardShell: React.FC<{ title?: string; children: React.ReactNod
 
       <div className="flex gap-4">
         {/* Sidebar */}
-        <div className={`sm:static ${open ? 'block' : 'hidden'} sm:block sm:w-64 shrink-0`}>
+        <div
+          className={`sm:static ${open ? "block" : "hidden"} sm:block sm:w-64 shrink-0`}
+        >
           <Sidebar onNavigate={() => setOpen(false)} />
         </div>
         {/* Content */}

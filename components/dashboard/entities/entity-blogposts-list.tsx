@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { BlogPost } from '@prisma/client';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import React, { useState } from "react";
+import { BlogPost } from "@prisma/client";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-import { CustomPagination } from '@/components/utils/custom-pagination';
+import { CustomPagination } from "@/components/utils/custom-pagination";
 
 interface EntityBlogPostListProps {
   title: string;
@@ -50,7 +50,7 @@ export const EntityBlogPostList: React.FC<EntityBlogPostListProps> = ({
                   onClick={() => onPostSelect && onPostSelect(post)}
                   className="min-w-full text-secondary hover:bg-secondary-ligth  flex items-center justify-start gap-2 px-4"
                 >
-                  <span className="w-2 h-2 bg-secondary rounded-full"></span>{' '}
+                  <span className="w-2 h-2 bg-secondary rounded-full"></span>{" "}
                   {/* Marqueur de liste */}
                   <span className="text-left">{post.title}</span>
                 </Button>

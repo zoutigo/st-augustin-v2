@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import React, { ReactNode, useState } from 'react';
-import { RiMessage3Fill } from 'react-icons/ri';
+import { Button } from "@/components/ui/button";
+import React, { ReactNode, useState } from "react";
+import { RiMessage3Fill } from "react-icons/ri";
 
 interface StyledParagraphProps {
   children: ReactNode;
@@ -41,7 +41,7 @@ export const LandingMessage = () => {
         className="flex items-center gap-3"
       >
         <RiMessage3Fill className="text-6xl text-secondary" />
-        <span className="text-secondary">{'Le mot du principal'}</span>
+        <span className="text-secondary">{"Le mot du principal"}</span>
       </Button>
 
       {showMessage && (

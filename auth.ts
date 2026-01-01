@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import NextAuth from "next-auth";
 // Ensure NextAuth v5 env in all environments (especially on cPanel)
 if (!process.env.AUTH_URL && process.env.NEXTAUTH_URL) {
   process.env.AUTH_URL = process.env.NEXTAUTH_URL;
@@ -6,19 +6,19 @@ if (!process.env.AUTH_URL && process.env.NEXTAUTH_URL) {
 if (!process.env.AUTH_SECRET && process.env.NEXTAUTH_SECRET) {
   process.env.AUTH_SECRET = process.env.NEXTAUTH_SECRET;
 }
-process.env.AUTH_TRUST_HOST = process.env.AUTH_TRUST_HOST || 'true';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import authConfig from '@/auth.config';
-import { db } from '@/lib/db';
-import { getUserByEmail, getUserById } from './data/user';
-import { UserGrade, UserRole } from '@prisma/client';
-import { getAccountByUserId } from './data/account';
+process.env.AUTH_TRUST_HOST = process.env.AUTH_TRUST_HOST || "true";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import authConfig from "@/auth.config";
+import { db } from "@/lib/db";
+import { getUserByEmail, getUserById } from "./data/user";
+import { UserGrade, UserRole } from "@prisma/client";
+import { getAccountByUserId } from "./data/account";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(db),
   pages: {
-    signIn: '/auth/login',
-    error: '/auth/error',
+    signIn: "/auth/login",
+    error: "/auth/error",
   },
   events: {
     async linkAccount({ user }) {
@@ -30,7 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider !== 'credentials') {
+      if (account?.provider !== "credentials") {
         const existingUser = await getUserByEmail(user.email as string);
 
         if (existingUser) {
@@ -132,7 +132,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
   },
   ...authConfig,
 });

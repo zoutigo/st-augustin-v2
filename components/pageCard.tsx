@@ -3,12 +3,12 @@ import {
   CardHeader,
   CardContent,
   CardFooter,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import Link from 'next/link';
-import { NavRoutes } from '@/routes';
-import { NavRoute } from '@/types/nav-routes';
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
+import { NavRoutes } from "@/routes";
+import { NavRoute } from "@/types/nav-routes";
 
 interface PageCardProps {
   slug: string;

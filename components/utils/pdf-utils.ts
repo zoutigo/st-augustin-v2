@@ -1,8 +1,8 @@
-import { GlobalWorkerOptions, getDocument, PDFDocumentProxy } from 'pdfjs-dist';
+import { GlobalWorkerOptions, getDocument, PDFDocumentProxy } from "pdfjs-dist";
 
 // Fonction pour configurer le worker PDF.js
 export async function configurePdfJsWorker() {
-  const pdfJsVersion = (await import('pdfjs-dist/package.json')).version;
+  const pdfJsVersion = (await import("pdfjs-dist/package.json")).version;
   GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfJsVersion}/pdf.worker.min.js`;
 }
 

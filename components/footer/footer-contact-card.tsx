@@ -1,8 +1,8 @@
-import { Card, CardHeader, CardContent, CardFooter } from '../ui/card';
-import { FaLocationDot } from 'react-icons/fa6';
-import { FaPhoneAlt } from 'react-icons/fa';
-import { IoMail } from 'react-icons/io5';
-import Link from 'next/link';
+import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaPhoneAlt } from "react-icons/fa";
+import { IoMail } from "react-icons/io5";
+import Link from "next/link";
 
 export const FooterContactcard = () => {
   const phone = `0474907880`;
@@ -13,7 +13,7 @@ export const FooterContactcard = () => {
   return (
     <Card className="bg-transparent border-transparent text-white md:col-span-2 text-sm sm:text-base md:text-lg">
       <CardHeader className="uppercase text-xl sm:text-2xl  font-semibold tracking-wider text-left">
-        {' '}
+        {" "}
         Nous Contacter
       </CardHeader>
       <CardContent>

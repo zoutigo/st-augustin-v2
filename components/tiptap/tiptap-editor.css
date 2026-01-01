@@ -128,7 +128,7 @@
   background-color: #e0e0e0; /* Changer la couleur de fond lors de la sélection */
 }
 
-.ProseMirror span[style*='color'] {
+.ProseMirror span[style*="color"] {
   transition: color 0.3s ease;
 }
 /* Styles pour le redimensionnement des colonnes de tableau */
@@ -147,7 +147,7 @@ td {
 
 th::after,
 td::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   top: 0;

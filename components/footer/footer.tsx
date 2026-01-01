@@ -1,8 +1,8 @@
-import { FooterContactcard } from './footer-contact-card';
-import { FooterCopyrigths } from './footer-copyrigths';
-import { FooterLogo } from './footer-logo';
-import { FooterSponsorCard } from './footer-sponsors-card';
-import { FooterSitemap } from './footer-sitemap';
+import { FooterContactcard } from "./footer-contact-card";
+import { FooterCopyrigths } from "./footer-copyrigths";
+import { FooterLogo } from "./footer-logo";
+import { FooterSponsorCard } from "./footer-sponsors-card";
+import { FooterSitemap } from "./footer-sitemap";
 
 export const Footer = () => {
   return (

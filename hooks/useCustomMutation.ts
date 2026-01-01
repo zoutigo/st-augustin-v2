@@ -3,31 +3,31 @@ import {
   useQueryClient,
   UseMutationOptions,
   InvalidateQueryFilters,
-} from '@tanstack/react-query';
+} from "@tanstack/react-query";
 
 type CustomMutationOptions<TData, TError, TVariables, TContext> = {
   onSuccess?: ((
     data: TData,
     variables: TVariables,
-    context: TContext | undefined
+    context: TContext | undefined,
   ) => void)[];
   onError?: ((
     error: TError,
     variables: TVariables,
-    context: TContext | undefined
+    context: TContext | undefined,
   ) => void)[];
   onSettled?: (
     data: TData | undefined,
     error: TError | null,
     variables: TVariables,
-    context: TContext | undefined
+    context: TContext | undefined,
   ) => void;
 };
 
 export const useCustomMutation = <TData, TError, TVariables, TContext>(
   key: InvalidateQueryFilters,
   mutationFn: (variables: TVariables) => Promise<TData>,
-  options?: CustomMutationOptions<TData, TError, TVariables, TContext>
+  options?: CustomMutationOptions<TData, TError, TVariables, TContext>,
 ) => {
   const queryClient = useQueryClient();
 
@@ -41,7 +41,7 @@ export const useCustomMutation = <TData, TError, TVariables, TContext>(
     onSuccess: (data, variables, context) => {
       if (options?.onSuccess) {
         options.onSuccess.forEach((callback) =>
-          callback(data, variables, context)
+          callback(data, variables, context),
         );
       }
       queryClient.invalidateQueries(key);
@@ -49,7 +49,7 @@ export const useCustomMutation = <TData, TError, TVariables, TContext>(
     onError: (error, variables, context) => {
       if (options?.onError) {
         options.onError.forEach((callback) =>
-          callback(error, variables, context)
+          callback(error, variables, context),
         );
       }
     },
@@ -61,6 +61,6 @@ export const useCustomMutation = <TData, TError, TVariables, TContext>(
   };
 
   return useReactQueryMutation<TData, TError, TVariables, TContext>(
-    mutationOptions
+    mutationOptions,
   );
 };

@@ -1,5 +1,5 @@
 /* Assurez-vous que les polices sont bien importées */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Raleway:wght@400;700&family=Comfortaa:wght@400;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Raleway:wght@400;700&family=Comfortaa:wght@400;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -12,8 +12,8 @@ body,
 }
 
 body {
-  font-family: var(--font-poppins), var(--font-raleway), var(--font-comfortaa),
-    sans-serif;
+  font-family:
+    var(--font-poppins), var(--font-raleway), var(--font-comfortaa), sans-serif;
 }
 
 @layer base {

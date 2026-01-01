@@ -1,10 +1,10 @@
-'use client';
-import { getColorByName } from '@/lib/get-color-by-name';
-import { getPathColor } from '@/lib/get-path-color';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useCallback } from 'react';
-import styled from 'styled-components';
+"use client";
+import { getColorByName } from "@/lib/get-color-by-name";
+import { getPathColor } from "@/lib/get-path-color";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useCallback } from "react";
+import styled from "styled-components";
 
 interface StyledNavProps extends React.HTMLProps<HTMLDivElement> {
   $dynamicColor: string; // Prop transitoire
@@ -16,7 +16,7 @@ const StyledNav = styled.nav<StyledNavProps>`
 
 const Breadcrumb = () => {
   const pathname = usePathname();
-  const pathSegments = pathname.split('/').filter(Boolean);
+  const pathSegments = pathname.split("/").filter(Boolean);
 
   const dynamicColor = useCallback((): string => {
     // Récupère le nom de la couleur associé au path
@@ -28,18 +28,18 @@ const Breadcrumb = () => {
 
   const formatLabel = (slug: string) => {
     const mappings: Record<string, string> = {
-      'espace-prive': 'Espace-Privé',
-      dashboard: 'Dashboard',
-      modals: 'Modals',
-      blogposts: 'Posts',
-      entities: 'Entités',
-      pages: 'Pages',
+      "espace-prive": "Espace-Privé",
+      dashboard: "Dashboard",
+      modals: "Modals",
+      blogposts: "Posts",
+      entities: "Entités",
+      pages: "Pages",
     };
     if (mappings[slug]) return mappings[slug];
     return slug
-      .split('-')
+      .split("-")
       .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(' ');
+      .join(" ");
   };
 
   return (
@@ -49,13 +49,16 @@ const Breadcrumb = () => {
     >
       <ul className="flex space-x-2 items-center pl-6 text-base text-gray-900 font-semibold">
         {pathSegments.map((segment, index) => {
-          const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
+          const href = `/${pathSegments.slice(0, index + 1).join("/")}`;
           const label = formatLabel(segment);
           const isLast = index === pathSegments.length - 1;
           return (
             <li key={href} className="flex items-center">
               {!isLast ? (
-                <Link href={href} className="hover:underline hover:text-gray-800">
+                <Link
+                  href={href}
+                  className="hover:underline hover:text-gray-800"
+                >
                   {label}
                 </Link>
               ) : (

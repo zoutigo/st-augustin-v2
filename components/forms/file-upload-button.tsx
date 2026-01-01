@@ -1,7 +1,10 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { Button } from "@/components/ui/button";
 
-import { ACCEPT_ATTRIBUTE, humanAllowedTypes } from '@/components/utils/upload-constraints';
+import {
+  ACCEPT_ATTRIBUTE,
+  humanAllowedTypes,
+} from "@/components/utils/upload-constraints";
 
 interface FileUploadButtonProps {
   onFileSelect: (file: File | null) => void; // Callback lorsque le fichier est sélectionné
@@ -18,7 +21,7 @@ export const FileUploadButton: React.FC<FileUploadButtonProps> = ({
   };
 
   const triggerFileUpload = () => {
-    document.getElementById('file-upload-input')?.click();
+    document.getElementById("file-upload-input")?.click();
   };
 
   return (
@@ -28,7 +31,7 @@ export const FileUploadButton: React.FC<FileUploadButtonProps> = ({
         type="file"
         accept={ACCEPT_ATTRIBUTE}
         onChange={handleFileChange}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
       />
       <Button
         type="button"
@@ -38,7 +41,9 @@ export const FileUploadButton: React.FC<FileUploadButtonProps> = ({
       >
         {buttonText}
       </Button>
-      <p className="mt-1 text-xs text-muted-foreground">Types acceptés: {humanAllowedTypes}</p>
+      <p className="mt-1 text-xs text-muted-foreground">
+        Types acceptés: {humanAllowedTypes}
+      </p>
     </div>
   );
 };
