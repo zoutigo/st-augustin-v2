@@ -22,12 +22,12 @@ export const Navbar = () => {
   const { isMenuOpen, toggleMenu } = useAppStore(); // Utilisez Zustand
 
   return (
-    <header className="flex flex-row justify-between items-center h-[14vh] min-w-[100%] px-10 shadow-sm">
+    <header className="flex flex-row justify-between items-center h-[14vh] w-full px-[12%] shadow-sm">
       <div className="mt-12">
         <Logo />
       </div>
       {/* <nav className="hidden lg:flex bg-white w-[80%] flex-row justify-between items-center mx-2 gap-1"> */}
-      <nav className="hidden lg:grid grid-cols-6 bg-slate-50 w-[80%]">
+      <nav className="hidden lg:grid grid-cols-5 bg-slate-50 flex-1 ml-6">
         {NavRoutes.map((route) => {
           return (
             <DynamicNavButton
