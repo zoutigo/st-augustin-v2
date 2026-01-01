@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, { useState, useTransition } from 'react';
-import { createEntitySchema } from '@/schemas';
-import { z } from 'zod';
-import { useRouter } from 'next/navigation';
-import { createEntity } from '@/actions/entity/posts';
-import { EntityForm } from '@/components/dashboard/entities/entity-form';
+import React, { useState, useTransition } from "react";
+import { createEntitySchema } from "@/schemas";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { createEntity } from "@/actions/entity/posts";
+import { EntityForm } from "@/components/dashboard/entities/entity-form";
 
 type CreateEntityInput = z.infer<typeof createEntitySchema>;
 
@@ -14,17 +14,17 @@ type Props = {};
 const CreateEntityPage = (props: Props) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>('');
-  const [success, setSuccess] = useState<string | undefined>('');
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
   const initialValues: Partial<CreateEntityInput> = {
-    name: '',
-    slug: '',
-    description: '',
+    name: "",
+    slug: "",
+    description: "",
   };
 
   const handleSubmit = (values: CreateEntityInput) => {
-    setError('');
+    setError("");
     startTransition(() => {
       createEntity(values)
         .then((data) => {
@@ -34,7 +34,7 @@ const CreateEntityPage = (props: Props) => {
           if (data.success) {
             setSuccess(data.success);
 
-            router.push('/espace-prive/dashboard/entities');
+            router.push("/espace-prive/dashboard/entities");
             router.refresh();
           }
         })

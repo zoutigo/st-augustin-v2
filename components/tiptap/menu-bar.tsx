@@ -1,13 +1,13 @@
-import { Editor } from '@tiptap/react';
-import { TextSelection } from 'prosemirror-state'; // Importez TextSelection
-import React, { useState } from 'react';
-import { FaImage } from 'react-icons/fa';
-import TableButtons from './table-buttons';
-import TextFormattingButtons from './text-formatting-buttons';
-import ColumnButtons from './columns-buttons';
-import { ToggleButton } from './toggle-button';
-import { FileUploadButton } from '../forms/file-upload-button';
-import { handleFile } from '../utils/handle-editor-file';
+import { Editor } from "@tiptap/react";
+import { TextSelection } from "prosemirror-state"; // Importez TextSelection
+import React, { useState } from "react";
+import { FaImage } from "react-icons/fa";
+import TableButtons from "./table-buttons";
+import TextFormattingButtons from "./text-formatting-buttons";
+import ColumnButtons from "./columns-buttons";
+import { ToggleButton } from "./toggle-button";
+import { FileUploadButton } from "../forms/file-upload-button";
+import { handleFile } from "../utils/handle-editor-file";
 
 interface MenuBarProps {
   editor: Editor | null;
@@ -54,7 +54,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
         </ToggleButton>
         <FileUploadButton
           onFileSelect={(file) => handleFile(file, editor)}
-          buttonText="Upload Image"
+          buttonText="Ajouter image/PDF"
         />
       </div>
 

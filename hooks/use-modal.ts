@@ -1,5 +1,5 @@
-import { syncModalStore, useModalStore } from '@/stores/modal-store';
-import { useEffect } from 'react';
+import { syncModalStore, useModalStore } from "@/stores/modal-store";
+import { useEffect } from "react";
 
 export const useModal = () => {
   const { viewCount, canDisplayModal, incrementViewCount, resetViewCount } =

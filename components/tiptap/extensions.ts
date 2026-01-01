@@ -1,19 +1,19 @@
-import { Node, mergeAttributes, Mark } from '@tiptap/core';
+import { Node, mergeAttributes, Mark } from "@tiptap/core";
 
-import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
-import Highlight from '@tiptap/extension-highlight';
-import TextAlign from '@tiptap/extension-text-align';
-import Heading from '@tiptap/extension-heading';
-import Strike from '@tiptap/extension-strike';
-import Image from '@tiptap/extension-image';
-import ResizeImage from 'tiptap-extension-resize-image';
-import Table from '@tiptap/extension-table';
-import TableRow from '@tiptap/extension-table-row';
-import TableHeader from '@tiptap/extension-table-header';
-import TableCell from '@tiptap/extension-table-cell';
-import { PDFNode } from './pdf-node-extension';
-import { SpinnerNode } from './spinner-node';
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import Highlight from "@tiptap/extension-highlight";
+import TextAlign from "@tiptap/extension-text-align";
+import Heading from "@tiptap/extension-heading";
+import Strike from "@tiptap/extension-strike";
+import Image from "@tiptap/extension-image";
+import ResizeImage from "tiptap-extension-resize-image";
+import Table from "@tiptap/extension-table";
+import TableRow from "@tiptap/extension-table-row";
+import TableHeader from "@tiptap/extension-table-header";
+import TableCell from "@tiptap/extension-table-cell";
+import { PDFNode } from "./pdf-node-extension";
+import { SpinnerNode } from "./spinner-node";
 
 // ✅ **Table Cell Personnalisée**
 const CustomTableCell = TableCell.extend({
@@ -22,10 +22,10 @@ const CustomTableCell = TableCell.extend({
       ...this.parent?.(),
       backgroundColor: {
         default: null,
-        parseHTML: (element) => element.getAttribute('data-background-color'),
+        parseHTML: (element) => element.getAttribute("data-background-color"),
         renderHTML: (attributes) => {
           return {
-            'data-background-color': attributes.backgroundColor,
+            "data-background-color": attributes.backgroundColor,
             style: `background-color: ${attributes.backgroundColor}`,
           };
         },
@@ -36,17 +36,17 @@ const CustomTableCell = TableCell.extend({
 
 // ✅ **Extension Column**
 export const Column = Node.create({
-  name: 'column',
+  name: "column",
 
-  group: 'block',
-  content: 'block+',
+  group: "block",
+  content: "block+",
 
   addAttributes() {
     return {
       backgroundColor: {
         default: null,
         parseHTML: (element: HTMLElement) => {
-          const dataColor = element.getAttribute('data-bgcolor');
+          const dataColor = element.getAttribute("data-bgcolor");
           const inlineStyle = element.style?.backgroundColor;
           return dataColor || inlineStyle || null;
         },
@@ -55,7 +55,7 @@ export const Column = Node.create({
             return {};
           }
           return {
-            'data-bgcolor': attributes.backgroundColor,
+            "data-bgcolor": attributes.backgroundColor,
             style: `background-color: ${attributes.backgroundColor};`,
           };
         },
@@ -69,10 +69,10 @@ export const Column = Node.create({
 
   renderHTML({ HTMLAttributes }) {
     return [
-      'div',
+      "div",
       mergeAttributes(HTMLAttributes, {
-        'data-type': 'column',
-        class: 'column',
+        "data-type": "column",
+        class: "column",
       }),
       0,
     ];
@@ -81,17 +81,17 @@ export const Column = Node.create({
 
 // ✅ **Extension ColumnBlock**
 export const ColumnBlock = Node.create({
-  name: 'column-block',
+  name: "column-block",
 
-  group: 'block',
-  content: 'column+',
+  group: "block",
+  content: "column+",
 
   addAttributes() {
     return {
       backgroundColor: {
         default: null,
         parseHTML: (element: HTMLElement) => {
-          const dataColor = element.getAttribute('data-bgcolor');
+          const dataColor = element.getAttribute("data-bgcolor");
           const inlineStyle = element.style?.backgroundColor;
           return dataColor || inlineStyle || null;
         },
@@ -100,7 +100,7 @@ export const ColumnBlock = Node.create({
             return {};
           }
           return {
-            'data-bgcolor': attributes.backgroundColor,
+            "data-bgcolor": attributes.backgroundColor,
             style: `background-color: ${attributes.backgroundColor};`,
           };
         },
@@ -118,10 +118,10 @@ export const ColumnBlock = Node.create({
 
   renderHTML({ HTMLAttributes }) {
     return [
-      'div',
+      "div",
       mergeAttributes(HTMLAttributes, {
-        'data-type': 'column-block',
-        class: 'column-block',
+        "data-type": "column-block",
+        class: "column-block",
       }),
       0,
     ];
@@ -130,7 +130,7 @@ export const ColumnBlock = Node.create({
 
 // Extension TextColor
 export const TextColor = Mark.create({
-  name: 'textColor',
+  name: "textColor",
 
   addAttributes() {
     return {
@@ -148,14 +148,14 @@ export const TextColor = Mark.create({
   parseHTML() {
     return [
       {
-        style: 'color',
+        style: "color",
         getAttrs: (value) => (value ? { color: value } : {}),
       },
     ];
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['span', mergeAttributes(HTMLAttributes), 0];
+    return ["span", mergeAttributes(HTMLAttributes), 0];
   },
 });
 
@@ -164,7 +164,7 @@ export const extensions = [
   StarterKit,
   Underline,
   TextAlign.configure({
-    types: ['heading', 'paragraph'],
+    types: ["heading", "paragraph"],
   }),
   Highlight,
   Heading.configure({

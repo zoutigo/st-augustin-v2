@@ -1,8 +1,8 @@
-import React from 'react';
-import PageContent from '@/components/tiptap/page-content';
+import React from "react";
+import PageContent from "@/components/tiptap/page-content";
 
-import { Modal } from '@prisma/client';
-import { getModalById } from '@/actions/modals/get';
+import { Modal } from "@prisma/client";
+import { getModalById } from "@/actions/modals/get";
 
 interface ModalDetailPageProps {
   params: {
@@ -16,7 +16,7 @@ const ModalDetailPage = async ({ params }: ModalDetailPageProps) => {
 
   try {
     const result = await getModalById(params.modalId);
-    if ('error' in result) {
+    if ("error" in result) {
       error = result.error;
     } else {
       modal = result as Modal;

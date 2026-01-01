@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { getPageById } from '@/actions/pages/get';
-import { updatePage } from '@/actions/pages/update-page';
-import { PageForm } from '@/components/dashboard/page/page-form';
-import { useCustomMutation } from '@/hooks/useCustomMutation';
-import { updatePageSchema } from '@/schemas';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { z } from 'zod';
+import { getPageById } from "@/actions/pages/get";
+import { updatePage } from "@/actions/pages/update-page";
+import { PageForm } from "@/components/dashboard/page/page-form";
+import { useCustomMutation } from "@/hooks/useCustomMutation";
+import { updatePageSchema } from "@/schemas";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { z } from "zod";
 
 type Page = {
   name: string;
@@ -22,17 +22,17 @@ type Page = {
 const EditPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [error, setError] = useState<string | undefined>('');
-  const [success, setSuccess] = useState<string | undefined>('');
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const params = useParams();
   const { pageId } = params;
 
   const { data: pageData, isLoading } = useQuery<Page | { error: string }>({
-    queryKey: ['page', pageId],
+    queryKey: ["page", pageId],
     queryFn: async () => {
       try {
         const result = await getPageById(pageId as string);
-        if ('error' in result) {
+        if ("error" in result) {
           throw new Error(result.error);
         }
         return result;
@@ -54,29 +54,29 @@ const EditPage = () => {
     z.infer<typeof updatePageSchema>,
     unknown
   >(
-    { queryKey: ['page', pageId] },
+    { queryKey: ["page", pageId] },
     (values) => updatePage(pageId as string, values),
     {
       onSuccess: [
-        () => queryClient.invalidateQueries({ queryKey: ['page', pageId] }),
-        () => router.push('/espace-prive/dashboard/pages'),
+        () => queryClient.invalidateQueries({ queryKey: ["page", pageId] }),
+        () => router.push("/espace-prive/dashboard/pages"),
       ],
       onError: [
         (err: unknown) => {
           if (err instanceof Error) {
             setError(
-              err.message || "Quelque chose n'a pas fonctionné en front"
+              err.message || "Quelque chose n'a pas fonctionné en front",
             );
           } else {
             setError("Quelque chose n'a pas fonctionné en front");
           }
         },
       ],
-    }
+    },
   );
 
   const handleSubmit = (values: z.infer<typeof updatePageSchema>) => {
-    setError('');
+    setError("");
     mutation.mutate(values);
   };
 

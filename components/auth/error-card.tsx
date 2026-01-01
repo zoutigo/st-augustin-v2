@@ -1,7 +1,7 @@
-import React from 'react';
-import { Card, CardFooter, CardHeader } from '@/components/ui/card';
-import { Header } from './header';
-import { BackButton } from './back-button';
+import React from "react";
+import { Card, CardFooter, CardHeader } from "@/components/ui/card";
+import { Header } from "./header";
+import { BackButton } from "./back-button";
 
 type Props = {};
 

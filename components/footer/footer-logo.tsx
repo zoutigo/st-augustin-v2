@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 
 export const FooterLogo: React.FC = () => {
   return (
-    <div className="box-border align-top max-h-[25vh] text-left overflow-hidden md:col-span-1">
+    <div className="md:col-span-1 flex items-center justify-center md:justify-center p-3 h-16 sm:h-20 md:h-auto">
       <svg
-        className="h-[24vh] mt-[-40px] mb-[-40px]"
+        className="h-14 sm:h-16 md:h-20 lg:h-24 xl:h-28"
         version="1.1"
         baseProfile="tiny"
         xmlns="http://www.w3.org/2000/svg"
         x="0px"
         y="0px"
         viewBox="0 0 283.5 283.5"
-        preserveAspectRatio="none"
+        preserveAspectRatio="xMidYMid meet"
       >
         <g className="fill-white">
           <path

@@ -1,8 +1,8 @@
-import { LandMovieTextItem } from './land-movie-text-item';
+import { LandMovieTextItem } from "./land-movie-text-item";
 
 export const LandingMovie = () => {
   return (
-    <div className="min-h-[40vh] relative bg-green-700 xs:min-h-[40vh] sm:min-h-[50vh] md:min-[65] lg:min-h-[83vh]">
+    <div className="relative overflow-hidden bg-green-700 min-h-[40vh] xs:min-h-[40vh] sm:min-h-[50vh] md:min-h-[65vh] lg:min-h-[83vh]">
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
         autoPlay
@@ -12,11 +12,12 @@ export const LandingMovie = () => {
         <source src="/videos/landing.mp4" type="video/mp4" />
         Votre navigateur ne supporte pas la vidéo.
       </video>
-      <div className="absolute top-[10rem] sm:top-[1rem] xs:hidden">
-        <LandMovieTextItem text="ecole" />
-
-        <LandMovieTextItem text="saint augustin" />
-        <LandMovieTextItem text="cremieu" />
+      <div className="absolute inset-0 flex items-center xs:hidden">
+        <div className="w-full max-w-6xl mx-auto px-4 sm:px-8">
+          <LandMovieTextItem text="ecole" />
+          <LandMovieTextItem text="saint augustin" />
+          <LandMovieTextItem text="cremieu" />
+        </div>
       </div>
     </div>
   );

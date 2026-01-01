@@ -1,5 +1,5 @@
-import React from 'react';
-import Breadcrumb from './breadcrumb';
+import React from "react";
+import Breadcrumb from "./breadcrumb";
 
 interface PageHolderProps {
   children: React.ReactNode;

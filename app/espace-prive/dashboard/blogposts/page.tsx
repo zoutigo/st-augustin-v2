@@ -1,12 +1,12 @@
 // app/espace-prive/dashboard/pages/page.tsx
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { Plus } from 'lucide-react';
-import { DataTable } from '@/components/data-table';
-import { getAllBlogPosts } from '@/actions/blogposts/get';
-import { BlogpostsColumns } from '@/components/dashboard/bloposts/blogposts-colums';
-import { BlogPostWithEntity } from '@/types/model';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import { DataTable } from "@/components/data-table";
+import { getAllBlogPosts } from "@/actions/blogposts/get";
+import { BlogpostsColumns } from "@/components/dashboard/bloposts/blogposts-colums";
+import { BlogPostWithEntity } from "@/types/model";
 
 const BlogpostPage = async () => {
   let blogpost: BlogPostWithEntity[] = [];
@@ -14,7 +14,7 @@ const BlogpostPage = async () => {
 
   try {
     const result = await getAllBlogPosts();
-    if ('error' in result) {
+    if ("error" in result) {
       error = result.error;
     } else {
       blogpost = result;
@@ -27,7 +27,7 @@ const BlogpostPage = async () => {
     <div>
       <div className="flex items-center mb-4">
         <h1 className="text-2xl font-bold flex-grow">Liste des articles</h1>
-        <Link href={'/espace-prive/dashboard/blogposts/create'} passHref>
+        <Link href={"/espace-prive/dashboard/blogposts/create"} passHref>
           <Button variant="default" className="gap-2">
             <Plus className="h-4 w-4" />
             Ajouter un article

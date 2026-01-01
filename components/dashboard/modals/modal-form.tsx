@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { createModalSchema } from '@/schemas';
-import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { createModalSchema } from "@/schemas";
+import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
 import {
   Form,
   FormField,
@@ -13,12 +13,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { FormError } from '@/components/form-error';
-import { FormSuccess } from '@/components/form-success';
-import { TiptapEditor } from '@/components/tiptap/tiptap';
+} from "@/components/ui/form";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
+import { TiptapEditor } from "@/components/tiptap/tiptap";
 
 // Définir les types basés sur le schéma Zod
 type CreateModalInput = z.infer<typeof createModalSchema>;
@@ -39,7 +39,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
   success,
 }) => {
   const [editorContent, setEditorContent] = useState(
-    initialValues.content || ''
+    initialValues.content || "",
   );
 
   const form = useForm<CreateModalInput>({
@@ -55,7 +55,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
     <Card className="w-full">
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
-          {initialValues ? 'Modifier le modal' : 'Créer un modal'}
+          {initialValues ? "Modifier le modal" : "Créer un modal"}
         </p>
       </CardHeader>
       <CardContent>
@@ -71,7 +71,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'Titre du modal :'} </FormLabel>
+                    <FormLabel>{"Titre du modal :"} </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -92,7 +92,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 name="content"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'Contenu du modal :'} </FormLabel>
+                    <FormLabel>{"Contenu du modal :"} </FormLabel>
                     <FormControl>
                       <TiptapEditor
                         initialContent={field.value}
@@ -114,17 +114,17 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 name="startDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'Date de début :'} </FormLabel>
+                    <FormLabel>{"Date de début :"} </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="date"
                         disabled={isPending}
-                        min={new Date().toISOString().split('T')[0]} // Date minimale
+                        min={new Date().toISOString().split("T")[0]} // Date minimale
                         value={
                           field.value
-                            ? new Date(field.value).toISOString().split('T')[0]
-                            : ''
+                            ? new Date(field.value).toISOString().split("T")[0]
+                            : ""
                         } // Convertir en string
                         onChange={(e) =>
                           field.onChange(new Date(e.target.value))
@@ -143,23 +143,23 @@ export const ModalForm: React.FC<ModalFormProps> = ({
                 name="endDate"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'Date de fin :'} </FormLabel>
+                    <FormLabel>{"Date de fin :"} </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="date"
                         disabled={isPending}
                         min={
-                          form.watch('startDate')
-                            ? new Date(form.watch('startDate'))
+                          form.watch("startDate")
+                            ? new Date(form.watch("startDate"))
                                 .toISOString()
-                                .split('T')[0]
-                            : new Date().toISOString().split('T')[0]
+                                .split("T")[0]
+                            : new Date().toISOString().split("T")[0]
                         } // Date minimale basée sur startDate
                         value={
                           field.value
-                            ? new Date(field.value).toISOString().split('T')[0]
-                            : ''
+                            ? new Date(field.value).toISOString().split("T")[0]
+                            : ""
                         } // Convertir en string
                         onChange={(e) =>
                           field.onChange(new Date(e.target.value))
@@ -184,7 +184,7 @@ export const ModalForm: React.FC<ModalFormProps> = ({
               disabled={isPending}
               className="text-secondary"
             >
-              {isPending ? 'En cours...' : 'Soumettre'}
+              {isPending ? "En cours..." : "Soumettre"}
             </Button>
           </form>
         </Form>

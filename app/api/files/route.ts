@@ -1,28 +1,28 @@
-import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-import mime from 'mime-types';
+import { NextResponse } from "next/server";
+import { promises as fs } from "fs";
+import path from "path";
+import mime from "mime-types";
 
 const UPLOAD_DIR =
-  process.env.EXTERNAL_UPLOAD_DIR || '/home/zoutigo/projets/nextjs/files';
+  process.env.EXTERNAL_UPLOAD_DIR || "/home/zoutigo/projets/nextjs/files";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 Mo
 const ALLOWED_MIME_TYPES = [
-  'image/jpeg',
-  'image/png',
-  'application/pdf',
-  'image/gif',
-  'image/jpg',
-  'image/webp',
+  "image/jpeg",
+  "image/png",
+  "application/pdf",
+  "image/gif",
+  "image/jpg",
+  "image/webp",
 ];
-const VALID_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.pdf', '.gif', '.webp'];
-const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
+const VALID_EXTENSIONS = [".jpg", ".jpeg", ".png", ".pdf", ".gif", ".webp"];
+// Build relative URL so it works on any host (prod/dev) without relying on env
 
 // Fonction utilitaire pour nettoyer les noms de fichiers
 const sanitizeFileName = (fileName: string): string => {
   const extension = path.extname(fileName);
   const baseName = path.basename(fileName, extension);
-  const sanitizedBaseName = baseName.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const sanitizedBaseName = baseName.replace(/[^a-zA-Z0-9._-]/g, "_");
   const timestamp = Date.now(); // Pour éviter les conflits de noms
   return `${sanitizedBaseName}-${timestamp}${extension}`;
 };
@@ -32,13 +32,13 @@ export const POST = async (req: Request) => {
   console.log(`[${requestId}] Début du traitement du fichier...`);
   try {
     const formData = await req.formData();
-    const file = formData.get('file') as File | null;
+    const file = formData.get("file") as File | null;
 
     if (!file) {
       console.error(`[${requestId}] Aucun fichier envoyé.`);
       return NextResponse.json(
-        { error: 'Aucun fichier envoyé.' },
-        { status: 400 }
+        { error: "Aucun fichier envoyé." },
+        { status: 400 },
       );
     }
 
@@ -46,7 +46,7 @@ export const POST = async (req: Request) => {
       console.error(`[${requestId}] Type de fichier non supporté:`, file.type);
       return NextResponse.json(
         { error: `Type de fichier non supporté: ${file.type}` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -58,18 +58,18 @@ export const POST = async (req: Request) => {
             MAX_FILE_SIZE / (1024 * 1024)
           } Mo).`,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!VALID_EXTENSIONS.includes(path.extname(file.name).toLowerCase())) {
       console.error(
         `[${requestId}] Extension de fichier non autorisée:`,
-        file.name
+        file.name,
       );
       return NextResponse.json(
-        { error: 'Extension de fichier non autorisée.' },
-        { status: 400 }
+        { error: "Extension de fichier non autorisée." },
+        { status: 400 },
       );
     }
 
@@ -87,24 +87,25 @@ export const POST = async (req: Request) => {
     const detectedMimeType = mime.lookup(filePath);
     console.log(`[${requestId}] Type MIME détecté:`, detectedMimeType);
 
-    if (!ALLOWED_MIME_TYPES.includes(detectedMimeType || '')) {
+    if (!ALLOWED_MIME_TYPES.includes(detectedMimeType || "")) {
       console.error(
         `[${requestId}] Type MIME incorrect après l’écriture:`,
-        detectedMimeType
+        detectedMimeType,
       );
       await fs.unlink(filePath);
       return NextResponse.json(
         {
           error: `Le type MIME détecté (${detectedMimeType}) n'est pas autorisé.`,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     await fs.chmod(filePath, 0o644);
     console.log(`[${requestId}] Permissions définies pour:`, filePath);
 
-    const fileUrl = `${NEXTAUTH_URL}/api/external-files/${sanitizedFileName}`;
+    // Return a path relative to the current origin to avoid hard-coded host
+    const fileUrl = `/api/external-files/${sanitizedFileName}`;
     return NextResponse.json({
       url: fileUrl,
       name: sanitizedFileName,
@@ -116,7 +117,7 @@ export const POST = async (req: Request) => {
     const errorMessage =
       error instanceof Error
         ? error.message
-        : 'Erreur lors de l’upload du fichier.';
+        : "Erreur lors de l’upload du fichier.";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 };

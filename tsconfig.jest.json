@@ -24,7 +24,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "server.js",
-    "test"
+    "tests/**/*"
   ],
   "exclude": ["node_modules"]
 }

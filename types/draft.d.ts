@@ -1,13 +1,13 @@
-declare module 'draft-js' {
-  import { ComponentType } from 'react';
+declare module "draft-js" {
+  import { ComponentType } from "react";
 
   export interface EditorProps {
     editorState: EditorState;
     onChange: (editorState: EditorState) => void;
     handleKeyCommand?: (
       command: string,
-      editorState: EditorState
-    ) => 'handled' | 'not-handled';
+      editorState: EditorState,
+    ) => "handled" | "not-handled";
     placeholder?: string;
   }
 
@@ -26,11 +26,11 @@ declare module 'draft-js' {
   export class RichUtils {
     static handleKeyCommand(
       editorState: EditorState,
-      command: string
+      command: string,
     ): EditorState | null;
     static toggleInlineStyle(
       editorState: EditorState,
-      style: string
+      style: string,
     ): EditorState;
   }
 

@@ -1,16 +1,16 @@
-'use server';
+"use server";
 
-import { z } from 'zod';
-import { db } from '@/lib/db';
-import { createModalSchema, updateModalSchema } from '@/schemas';
+import { z } from "zod";
+import { db } from "@/lib/db";
+import { createModalSchema, updateModalSchema } from "@/schemas";
 
 export const createModal = async (
-  values: z.infer<typeof createModalSchema>
+  values: z.infer<typeof createModalSchema>,
 ) => {
   const validatedFields = createModalSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: 'Les champs ne sont pas correctement remplis' };
+    return { error: "Les champs ne sont pas correctement remplis" };
   }
 
   try {
@@ -23,24 +23,29 @@ export const createModal = async (
       return { error: "Ca n'a pas marché" };
     }
 
-    return { success: 'Le modal a été créé.' };
+    return { success: "Le modal a été créé." };
   } catch (error) {
-    return { error: "Quelque chose n'a pas fonctionné" };
+    console.error("createModal error:", error);
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Quelque chose n'a pas fonctionné";
+    return { error: message };
   }
 };
 
 export const updateModal = async (
   modalId: string,
-  values: z.infer<typeof updateModalSchema>
+  values: z.infer<typeof updateModalSchema>,
 ): Promise<{ success: string } | { error: string }> => {
   const validatedFields = updateModalSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: 'Les champs ne sont pas correctement renseignés' };
+    return { error: "Les champs ne sont pas correctement renseignés" };
   }
 
   if (!modalId) {
-    return { error: 'the modal id is missing' };
+    return { error: "the modal id is missing" };
   }
 
   try {
@@ -52,10 +57,15 @@ export const updateModal = async (
     });
 
     if (!modal) {
-      return { error: 'Quelque chose a mal tourné' };
+      return { error: "Quelque chose a mal tourné" };
     }
     return { success: `Le modal ${values.title} a bien été modifié` };
   } catch (error) {
-    return { error: "Quelque chose n'a pas fonctionné sur le server" };
+    console.error("updateModal error:", error);
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Quelque chose n'a pas fonctionné sur le server";
+    return { error: message };
   }
 };

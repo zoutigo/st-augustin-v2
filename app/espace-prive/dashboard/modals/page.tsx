@@ -1,12 +1,12 @@
 // app/espace-prive/dashboard/pages/page.tsx
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { Plus } from 'lucide-react';
-import { DataTable } from '@/components/data-table';
-import { Modal } from '@prisma/client';
-import { getAllModals } from '@/actions/modals/get';
-import { ModalsColumns } from '@/components/dashboard/modals/modals-colums';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import { DataTable } from "@/components/data-table";
+import { Modal } from "@prisma/client";
+import { getAllModals } from "@/actions/modals/get";
+import { ModalsColumns } from "@/components/dashboard/modals/modals-colums";
 
 const ModalPage = async () => {
   let modal: Modal[] = [];
@@ -14,7 +14,7 @@ const ModalPage = async () => {
 
   try {
     const result = await getAllModals();
-    if ('error' in result) {
+    if ("error" in result) {
       error = result.error;
     } else {
       modal = result;
@@ -27,7 +27,7 @@ const ModalPage = async () => {
     <div>
       <div className="flex items-center mb-4">
         <h1 className="text-2xl font-bold flex-grow">Liste des modales</h1>
-        <Link href={'/espace-prive/dashboard/modals/create'} passHref>
+        <Link href={"/espace-prive/dashboard/modals/create"} passHref>
           <Button variant="default" className="gap-2">
             <Plus className="h-4 w-4" />
             Ajouter une modale

@@ -1,6 +1,6 @@
-import React from 'react';
-import { getEntityById } from '@/actions/entity/get';
-import PageContent from '@/components/tiptap/page-content';
+import React from "react";
+import { getEntityById } from "@/actions/entity/get";
+import PageContent from "@/components/tiptap/page-content";
 
 interface PageDetailProps {
   params: {

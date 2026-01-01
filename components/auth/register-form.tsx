@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useTransition } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { CardWrapper } from '@/components/auth/card-wrapper';
-import { RegisterSchema } from '@/schemas';
+import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { CardWrapper } from "@/components/auth/card-wrapper";
+import { RegisterSchema } from "@/schemas";
 import {
   Form,
   FormControl,
@@ -14,19 +14,19 @@ import {
   FormLabel,
   FormItem,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { FormError } from '@/components/form-error';
-import { FormSuccess } from '../form-success';
-import { register } from '@/actions/register';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "../form-success";
+import { register } from "@/actions/register";
 
 export const RegisterForm = () => {
   const searchParams = useSearchParams();
   const urlError =
-    searchParams.get('error') === 'OAuthAccountNotLinked'
-      ? 'Email Already in use with different provider'
-      : '';
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email Already in use with different provider"
+      : "";
 
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
@@ -34,15 +34,15 @@ export const RegisterForm = () => {
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      password: '',
+      name: "",
+      email: "",
+      password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     startTransition(() => {
       register(values).then((data) => {

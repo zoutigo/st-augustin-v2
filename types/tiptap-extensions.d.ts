@@ -1,6 +1,6 @@
-import '@tiptap/core';
+import "@tiptap/core";
 
-declare module '@tiptap/core' {
+declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     /**
      * Applique une couleur à une colonne.

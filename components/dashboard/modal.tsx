@@ -1,7 +1,7 @@
 // dashboard/components/Modal.tsx
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@/components/ui/dialog'; // Assure-toi que ce chemin est correct
+} from "@/components/ui/dialog"; // Assure-toi que ce chemin est correct
 
 interface ModalProps {
   isOpen: boolean;

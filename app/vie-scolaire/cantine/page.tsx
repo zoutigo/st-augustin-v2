@@ -1,11 +1,11 @@
-import GenericEntityPage from '@/components/classrooms/generic-entity-page';
-import { GenericEntityPageClient } from '@/components/classrooms/generic-entity-page-client';
+import GenericEntityPage from "@/components/classrooms/generic-entity-page";
+import { GenericEntityPageClient } from "@/components/classrooms/generic-entity-page-client";
 
 const CantinePage = async () => {
   const { entitySlug, blogpostsLimit, blogpostsTitle } = {
-    entitySlug: 'cantine',
+    entitySlug: "cantine",
     blogpostsLimit: 10,
-    blogpostsTitle: 'Menus et brèves',
+    blogpostsTitle: "Menus et brèves",
   };
 
   const pageData = await GenericEntityPage({
@@ -14,7 +14,7 @@ const CantinePage = async () => {
     blogpostsTitle,
   });
 
-  if ('error' in pageData) {
+  if ("error" in pageData) {
     return <div className="text-red-500">{pageData.error}</div>;
   }
 

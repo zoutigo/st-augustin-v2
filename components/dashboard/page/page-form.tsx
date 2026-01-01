@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { createPageSchema } from '@/schemas';
-import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { createPageSchema } from "@/schemas";
+import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
 import {
   Form,
   FormField,
@@ -13,12 +13,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { FormError } from '@/components/form-error';
-import { FormSuccess } from '@/components/form-success';
-import { TiptapEditor } from '@/components/tiptap/tiptap';
+} from "@/components/ui/form";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
+import { TiptapEditor } from "@/components/tiptap/tiptap";
 
 // Définir les types basés sur le schéma Zod
 type CreatePageInput = z.infer<typeof createPageSchema>;
@@ -39,7 +39,7 @@ export const PageForm: React.FC<PageFormProps> = ({
   success,
 }) => {
   const [editorContent, setEditorContent] = useState(
-    initialValues.content || ''
+    initialValues.content || "",
   );
 
   const form = useForm<CreatePageInput>({
@@ -55,7 +55,7 @@ export const PageForm: React.FC<PageFormProps> = ({
     <Card className="w-full">
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
-          {'Créer ou Modifier une page'}
+          {"Créer ou Modifier une page"}
         </p>
       </CardHeader>
       <CardContent>
@@ -133,7 +133,7 @@ export const PageForm: React.FC<PageFormProps> = ({
               disabled={isPending}
               className="text-secondary"
             >
-              {isPending ? 'En cours...' : 'Soumettre'}
+              {isPending ? "En cours..." : "Soumettre"}
             </Button>
           </form>
         </Form>

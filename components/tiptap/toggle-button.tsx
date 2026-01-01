@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { Button } from "@/components/ui/button";
 
 interface ToggleButtonProps {
   children: React.ReactNode; // Contenu du bouton
@@ -18,9 +18,9 @@ export const ToggleButton: React.FC<ToggleButtonProps> = ({
       variant="ghost"
       className="p-0 text-sm text-gray-700 hover:text-gray-900 border-none shadow-none focus:ring-0"
       style={{
-        background: isActive ? 'silver' : 'transparent',
-        borderRadius: '0',
-        transition: 'background-color 0.3s ease',
+        background: isActive ? "silver" : "transparent",
+        borderRadius: "0",
+        transition: "background-color 0.3s ease",
       }}
       onClick={(event) => {
         event.preventDefault(); // Empêche le comportement par défaut

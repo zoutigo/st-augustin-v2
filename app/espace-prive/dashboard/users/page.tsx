@@ -1,7 +1,10 @@
-import React from 'react';
-import { getAllUsers } from '@/actions/users/get';
-import { DataTable } from '@/components/data-table';
-import { UsersColumns, type UserRow } from '@/components/dashboard/users/users-columns';
+import React from "react";
+import { getAllUsers } from "@/actions/users/get";
+import { DataTable } from "@/components/data-table";
+import {
+  UsersColumns,
+  type UserRow,
+} from "@/components/dashboard/users/users-columns";
 
 const UsersPage = async () => {
   let users: UserRow[] = [];
@@ -9,10 +12,10 @@ const UsersPage = async () => {
 
   try {
     const result = await getAllUsers();
-    if ('error' in (result as any)) {
-      error = (result as any).error;
+    if ("error" in result) {
+      error = result.error;
     } else {
-      users = result as UserRow[];
+      users = result;
     }
   } catch (err) {
     error = (err as Error).message;
@@ -32,4 +35,3 @@ const UsersPage = async () => {
 };
 
 export default UsersPage;
-

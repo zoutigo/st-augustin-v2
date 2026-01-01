@@ -1,13 +1,13 @@
-import React from 'react';
-import { getAllBlogPosts } from '@/actions/blogposts/get';
-import { PageHolder } from '@/components/page-holder';
-import { BlogPost } from '@prisma/client';
-import { BlogPostList } from '@/components/blog/blogpost-list';
+import React from "react";
+import { getAllBlogPosts } from "@/actions/blogposts/get";
+import { PageHolder } from "@/components/page-holder";
+import { BlogPost } from "@prisma/client";
+import { BlogPostList } from "@/components/blog/blogpost-list";
 
 const BlogPage = async (): Promise<JSX.Element> => {
   const blogposts: BlogPost[] | { error: string } = await getAllBlogPosts();
 
-  if ('error' in blogposts) {
+  if ("error" in blogposts) {
     return (
       <PageHolder>
         <p className="text-red-500">Erreur : {blogposts.error}</p>

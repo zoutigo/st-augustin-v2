@@ -1,7 +1,7 @@
-import React from 'react';
-import PageContent from '@/components/tiptap/page-content';
-import { BlogPostWithEntity } from '@/types/model';
-import { getBlogPostById } from '@/actions/blogposts/get';
+import React from "react";
+import PageContent from "@/components/tiptap/page-content";
+import { BlogPostWithEntity } from "@/types/model";
+import { getBlogPostById } from "@/actions/blogposts/get";
 
 interface BlogpostDetailPageProps {
   params: {
@@ -15,7 +15,7 @@ const BlogpostDetailPage = async ({ params }: BlogpostDetailPageProps) => {
 
   try {
     const result = await getBlogPostById(params.blogpostId);
-    if ('error' in result) {
+    if ("error" in result) {
       error = result.error;
     } else {
       blogpost = result as BlogPostWithEntity;

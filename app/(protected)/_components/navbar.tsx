@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
 // import { UserButton } from '@/components/auth/user-button';
-import { UserButton } from '../../../components/auth/user-button';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+import { UserButton } from "../../../components/auth/user-button";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React from "react";
 
 export const ProtectedNavbar = () => {
   const pathname = usePathname();
   return (
     <nav className="bg-secondary flex justify-between items-center p-4 rounded-xl w-[600px] shadow-sm">
       <div className="flex gap-x-2">
-        <Button asChild variant={pathname == '/client' ? 'default' : 'outline'}>
-          <Link href={'/client'}>Clientelle</Link>
+        <Button asChild variant={pathname == "/client" ? "default" : "outline"}>
+          <Link href={"/client"}>Clientelle</Link>
         </Button>
-        <Button asChild variant={pathname == '/server' ? 'default' : 'outline'}>
-          <Link href={'/server'}>Server</Link>
+        <Button asChild variant={pathname == "/server" ? "default" : "outline"}>
+          <Link href={"/server"}>Server</Link>
         </Button>
-        <Button asChild variant={pathname == '/admin' ? 'default' : 'outline'}>
-          <Link href={'/admin'}>Admin </Link>
+        <Button asChild variant={pathname == "/admin" ? "default" : "outline"}>
+          <Link href={"/admin"}>Admin </Link>
         </Button>
         <Button
           asChild
-          variant={pathname == '/settings' ? 'default' : 'outline'}
+          variant={pathname == "/settings" ? "default" : "outline"}
         >
-          <Link href={'/settings'}>Settings</Link>
+          <Link href={"/settings"}>Settings</Link>
         </Button>
       </div>
       <UserButton />

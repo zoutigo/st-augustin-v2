@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { updateUserProfile } from '@/actions/users/post';
-import { userProfileUpdateSchema } from '@/schemas';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { useCurrentUser } from '@/hooks/use-current-user';
-import { useEffect } from 'react';
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { updateUserProfile } from "@/actions/users/post";
+import { userProfileUpdateSchema } from "@/schemas";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { useEffect } from "react";
 
 type ProfileFormValues = z.infer<typeof userProfileUpdateSchema>;
 
@@ -27,29 +27,29 @@ export default function EditProfilePage() {
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(userProfileUpdateSchema),
     defaultValues: {
-      firstname: '',
-      lastname: '',
-      phone: '',
+      firstname: "",
+      lastname: "",
+      phone: "",
     },
   });
 
   // Remplissage des valeurs du formulaire dès que `user` est disponible
   useEffect(() => {
     if (user) {
-      setValue('firstname', user.firstname || '');
-      setValue('lastname', user.lastname || '');
-      setValue('phone', user.phone || '');
+      setValue("firstname", user.firstname || "");
+      setValue("lastname", user.lastname || "");
+      setValue("phone", user.phone || "");
     }
   }, [user, setValue]);
 
   const onSubmit = async (data: ProfileFormValues) => {
     const response = await updateUserProfile(data);
 
-    if ('error' in response) {
+    if ("error" in response) {
       toast.error(response.error);
     } else {
       setTimeout(() => {
-        router.push('/espace-prive/account');
+        router.push("/espace-prive/account");
       }, 1000);
       toast.success(response.success);
       router.refresh();
@@ -74,7 +74,7 @@ export default function EditProfilePage() {
                 Nom
               </label>
               <Input
-                {...register('lastname')}
+                {...register("lastname")}
                 placeholder="Votre nom"
                 className="w-full"
               />
@@ -88,7 +88,7 @@ export default function EditProfilePage() {
                 Prénom
               </label>
               <Input
-                {...register('firstname')}
+                {...register("firstname")}
                 placeholder="Votre prénom"
                 className="w-full"
               />
@@ -103,7 +103,7 @@ export default function EditProfilePage() {
               Téléphone
             </label>
             <Input
-              {...register('phone')}
+              {...register("phone")}
               placeholder="Votre numéro de téléphone"
               className="w-full"
             />
@@ -117,7 +117,7 @@ export default function EditProfilePage() {
               Email
             </label>
             <Input
-              value={user.email ?? 'mail manquant'}
+              value={user.email ?? "mail manquant"}
               disabled
               className="w-full bg-gray-200 text-gray-600 cursor-not-allowed"
             />

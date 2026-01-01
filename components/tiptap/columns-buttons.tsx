@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Editor } from '@tiptap/react';
-import { ColorPalette } from './color-palette';
+import React, { useState } from "react";
+import { Editor } from "@tiptap/react";
+import { ColorPalette } from "./color-palette";
 
 interface ColumnButtonsProps {
   editor: Editor;
@@ -33,17 +33,17 @@ const ColumnButtons: React.FC<ColumnButtonsProps> = ({ editor }) => {
           const parentPos = $from.before(depth);
           const parentNode = state.doc.nodeAt(parentPos);
 
-          if (parentNode?.type.name === 'column') {
+          if (parentNode?.type.name === "column") {
             columnPos = parentPos;
             columnNode = parentNode;
             break;
           }
         }
 
-        console.log('Found column node:', columnNode);
+        console.log("Found column node:", columnNode);
 
         if (!columnNode) {
-          console.warn('No column node found after traversal');
+          console.warn("No column node found after traversal");
           return false;
         }
 
@@ -56,7 +56,7 @@ const ColumnButtons: React.FC<ColumnButtonsProps> = ({ editor }) => {
           columnPos,
           columnNode.type,
           newAttrs,
-          columnNode.marks
+          columnNode.marks,
         );
 
         if (!tr.docChanged) {
@@ -97,14 +97,14 @@ const ColumnButtons: React.FC<ColumnButtonsProps> = ({ editor }) => {
           const parentPos = $from.before(depth);
           const parentNode = state.doc.nodeAt(parentPos);
 
-          if (parentNode?.type.name === 'column-block') {
+          if (parentNode?.type.name === "column-block") {
             blockPos = parentPos;
             blockNode = parentNode;
             break;
           }
         }
 
-        if (!blockNode || blockNode.type.name !== 'column-block') {
+        if (!blockNode || blockNode.type.name !== "column-block") {
           return false;
         }
 
@@ -117,7 +117,7 @@ const ColumnButtons: React.FC<ColumnButtonsProps> = ({ editor }) => {
           blockPos,
           blockNode.type,
           newAttrs,
-          blockNode.marks
+          blockNode.marks,
         );
 
         if (!tr.docChanged) {
@@ -144,29 +144,29 @@ const ColumnButtons: React.FC<ColumnButtonsProps> = ({ editor }) => {
       .focus()
       .command(({ commands }) => {
         commands.insertContent({
-          type: 'column-block',
+          type: "column-block",
           content: [
             {
-              type: 'column',
+              type: "column",
               content: [
                 {
-                  type: 'paragraph',
-                  content: [{ type: 'text', text: 'Column 1 content' }],
+                  type: "paragraph",
+                  content: [{ type: "text", text: "Column 1 content" }],
                 },
               ],
             },
             {
-              type: 'column',
+              type: "column",
               content: [
                 {
-                  type: 'paragraph',
-                  content: [{ type: 'text', text: 'Column 2 content' }],
+                  type: "paragraph",
+                  content: [{ type: "text", text: "Column 2 content" }],
                 },
               ],
             },
           ],
         });
-        console.log('Inserted column block successfully!');
+        console.log("Inserted column block successfully!");
         return true;
       })
       .run();
@@ -185,7 +185,7 @@ const ColumnButtons: React.FC<ColumnButtonsProps> = ({ editor }) => {
         const columnPos = $from.before($from.depth);
         const columnNode = state.doc.nodeAt(columnPos);
 
-        if (!columnNode || columnNode.type.name !== 'column') {
+        if (!columnNode || columnNode.type.name !== "column") {
           return false;
         }
 
@@ -195,7 +195,7 @@ const ColumnButtons: React.FC<ColumnButtonsProps> = ({ editor }) => {
         }
 
         dispatch?.(tr);
-        console.log('Column deleted successfully!');
+        console.log("Column deleted successfully!");
         return true;
       })
       .run();
@@ -214,7 +214,7 @@ const ColumnButtons: React.FC<ColumnButtonsProps> = ({ editor }) => {
         const blockPos = $from.before($from.depth);
         const blockNode = state.doc.nodeAt(blockPos);
 
-        if (!blockNode || blockNode.type.name !== 'column-block') {
+        if (!blockNode || blockNode.type.name !== "column-block") {
           return false;
         }
 

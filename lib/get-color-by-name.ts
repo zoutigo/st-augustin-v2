@@ -1,4 +1,4 @@
-import config from '../tailwind.config'; // Ajustez le chemin selon votre structure de projet
+import config from "../tailwind.config"; // Ajustez le chemin selon votre structure de projet
 
 // types/colors.d.ts (ou un autre fichier de déclaration de types)
 // types/colors.d.ts
@@ -36,24 +36,24 @@ export type TailwindColors = {
 // border: string; input: string; ring: string; background: string; foreground: string; primary: { DEFAULT: string; foreground: string; dark: string; light: string; }; secondary:
 
 const colors: TailwindColors = {
-  border: '',
-  input: '',
-  ring: '',
-  background: '',
-  foreground: '',
-  primary: { DEFAULT: '' },
-  secondary: { DEFAULT: '' },
-  destructive: { DEFAULT: '' },
-  muted: { DEFAULT: '' },
-  accent: { DEFAULT: '' },
-  popover: { DEFAULT: '' },
-  card: { DEFAULT: '' },
-  ecole: { DEFAULT: '' },
-  viescolaire: { DEFAULT: '' },
-  classes: { DEFAULT: '' },
-  blog: { DEFAULT: '' },
-  private: { DEFAULT: '' },
-  espaceprive: { DEFAULT: '' },
+  border: "",
+  input: "",
+  ring: "",
+  background: "",
+  foreground: "",
+  primary: { DEFAULT: "" },
+  secondary: { DEFAULT: "" },
+  destructive: { DEFAULT: "" },
+  muted: { DEFAULT: "" },
+  accent: { DEFAULT: "" },
+  popover: { DEFAULT: "" },
+  card: { DEFAULT: "" },
+  ecole: { DEFAULT: "" },
+  viescolaire: { DEFAULT: "" },
+  classes: { DEFAULT: "" },
+  blog: { DEFAULT: "" },
+  private: { DEFAULT: "" },
+  espaceprive: { DEFAULT: "" },
   ...config.theme?.extend?.colors,
 };
 
@@ -63,5 +63,5 @@ export const getColorByName = (colorName: keyof TailwindColors): string => {
   if (!color) {
     throw new Error(`Couleur avec le nom "${colorName}" non trouvée.`);
   }
-  return typeof color === 'string' ? color : color.DEFAULT; // Retourner la couleur par défaut si c'est un objet
+  return typeof color === "string" ? color : color.DEFAULT; // Retourner la couleur par défaut si c'est un objet
 };

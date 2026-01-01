@@ -1,5 +1,5 @@
-import clsx from 'clsx';
-import NavLink from '../styled/nav-link';
+import clsx from "clsx";
+import NavLink from "../styled/nav-link";
 
 export const Logo = () => {
   // root: {
@@ -23,7 +23,7 @@ export const Logo = () => {
   //     fill: theme.palette.secondary.dark,
   //   }
 
-  const svgcolor = 'text-secondary-dark';
+  const svgcolor = "text-secondary-dark";
   return (
     <div className="overflow-hidden mt-[-2.7rem] text-center box-border">
       <NavLink href="/">

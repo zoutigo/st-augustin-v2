@@ -1,10 +1,10 @@
-'use server';
+"use server";
 
-import { db } from '@/lib/db';
-import { Entity } from '@prisma/client';
+import { db } from "@/lib/db";
+import { Entity } from "@prisma/client";
 
 export const getEntityById = async (
-  entityId: string
+  entityId: string,
 ): Promise<Entity | null> => {
   if (!entityId) {
     throw new Error("veiller indiquer l'id de l'entité");
@@ -20,13 +20,13 @@ export const getEntityById = async (
     }
     return entity;
   } catch (error) {
-    throw new Error('Failed to fetch entity');
+    throw new Error("Failed to fetch entity");
   }
 };
 
 export const getEntityBySlug = async (
   entitySlug: string,
-  blogpostsLimit: number = 0
+  blogpostsLimit: number = 0,
 ): Promise<Entity | null> => {
   if (!entitySlug) {
     throw new Error("Veuillez indiquer le slug de l'entité");
@@ -43,7 +43,7 @@ export const getEntityBySlug = async (
               blogpages: {
                 take: blogpostsLimit,
                 orderBy: {
-                  createdAt: 'desc',
+                  createdAt: "desc",
                 },
               },
             }
@@ -56,18 +56,20 @@ export const getEntityBySlug = async (
 
     return entity;
   } catch (error) {
-    throw new Error('Failed to fetch entity');
+    throw new Error("Failed to fetch entity");
   }
 };
 
 export const getAllEntities = async (): Promise<Entity[]> => {
   try {
-    const entities = await db.entity.findMany();
+    const entities = await db.entity.findMany({
+      orderBy: { createdAt: "desc" },
+    });
 
     return entities.map((entity) => ({
       ...entity,
     }));
   } catch (error) {
-    throw new Error('Failed to fetch entities');
+    throw new Error("Failed to fetch entities");
   }
 };

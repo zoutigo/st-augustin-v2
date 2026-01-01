@@ -1,6 +1,6 @@
-import { getEntityBySlug } from '@/actions/entity/get';
-import { BlogPost, Entity } from '@prisma/client';
-import { GenericEntityPageClient } from './generic-entity-page-client';
+import { getEntityBySlug } from "@/actions/entity/get";
+import { BlogPost, Entity } from "@prisma/client";
+import { GenericEntityPageClient } from "./generic-entity-page-client";
 
 interface GenericEntityPageProps {
   entitySlug: string;
@@ -11,9 +11,9 @@ interface GenericEntityPageProps {
 export const GenericEntityPage = async ({
   entitySlug,
   blogpostsLimit = 10,
-  blogpostsTitle = 'Articles récents',
+  blogpostsTitle = "Articles récents",
 }: GenericEntityPageProps) => {
-  const classroomsSlugs = ['ce1', 'ce2', 'cm1', 'cm2', 'cp', 'gs', 'ms', 'ps'];
+  const classroomsSlugs = ["ce1", "ce2", "cm1", "cm2", "cp", "gs", "ms", "ps"];
 
   // Récupérer les données côté serveur
   const entity: (Entity & { blogpages?: BlogPost[] }) | null =

@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { BlogPost } from '@prisma/client';
+import React, { useState } from "react";
+import { BlogPost } from "@prisma/client";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
-} from '@/components/ui/card';
-import Link from 'next/link';
-import { CustomPagination } from '../utils/custom-pagination';
-import { capitalizeFirstLetter } from '../utils/capitalize-first.letter';
+} from "@/components/ui/card";
+import Link from "next/link";
+import { CustomPagination } from "../utils/custom-pagination";
+import { capitalizeFirstLetter } from "../utils/capitalize-first.letter";
 
 interface BlogPostListProps {
   blogposts: BlogPost[];
@@ -36,8 +36,8 @@ export const BlogPostList: React.FC<BlogPostListProps> = ({ blogposts }) => {
                   {capitalizeFirstLetter(post.title)}
                 </CardTitle>
                 <CardDescription className="text-sm text-gray-500">
-                  Publié le{' '}
-                  {new Date(post.createdAt).toLocaleDateString('fr-FR')}
+                  Publié le{" "}
+                  {new Date(post.createdAt).toLocaleDateString("fr-FR")}
                 </CardDescription>
               </CardHeader>
             </Link>

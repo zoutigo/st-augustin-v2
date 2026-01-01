@@ -1,2 +1,2 @@
 // nodemailer.d.ts
-declare module 'nodemailer';
+declare module "nodemailer";

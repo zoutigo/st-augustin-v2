@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   EditorState,
   Editor,
   convertToRaw,
   convertFromRaw,
   RichUtils,
-} from 'draft-js';
-import 'draft-js/dist/Draft.css';
+} from "draft-js";
+import "draft-js/dist/Draft.css";
 
 interface EditorProps {
   initialContent?: string;
@@ -22,9 +22,9 @@ export const RichTextEditor: React.FC<EditorProps> = ({
   const [editorState, setEditorState] = useState(() =>
     initialContent
       ? EditorState.createWithContent(
-          convertFromRaw(JSON.parse(initialContent))
+          convertFromRaw(JSON.parse(initialContent)),
         )
-      : EditorState.createEmpty()
+      : EditorState.createEmpty(),
   );
 
   // Fonction de mise à jour lors des changements dans l'éditeur
@@ -39,8 +39,8 @@ export const RichTextEditor: React.FC<EditorProps> = ({
     if (initialContent) {
       setEditorState(
         EditorState.createWithContent(
-          convertFromRaw(JSON.parse(initialContent))
-        )
+          convertFromRaw(JSON.parse(initialContent)),
+        ),
       );
     }
   }, [initialContent]);
@@ -50,9 +50,9 @@ export const RichTextEditor: React.FC<EditorProps> = ({
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       setEditorState(newState);
-      return 'handled';
+      return "handled";
     }
-    return 'not-handled';
+    return "not-handled";
   };
 
   // Fonction pour appliquer les styles en ligne
@@ -67,7 +67,7 @@ export const RichTextEditor: React.FC<EditorProps> = ({
           type="button"
           onMouseDown={(e) => {
             e.preventDefault();
-            toggleInlineStyle('BOLD');
+            toggleInlineStyle("BOLD");
           }}
         >
           Gras
@@ -76,7 +76,7 @@ export const RichTextEditor: React.FC<EditorProps> = ({
           type="button"
           onMouseDown={(e) => {
             e.preventDefault();
-            toggleInlineStyle('ITALIC');
+            toggleInlineStyle("ITALIC");
           }}
         >
           Italique
@@ -85,7 +85,7 @@ export const RichTextEditor: React.FC<EditorProps> = ({
           type="button"
           onMouseDown={(e) => {
             e.preventDefault();
-            toggleInlineStyle('UNDERLINE');
+            toggleInlineStyle("UNDERLINE");
           }}
         >
           Souligné

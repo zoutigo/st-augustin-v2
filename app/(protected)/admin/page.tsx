@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { admin } from '@/actions/admin';
-import { GradeGate } from '@/components/auth/grade-gate';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { UserGrade } from '@prisma/client';
-import React from 'react';
-import { toast } from 'sonner';
+import { admin } from "@/actions/admin";
+import { GradeGate } from "@/components/auth/grade-gate";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { UserGrade } from "@prisma/client";
+import React from "react";
+import { toast } from "sonner";
 
 const AdminPage = () => {
   const onApiRouteClick = () => {
-    fetch('/api/admin').then((response) => {
+    fetch("/api/admin").then((response) => {
       if (response.ok) {
-        toast.success('Allowed Api Route');
+        toast.success("Allowed Api Route");
       } else {
-        toast.error('Forbideen ');
+        toast.error("Forbideen ");
       }
     });
   };

@@ -1,8 +1,8 @@
 // components/PDFViewer.tsx
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
+import { useEffect, useRef } from "react";
+import * as pdfjsLib from "pdfjs-dist";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
@@ -22,7 +22,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
 
         if (canvasRef.current) {
           const canvas = canvasRef.current;
-          const context = canvas.getContext('2d');
+          const context = canvas.getContext("2d");
 
           if (context) {
             canvas.height = viewport.height;
@@ -35,7 +35,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ fileUrl }) => {
           }
         }
       } catch (error) {
-        console.error('Failed to load PDF:', error);
+        console.error("Failed to load PDF:", error);
       }
     };
 

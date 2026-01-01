@@ -1,28 +1,28 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+"use client";
+import { useRouter } from "next/navigation";
+import React from "react";
 
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { LoginForm } from './login-form';
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { LoginForm } from "./login-form";
 
 type LoginButtonProps = {
   children: React.ReactNode;
-  mode?: 'modal' | 'redirect';
+  mode?: "modal" | "redirect";
   asChild?: boolean;
 };
 
 const LoginButton = ({
   children,
-  mode = 'redirect',
+  mode = "redirect",
   asChild,
 }: LoginButtonProps) => {
   const onClick = () => {
-    router.push('/auth/login');
+    router.push("/auth/login");
   };
 
   const router = useRouter();
 
-  if (mode === 'modal') {
+  if (mode === "modal") {
     return (
       <Dialog>
         <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
@@ -34,8 +34,8 @@ const LoginButton = ({
   }
   return (
     <span className="cursor-pointer" onClick={onClick}>
-      {' '}
-      {children}{' '}
+      {" "}
+      {children}{" "}
     </span>
   );
 };

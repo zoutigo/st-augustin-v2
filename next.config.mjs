@@ -5,6 +5,7 @@ import path from 'path';
 const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
@@ -19,6 +20,10 @@ const nextConfig = {
   experimental: {
     workerThreads: false, // Désactiver les threads pour limiter la charge
     cpus: 1, // Forcer Next.js à utiliser un seul CPU
+    // Augmenter la taille maximale du corps pour les Server Actions
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
   },
   typescript: {
     ignoreBuildErrors: false, // Ignore les erreurs TypeScript pendant le build
@@ -36,6 +41,16 @@ const nextConfig = {
     config.resolve.alias['@'] = path.resolve('./');
     if (!isServer) {
       config.resolve.fallback.fs = false;
+    }
+    // Reduce dev file watchers to avoid EMFILE on some systems
+    if (dev) {
+      // next dev uses webpackDevMiddleware under the hood
+      // Use glob strings to satisfy webpack schema
+      config.watchOptions = {
+        ignored: ['**/node_modules/**', '**/.git/**', '**/.next/**'],
+        aggregateTimeout: 300,
+        poll: 1000,
+      };
     }
     if (!dev) {
       // Limiter le nombre de threads pour éviter de surcharger le serveur

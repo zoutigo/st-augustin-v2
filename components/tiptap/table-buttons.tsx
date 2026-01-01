@@ -1,5 +1,5 @@
-import React from 'react';
-import { Editor } from '@tiptap/react';
+import React from "react";
+import { Editor } from "@tiptap/react";
 
 interface TableButtonsProps {
   editor: Editor;
@@ -60,7 +60,7 @@ const TableButtons: React.FC<TableButtonsProps> = ({ editor }) => {
       </button>
       <button
         onClick={() =>
-          editor.chain().focus().setCellAttribute('colspan', 2).run()
+          editor.chain().focus().setCellAttribute("colspan", 2).run()
         }
       >
         Set cell attribute

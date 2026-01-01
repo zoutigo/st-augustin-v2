@@ -1,4 +1,4 @@
-import { TriangleAlert } from 'lucide-react';
+import { TriangleAlert } from "lucide-react";
 
 interface FormMessageProps {
   message?: string;

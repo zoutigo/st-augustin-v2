@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { createBlogpostSchema } from '@/schemas';
-import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { createBlogpostSchema } from "@/schemas";
+import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
 import {
   Form,
   FormField,
@@ -13,14 +13,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { FormError } from '@/components/form-error';
-import { FormSuccess } from '@/components/form-success';
-import { TiptapEditor } from '@/components/tiptap/tiptap';
-import { Entity } from '@prisma/client';
+} from "@/components/ui/form";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
+import { TiptapEditor } from "@/components/tiptap/tiptap";
+import { Entity } from "@prisma/client";
 
 // Définir les types basés sur le schéma Zod
 type CreateBlogpostInput = z.infer<typeof createBlogpostSchema>;
@@ -43,7 +43,7 @@ export const BlogPostForm: React.FC<BlogpostFormProps> = ({
   success,
 }) => {
   const [editorContent, setEditorContent] = useState(
-    initialValues.content || ''
+    initialValues.content || "",
   );
   const form = useForm<CreateBlogpostInput>({
     resolver: zodResolver(createBlogpostSchema),
@@ -58,7 +58,7 @@ export const BlogPostForm: React.FC<BlogpostFormProps> = ({
     <Card className="w-full">
       <CardHeader>
         <p className="text-2xl font-semibold text-center">
-          {initialValues ? 'Modifier le post' : 'Créer un post'}
+          {initialValues ? "Modifier le post" : "Créer un post"}
         </p>
       </CardHeader>
       <CardContent>
@@ -73,7 +73,7 @@ export const BlogPostForm: React.FC<BlogpostFormProps> = ({
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'Titre du post :'} </FormLabel>
+                    <FormLabel>{"Titre du post :"} </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -93,7 +93,7 @@ export const BlogPostForm: React.FC<BlogpostFormProps> = ({
                 name="entityId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'Entité liée :'} </FormLabel>
+                    <FormLabel>{"Entité liée :"} </FormLabel>
                     <FormControl>
                       <select
                         {...field}
@@ -123,7 +123,7 @@ export const BlogPostForm: React.FC<BlogpostFormProps> = ({
                 name="isReleased"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'Publier le post  ?'} </FormLabel>
+                    <FormLabel>{"Publier le post  ?"} </FormLabel>
                     <FormControl>
                       <Checkbox
                         checked={field.value}
@@ -144,7 +144,7 @@ export const BlogPostForm: React.FC<BlogpostFormProps> = ({
                 name="isPublic"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'Le post doit il etre public ?'} </FormLabel>
+                    <FormLabel>{"Le post doit il etre public ?"} </FormLabel>
                     <FormControl>
                       <Checkbox
                         checked={field.value}
@@ -165,7 +165,7 @@ export const BlogPostForm: React.FC<BlogpostFormProps> = ({
                 name="content"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{'contenu du post'} </FormLabel>
+                    <FormLabel>{"contenu du post"} </FormLabel>
                     <FormControl>
                       <TiptapEditor
                         initialContent={field.value}
@@ -190,7 +190,7 @@ export const BlogPostForm: React.FC<BlogpostFormProps> = ({
               disabled={isPending}
               className="text-secondary"
             >
-              {isPending ? 'En cours...' : 'Soumettre'}
+              {isPending ? "En cours..." : "Soumettre"}
             </Button>
           </form>
         </Form>

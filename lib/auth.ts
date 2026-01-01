@@ -1,5 +1,5 @@
-import { auth } from '@/auth';
-import { ExtendedUser } from '@/types/next-auth';
+import { auth } from "@/auth";
+import { ExtendedUser } from "@/types/next-auth";
 
 export const currentUser = async () => {
   const session = await auth();

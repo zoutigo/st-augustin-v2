@@ -1,38 +1,38 @@
-import { SiGoogleclassroom } from 'react-icons/si';
-import { RiRestaurantFill } from 'react-icons/ri';
-import { LuClock3 } from 'react-icons/lu';
-import { BiSolidSchool } from 'react-icons/bi';
+import { SiGoogleclassroom } from "react-icons/si";
+import { RiRestaurantFill } from "react-icons/ri";
+import { LuClock3 } from "react-icons/lu";
+import { BiSolidSchool } from "react-icons/bi";
 
 import {
   LandingFavoriteCard,
   LandingFavoriteCardProps,
-} from './landing-favorite-card';
+} from "./landing-favorite-card";
 
 export const LandingFavorites = () => {
   const favorites = [
     {
-      title: 'Garderie',
-      text: 'Retrouvez ici toutes les information sur la garderie étude.',
+      title: "Garderie",
+      text: "Retrouvez ici toutes les information sur la garderie étude.",
       icon: LuClock3,
-      path: '/vie-scolaire/garderie',
+      path: "/vie-scolaire/garderie",
     },
     {
-      title: 'Classes',
-      text: 'Accédez aux différentes classes et informations les concernant, de la Petite Section au CM2.',
+      title: "Classes",
+      text: "Accédez aux différentes classes et informations les concernant, de la Petite Section au CM2.",
       icon: SiGoogleclassroom,
-      path: '/classes',
+      path: "/classes",
     },
     {
-      title: 'Ecole',
-      text: 'Venez vite découvrir l’histoire, les valeurs de notre établissement et les avis des parents.',
+      title: "Ecole",
+      text: "Venez vite découvrir l’histoire, les valeurs de notre établissement et les avis des parents.",
       icon: BiSolidSchool,
-      path: '/ecole',
+      path: "/ecole",
     },
     {
-      title: 'Cantine',
-      text: 'Toutes les informations concernant la cantine, les menus et nos prestataires restauration.',
+      title: "Cantine",
+      text: "Toutes les informations concernant la cantine, les menus et nos prestataires restauration.",
       icon: RiRestaurantFill,
-      path: '/vie-scolaire/cantine',
+      path: "/vie-scolaire/cantine",
     },
   ];
   return (

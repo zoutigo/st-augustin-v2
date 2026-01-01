@@ -1,13 +1,13 @@
-'use server';
+"use server";
 
-import { db } from '@/lib/db';
-import { BlogPostWithEntity } from '@/types/model';
+import { db } from "@/lib/db";
+import { BlogPostWithEntity } from "@/types/model";
 
 export const getBlogPostById = async (
-  blogPostId: string
+  blogPostId: string,
 ): Promise<BlogPostWithEntity | { error: string }> => {
   if (!blogPostId) {
-    return { error: 'Veillez indiquer le numéro du post ' };
+    return { error: "Veillez indiquer le numéro du post " };
   }
   try {
     const blogPost = await db.blogPost.findUnique({
@@ -19,7 +19,7 @@ export const getBlogPostById = async (
       },
     });
     if (!blogPost) {
-      return { error: 'Post not found' };
+      return { error: "Post not found" };
     }
 
     // const deserializedContent = blogPost.content
@@ -28,7 +28,7 @@ export const getBlogPostById = async (
 
     return { ...blogPost };
   } catch (error) {
-    return { error: 'Failed to fetch page' };
+    return { error: "Failed to fetch page" };
   }
 };
 
@@ -39,10 +39,10 @@ export const getBlogPostById = async (
  * @returns Une liste triée de blog posts ou une erreur descriptive.
  */
 export const getBlogPostsByEntitySlug = async (
-  entitySlug: string
+  entitySlug: string,
 ): Promise<BlogPostWithEntity[] | { error: string }> => {
   // Vérification du paramètre
-  if (!entitySlug || typeof entitySlug !== 'string') {
+  if (!entitySlug || typeof entitySlug !== "string") {
     return { error: "Veuillez indiquer un slug valide pour l'entité." };
   }
 
@@ -58,7 +58,7 @@ export const getBlogPostsByEntitySlug = async (
         entity: true, // Inclure les informations sur l'entité associée
       },
       orderBy: {
-        createdAt: 'desc', // Trier par date de création (plus récent au plus ancien)
+        createdAt: "desc", // Trier par date de création (plus récent au plus ancien)
       },
     });
 
@@ -69,9 +69,9 @@ export const getBlogPostsByEntitySlug = async (
 
     return blogPosts;
   } catch (error) {
-    console.error('Erreur lors de la récupération des blogposts:', error);
+    console.error("Erreur lors de la récupération des blogposts:", error);
     return {
-      error: 'Une erreur est survenue lors de la récupération des blogposts.',
+      error: "Une erreur est survenue lors de la récupération des blogposts.",
     };
   }
 };
@@ -84,10 +84,11 @@ export const getAllBlogPosts = async (): Promise<
       include: {
         entity: true,
       },
+      orderBy: { createdAt: "desc" },
     });
 
     return blogposts;
   } catch (error) {
-    return { error: 'Failed to fetch posts' };
+    return { error: "Failed to fetch posts" };
   }
 };

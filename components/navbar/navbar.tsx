@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { usePathname } from 'next/navigation';
-import { TiThMenu } from 'react-icons/ti';
+import { usePathname } from "next/navigation";
+import { TiThMenu } from "react-icons/ti";
 
-import { FaWindowClose } from 'react-icons/fa';
-import { cn } from '@/lib/utils';
-import { Poppins } from 'next/font/google';
-import { NavRoutes } from '@/routes';
-import { Logo } from './logo';
-import { Button } from '../ui/button';
-import { useAppStore } from '@/lib/store';
-import { DynamicNavButton } from './dynamic-nav-button';
+import { FaWindowClose } from "react-icons/fa";
+import { cn } from "@/lib/utils";
+import { Poppins } from "next/font/google";
+import { NavRoutes } from "@/routes";
+import { Logo } from "./logo";
+import { Button } from "../ui/button";
+import { useAppStore } from "@/lib/store";
+import { DynamicNavButton } from "./dynamic-nav-button";
 
 const font = Poppins({
-  subsets: ['latin'],
-  weight: ['600'],
+  subsets: ["latin"],
+  weight: ["600"],
 });
 
 export const Navbar = () => {
@@ -33,7 +33,7 @@ export const Navbar = () => {
             <DynamicNavButton
               {...route}
               key={route.slug}
-              isActive={route.path.includes(pathname) && pathname !== '/'}
+              isActive={route.path.includes(pathname) && pathname !== "/"}
             />
           );
         })}
@@ -41,8 +41,8 @@ export const Navbar = () => {
       <div className="lg:hidden">
         {!isMenuOpen && (
           <Button
-            size={'lg'}
-            variant={'outline'}
+            size={"lg"}
+            variant={"outline"}
             className="border-none p-1"
             onClick={toggleMenu}
           >
@@ -54,8 +54,8 @@ export const Navbar = () => {
         )}
         {isMenuOpen && (
           <Button
-            size={'lg'}
-            variant={'outline'}
+            size={"lg"}
+            variant={"outline"}
             className="border-none p-1"
             onClick={toggleMenu}
           >
