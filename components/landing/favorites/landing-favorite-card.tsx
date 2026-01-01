@@ -12,6 +12,7 @@ export interface LandingFavoriteCardProps {
   icon: React.ElementType;
   text: string;
   path: string;
+  accent?: string;
 }
 
 export const LandingFavoriteCard = ({
@@ -19,32 +20,49 @@ export const LandingFavoriteCard = ({
   text,
   icon: Icon,
   path,
+  accent,
 }: LandingFavoriteCardProps) => {
+  const isDark =
+    accent?.includes("bg-secondary") || accent?.includes("text-white");
+  const titleColor = isDark ? "text-white" : "text-secondary";
+  const bodyColor = isDark ? "text-white/85" : "text-secondary";
+  const buttonClasses = isDark
+    ? "bg-white text-secondary hover:bg-white/90"
+    : "bg-secondary text-white hover:brightness-110";
+
   return (
-    <Card className="h-full flex flex-col">
-      <CardHeader>
-        <div className="flex justify-center">
-          <Icon className="text-4xl text-primary h-[6rem] w-[6rem]" />{" "}
+    <Card
+      className={`h-full flex flex-col rounded-2xl shadow-md border-none transition-transform duration-300 hover:-translate-y-1 ${
+        accent ?? "bg-white"
+      }`}
+    >
+      <CardHeader className="flex flex-row items-center justify-between gap-3 pb-2">
+        <div className="rounded-full bg-white/40 p-3">
+          <Icon className="text-3xl" />
         </div>
+        <span className="text-secondary text-sm uppercase tracking-[0.2em]">
+          Info clé
+        </span>
       </CardHeader>
-      <CardContent className="flex-1">
-        <div className="text-center text-secondary font-sans font-semibold text-2xl my-[2rem] uppercase">
-          {title}{" "}
-        </div>
-        <div className="text-xl text-justify">{text} </div>
-      </CardContent>
-      <CardFooter className="mt-auto">
-        <Button
-          variant={"default"}
-          className="w-full py-8 hover:bg-secondary-ligth hover:uppercase"
+      <CardContent className="flex-1 space-y-3">
+        <div
+          className={`text-left font-semibold text-2xl uppercase leading-snug ${titleColor}`}
         >
-          <Link href={path}>
-            <span className="text-2xl text-secondary font-cursive">
-              {" "}
-              Allons y !
-            </span>
-          </Link>
-        </Button>{" "}
+          {title}
+        </div>
+        <div className={`text-base leading-relaxed opacity-80 ${bodyColor}`}>
+          {text}
+        </div>
+      </CardContent>
+      <CardFooter className="mt-auto pt-0">
+        <Link href={path} className="w-full">
+          <Button
+            className={`w-full flex items-center justify-between group ${buttonClasses}`}
+          >
+            <span className="font-semibold">Découvrir</span>
+            <span className="group-hover:translate-x-1 transition">→</span>
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

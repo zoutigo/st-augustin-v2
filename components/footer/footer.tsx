@@ -7,17 +7,24 @@ import { FooterSitemap } from "./footer-sitemap";
 export const Footer = () => {
   return (
     <footer className="w-full overflow-hidden bg-gradient-to-br from-secondary via-secondary/90 to-secondary-dark text-white">
-      <div className="max-w-6xl mx-auto px-4 py-10 space-y-8">
-        <div className="grid gap-8 md:grid-cols-6 items-start">
-          <div className="md:col-span-2 flex flex-col gap-4">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 py-10 space-y-8">
+        <div className="grid gap-8 md:grid-cols-12 items-start">
+          <div className="md:col-span-4 flex flex-col gap-4">
             <FooterLogo />
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
-              Une école au cœur de Crémieu, engagée pour la réussite et
-              l’épanouissement des enfants.
-            </p>
           </div>
-          <FooterContactcard />
-          <FooterSponsorCard />
+          <div className="md:col-span-4">
+            <FooterContactcard />
+          </div>
+          <div className="md:col-span-4">
+            <FooterSponsorCard />
+          </div>
+        </div>
+
+        <div className="w-full">
+          <p className="text-white/80 text-sm sm:text-base leading-relaxed text-center">
+            Une école au cœur de Crémieu, engagée pour la réussite et
+            l’épanouissement des enfants.
+          </p>
         </div>
 
         <FooterSitemap />

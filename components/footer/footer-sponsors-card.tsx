@@ -29,6 +29,10 @@ export const FooterSponsorCard = () => {
       title: `La fedération des OGEC`,
       path: `https://www.fnogec.org`,
     },
+    {
+      title: `LISAWEB`,
+      path: `https://www.lisaweb.fr`,
+    },
   ];
   return (
     <div className="md:col-span-2 text-white/90 text-sm sm:text-base md:text-lg">

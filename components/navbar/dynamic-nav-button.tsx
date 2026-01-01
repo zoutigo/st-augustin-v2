@@ -9,6 +9,7 @@ import { useHandleLogout } from "@/hooks/use-handle-logout";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useCurrentGrade } from "@/hooks/use-current-grade";
 import { useRouter } from "next/navigation";
+import { FaUserCircle } from "react-icons/fa";
 
 interface NavButtonProps {
   name: string;
@@ -29,6 +30,8 @@ export const DynamicNavButton = ({
   const user = useCurrentUser();
   const grade = useCurrentGrade();
   const router = useRouter();
+  const isPrivateRoute = slug === "espace-prive";
+  const isAuthenticated = Boolean(user);
 
   const dashboardAllowedGrades = ["ADMIN", "MANAGER", "MODERATOR"];
   const dashboardIsAllowed = dashboardAllowedGrades.includes(grade || "");
@@ -61,15 +64,20 @@ export const DynamicNavButton = ({
   );
 
   // Afficher le bouton de connexion si l'utilisateur est déconnecté pour l'espace privé
-  if (!user && slug === "espace-prive") {
+  if (!user && isPrivateRoute) {
     return (
-      <div className="col-span-1 relative group z-50 bg-transparent box-border">
+      <div className="col-span-1 relative group z-50 bg-transparent box-border flex items-center justify-center">
         <Link
           href="/auth/login"
-          className="text-secondary uppercase h-[4rem] w-full flex items-center justify-center"
+          className="h-[4rem] w-full flex items-center justify-center"
+          aria-label="Espace privé"
         >
-          <Button className="w-full text-secondary font-semibold uppercase text-2xl md:text-sm lg:text-xl tracking-widest xl:tracking-widest hover:opacity-80">
-            Login
+          <Button
+            variant="ghost"
+            className="h-12 w-12 p-0 rounded-full border border-gray-200 bg-white shadow-sm hover:bg-gray-100"
+            aria-label="Connexion espace privé"
+          >
+            <FaUserCircle className="h-8 w-8 text-red-500" />
           </Button>
         </Link>
       </div>
@@ -85,11 +93,29 @@ export const DynamicNavButton = ({
       <div
         ref={buttonRef}
         onClick={handleMainButtonClick}
-        className={`text-2xl md:text-sm lg:text-xl text-secondary uppercase tracking-widest h-[4rem] w-full flex items-center justify-center xl:tracking-widest ${
-          isActive ? "border-b-4" : ""
-        } hover:bg-${hoverClass} hover:text-white`}
+        className={`h-[4rem] w-full flex items-center justify-center cursor-pointer ${
+          isPrivateRoute
+            ? "hover:bg-transparent"
+            : "text-2xl md:text-sm lg:text-xl text-secondary uppercase tracking-widest xl:tracking-widest hover:bg-" +
+              hoverClass +
+              " hover:text-white"
+        } ${isActive && !isPrivateRoute ? "border-b-4" : ""}`}
       >
-        <Link href={path}>{name}</Link>
+        <Link
+          href={path}
+          className="flex items-center justify-center w-full h-full"
+          aria-label={isPrivateRoute ? "Espace privé" : name}
+        >
+          {isPrivateRoute ? (
+            <div className="h-12 w-12 rounded-full border border-gray-200 bg-white shadow-sm flex items-center justify-center">
+              <FaUserCircle
+                className={`h-8 w-8 ${isAuthenticated ? "text-green-600" : "text-red-500"}`}
+              />
+            </div>
+          ) : (
+            name
+          )}
+        </Link>
       </div>
 
       {showDropDown && subroutes && (
@@ -104,16 +130,20 @@ export const DynamicNavButton = ({
                 key={subroute.slug}
                 className={`relative group2 bg-gray-100 w-full my-1 box-border hover:bg-${hoverClass}`}
               >
-                <div className="text-2xl md:text-sm lg:text-xl tracking-wider text-secondary h-[4rem] flex items-center justify-center">
+                <div className="text-2xl md:text-sm lg:text-xl tracking-wider text-secondary h-[4rem] flex items-center justify-center cursor-pointer">
                   {subroute.slug === "logout" ? (
                     <button
                       onClick={(e) => handleNavigation(e, "", true)}
-                      className="w-full h-full flex items-center justify-center"
+                      className="w-full h-full flex items-center justify-center cursor-pointer"
                     >
                       {subroute.name}
                     </button>
                   ) : (
-                    <Link href={subroute.path} onClick={handleSubrouteClick}>
+                    <Link
+                      href={subroute.path}
+                      onClick={handleSubrouteClick}
+                      className="w-full h-full flex items-center justify-center"
+                    >
                       {subroute.name}
                     </Link>
                   )}
@@ -124,11 +154,12 @@ export const DynamicNavButton = ({
                     {subroute.finalroutes.map((finalroute) => (
                       <div
                         key={finalroute.slug}
-                        className={`text-2xl md:text-sm lg:text-xl tracking-wider text-secondary h-[4rem] w-full flex items-center justify-center bg-gray-100 mx-1 mb-1 box-border hover:bg-${hoverClass}`}
+                        className={`text-2xl md:text-sm lg:text-xl tracking-wider text-secondary h-[4rem] w-full flex items-center justify-center bg-gray-100 mx-1 mb-1 box-border hover:bg-${hoverClass} cursor-pointer`}
                       >
                         <Link
                           href={finalroute.path}
                           onClick={handleSubrouteClick}
+                          className="w-full h-full flex items-center justify-center"
                         >
                           {finalroute.name}
                         </Link>

@@ -44,18 +44,20 @@ describe("Navbar", () => {
       ["Vie Scolaire", "/vie-scolaire"],
       ["Classes", "/classes"],
       ["Blog", "/blog"],
-      ["Login", "/auth/login"], // affiché pour un utilisateur non connecté
+      ["Espace privé", "/auth/login"], // affiché pour un utilisateur non connecté
     ];
 
     expectedLinks.forEach(([label, href]) => {
-      const link = screen.getByRole("link", { name: new RegExp(label, "i") });
+      const link = screen.getByRole("link", {
+        name: new RegExp(label, "i"),
+      });
       expect(link).toHaveAttribute("href", href);
     });
   });
 
   it("affiche le lien de login quand l'utilisateur n'est pas connecté", () => {
     render(<Navbar />);
-    const loginLink = screen.getByRole("link", { name: /login/i });
+    const loginLink = screen.getByRole("link", { name: /espace privé/i });
     expect(loginLink).toHaveAttribute("href", "/auth/login");
   });
 });

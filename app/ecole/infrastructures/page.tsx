@@ -4,9 +4,9 @@ import PageContent from "@/components/tiptap/page-content";
 import { Page } from "@prisma/client";
 import React from "react";
 
-type Props = {};
+export const revalidate = 3600;
 
-const InfratructurePage = async (props: Props) => {
+const InfratructurePage = async () => {
   const metadatas = {
     title: "Infrastures - Ecole Saint Augustin Crémieu",
     description: "Découvrez les infrastructures de l’école Saint Augustin!",

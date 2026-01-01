@@ -27,6 +27,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
   handleButtonClick,
 }) => {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [fontSize, setFontSize] = useState<number>(16);
 
   const applyTextColor = (color: string, event: React.MouseEvent): void => {
     event.preventDefault();
@@ -109,6 +110,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
       <div className="menu-bar-button-group-list">
         <button
           type="button"
+          aria-label="Gras"
           onClick={() =>
             handleButtonClick(() => editor.chain().focus().toggleBold().run())
           }
@@ -118,6 +120,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Italique"
           onClick={() =>
             handleButtonClick(() => editor.chain().focus().toggleItalic().run())
           }
@@ -127,6 +130,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Souligner"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().toggleUnderline().run(),
@@ -138,6 +142,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Liste à puces"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().toggleBulletList().run(),
@@ -149,6 +154,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Liste ordonnée"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().toggleOrderedList().run(),
@@ -160,6 +166,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Titre H1"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().toggleHeading({ level: 1 }).run(),
@@ -174,6 +181,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
 
         <button
           type="button"
+          aria-label="Titre H2"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().toggleHeading({ level: 2 }).run(),
@@ -187,6 +195,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Titre H3"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().toggleHeading({ level: 3 }).run(),
@@ -200,6 +209,43 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Augmenter la taille du texte"
+          onClick={() => {
+            const next = Math.min(fontSize + 2, 40);
+            setFontSize(next);
+            handleButtonClick(() =>
+              editor
+                .chain()
+                .focus()
+                .setMark("fontSize", { size: `${next}px` })
+                .run(),
+            );
+          }}
+          className={editor.isActive("fontSize") ? "is-active" : ""}
+        >
+          A+
+        </button>
+        <button
+          type="button"
+          aria-label="Diminuer la taille du texte"
+          onClick={() => {
+            const next = Math.max(fontSize - 2, 12);
+            setFontSize(next);
+            handleButtonClick(() =>
+              editor
+                .chain()
+                .focus()
+                .setMark("fontSize", { size: `${next}px` })
+                .run(),
+            );
+          }}
+          className={editor.isActive("fontSize") ? "is-active" : ""}
+        >
+          A-
+        </button>
+        <button
+          type="button"
+          aria-label="Paragraphe"
           onClick={() =>
             handleButtonClick(() => editor.chain().focus().setParagraph().run())
           }
@@ -209,6 +255,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Barré"
           onClick={() =>
             handleButtonClick(() => editor.chain().focus().toggleStrike().run())
           }
@@ -218,6 +265,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Surligner"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().toggleHighlight().run(),
@@ -229,6 +277,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Aligner à gauche"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().setTextAlign("left").run(),
@@ -240,6 +289,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Aligner au centre"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().setTextAlign("center").run(),
@@ -253,6 +303,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Aligner à droite"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().setTextAlign("right").run(),
@@ -264,6 +315,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         </button>
         <button
           type="button"
+          aria-label="Justifier"
           onClick={() =>
             handleButtonClick(() =>
               editor.chain().focus().setTextAlign("justify").run(),
@@ -285,6 +337,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
         />
         <button
           type="button"
+          aria-label="Effacer la couleur du texte"
           onClick={clearTextColor}
           style={{
             marginTop: "8px",
