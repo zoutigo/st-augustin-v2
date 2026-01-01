@@ -5,7 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "dev": "npm install && npm run prisma:seed && cross-env WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=1 next dev -p 3000",
-    "build": "NODE_OPTIONS='--max-old-space-size=2048' next build",
+    "build": "next build",
     "start": "node start.js",
     "lint": "next lint",
     "format:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css,scss,html}\"",
