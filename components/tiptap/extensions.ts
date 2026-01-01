@@ -4,8 +4,6 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
-import Heading from "@tiptap/extension-heading";
-import Strike from "@tiptap/extension-strike";
 import Image from "@tiptap/extension-image";
 import ResizeImage from "tiptap-extension-resize-image";
 import Table from "@tiptap/extension-table";
@@ -162,16 +160,17 @@ export const TextColor = Mark.create({
 
 // ✅ **Tableau Final des Extensions**
 export const extensions = [
-  StarterKit,
+  StarterKit.configure({
+    heading: {
+      levels: [1, 2, 3],
+    },
+    strike: { HTMLAttributes: {} },
+  }),
   Underline,
   TextAlign.configure({
     types: ["heading", "paragraph"],
   }),
   Highlight,
-  Heading.configure({
-    levels: [1, 2, 3],
-  }),
-  Strike,
   Image,
   ResizeImage.configure({
     allowBase64: true,
