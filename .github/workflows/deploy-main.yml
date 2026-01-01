@@ -259,7 +259,11 @@ jobs:
         run: |
           set -euo pipefail
           SSH_OPTS="-4 -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-          rsync -az --delete --exclude 'files/' \
+          rsync -az --delete \
+            --exclude 'public/uploads/**' \
+            --exclude 'public/images/**' \
+            --exclude '.next/standalone/public/uploads/**' \
+            --exclude '.next/standalone/public/images/**' \
             -e "ssh $SSH_OPTS -p ${O2_SSH_PORT}" \
             deploy/ \
             "${O2_SSH_USER}@${O2_SSH_HOST}:${O2_TARGET_DIR}/"
