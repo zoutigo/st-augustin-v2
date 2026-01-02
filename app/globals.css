@@ -134,3 +134,36 @@ body {
     transform: var(--base-transform) translateY(-8px);
   }
 }
+
+@layer components {
+  .dashboard-typography {
+    @apply text-base md:text-lg leading-relaxed text-secondary;
+  }
+
+  .dashboard-typography h1 {
+    @apply text-3xl md:text-4xl font-bold text-secondary;
+  }
+
+  .dashboard-typography h2 {
+    @apply text-2xl md:text-3xl font-semibold text-secondary;
+  }
+
+  .dashboard-typography h3 {
+    @apply text-xl md:text-2xl font-semibold text-secondary;
+  }
+
+  .dashboard-typography p,
+  .dashboard-typography li,
+  .dashboard-typography label,
+  .dashboard-typography span {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+
+  .dashboard-typography small {
+    @apply text-sm leading-snug;
+  }
+
+  .landing-container {
+    @apply w-full px-[6%] md:px-[10%] lg:px-[12%];
+  }
+}

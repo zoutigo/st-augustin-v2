@@ -4,12 +4,12 @@ import { FiArrowRight } from "react-icons/fi";
 
 export const LandingActivity = () => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-r from-primary via-white to-secondary/10 text-secondary py-10 px-4 md:py-14 md:px-10">
+    <section className="relative overflow-hidden bg-gradient-to-r from-primary via-white to-secondary/10 text-secondary py-10 md:py-14">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -left-10 top-4 w-32 h-32 rounded-full bg-secondary/10 blur-3xl" />
         <div className="absolute right-0 bottom-0 w-40 h-40 rounded-full bg-primary/20 blur-3xl" />
       </div>
-      <div className="max-w-6xl mx-auto flex flex-col gap-6 md:gap-8 relative">
+      <div className="landing-container mx-auto flex flex-col gap-6 md:gap-8 relative">
         <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div>
             <p className="text-sm uppercase tracking-[0.35em] text-secondary/70">

@@ -5,6 +5,8 @@ import { LandingMessage } from "./message/landing-message";
 import { LandingMovie } from "./movie/landing-movie";
 import { LandingStats } from "./stats/landing-stats";
 import { LandingPrefetch } from "./landing-prefetch";
+import { LandingFaq } from "./faq/landing-faq";
+import { LandingDiscovery } from "./discovery/landing-discovery";
 
 export const Landing = () => {
   return (
@@ -13,9 +15,11 @@ export const Landing = () => {
       <ModalInfo />
       <LandingMovie />
       <LandingMessage />
+      <LandingDiscovery />
       <LandingFavorites />
       <LandingStats />
       <LandingActivity />
+      <LandingFaq />
     </div>
   );
 };

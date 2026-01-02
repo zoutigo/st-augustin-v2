@@ -1,32 +1,92 @@
 /* tiptap-editor.css */
 
 .editor {
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 4px;
-  min-height: 200px; /* Hauteur minimale */
+  border: 1px solid #e2e8f0;
+  padding: 12px;
+  border-radius: 16px;
+  min-height: 280px;
+  background: radial-gradient(circle at 10% 10%, #f8fafc, #ffffff 35%, #f1f5f9);
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.06);
 }
 
 .menu-bar {
-  border: 1px solid grey;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .menu-bar-button-group {
   display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-  padding: 1rem 0.5rem;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fafc, #ffffff);
 }
+
+.menu-bar-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.menu-bar-info-button {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menu-bar-info-button:hover {
+  background: #f8fafc;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.menu-bar button {
+  padding: 6px 10px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.menu-bar button.is-active {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+.menu-bar button:hover {
+  background: #f8fafc;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
 .menu-bar-button-group-list {
   display: flex;
-  flex-wrap: wrap; /* Permet de passer à la ligne suivante lorsque la ligne est pleine */
+  flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 8px;
-  padding: 0.1rem 0.5rem;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
 }
 
 .menu-bar-button-group-list button {
-  flex: 0 1 auto; /* Les boutons occupent la largeur de leur contenu */
+  flex: 0 0 auto;
+  height: 34px;
+}
+
+.menu-bar-info {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: #475569;
 }
 
 .menu-bar button {
@@ -44,13 +104,14 @@
 }
 
 .ProseMirror {
-  background-color: #f9f9f9; /* Couleur de fond */
-  color: #333; /* Couleur du texte */
-  padding: 8px;
-  border-radius: 4px;
-  min-height: 200px; /* Hauteur minimale */
-  line-height: 1.5;
-  margin: 1em 0;
+  background-color: #ffffff;
+  color: #0f172a;
+  padding: 12px;
+  border-radius: 12px;
+  min-height: 280px;
+  line-height: 1.65;
+  margin: 0.5em 0;
+  border: 1px solid #e2e8f0;
 }
 
 .ProseMirror ul {

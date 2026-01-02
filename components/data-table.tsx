@@ -47,13 +47,19 @@ export function DataTable<T>({
   }, [data.length, start, page]);
 
   return (
-    <div className="rounded-md border overflow-x-auto">
-      <Table>
+    <div className="rounded-xl overflow-x-auto bg-white shadow-sm border border-slate-200">
+      <Table className="border-collapse">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow
+              key={headerGroup.id}
+              className="border-b border-slate-100"
+            >
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
+                <TableHead
+                  key={header.id}
+                  className="border-none text-sm font-semibold text-secondary"
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -67,9 +73,12 @@ export function DataTable<T>({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow
+              key={row.id}
+              className="border-b border-slate-100 hover:bg-slate-50"
+            >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
+                <TableCell key={cell.id} className="border-none text-base">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}

@@ -9,11 +9,13 @@ import {
 interface FileUploadButtonProps {
   onFileSelect: (file: File | null) => void; // Callback lorsque le fichier est sélectionné
   buttonText: string; // Texte du bouton
+  showHelper?: boolean;
 }
 
 export const FileUploadButton: React.FC<FileUploadButtonProps> = ({
   onFileSelect,
   buttonText,
+  showHelper = true,
 }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -41,9 +43,11 @@ export const FileUploadButton: React.FC<FileUploadButtonProps> = ({
       >
         {buttonText}
       </Button>
-      <p className="mt-1 text-xs text-muted-foreground">
-        Types acceptés: {humanAllowedTypes}
-      </p>
+      {showHelper && (
+        <p className="mt-1 text-xs text-muted-foreground">
+          Types acceptés: {humanAllowedTypes}
+        </p>
+      )}
     </div>
   );
 };
