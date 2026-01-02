@@ -1,149 +1,118 @@
 import React from "react";
-import { db } from "@/lib/db";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import {
+  Settings,
+  Users,
+  HelpCircle,
+  GraduationCap,
+  BookOpen,
+  FileText,
+  CalendarClock,
+  Tags,
+} from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
-type Props = {};
+const tiles = [
+  {
+    title: "Site",
+    subtitle: "Coordonnées, mentions et apparence globale.",
+    category: "Configuration",
+    icon: <Settings className="h-6 w-6 text-primary" />,
+    href: "/espace-prive/dashboard/pages",
+  },
+  {
+    title: "Utilisateurs",
+    subtitle: "Comptes, rôles admin et coordination des accès.",
+    category: "Gestion",
+    icon: <Users className="h-6 w-6 text-secondary" />,
+    href: "/espace-prive/dashboard/users",
+  },
+  {
+    title: "FAQ",
+    subtitle: "Questions/réponses affichées sur le site.",
+    category: "Contenu",
+    icon: <HelpCircle className="h-6 w-6 text-slate-500" />,
+    href: "/espace-prive/dashboard/faq",
+  },
+  {
+    title: "Catégories FAQ",
+    subtitle: "Organisez vos thèmes de questions.",
+    category: "Contenu",
+    icon: <Tags className="h-6 w-6 text-amber-600" />,
+    href: "/espace-prive/dashboard/faq-categories",
+  },
+  {
+    title: "Classes",
+    subtitle: "Gérez les classes et contenus associés.",
+    category: "École",
+    icon: <GraduationCap className="h-6 w-6 text-emerald-600" />,
+    href: "/espace-prive/dashboard/entities",
+  },
+  {
+    title: "Blog & Articles",
+    subtitle: "Actualités et posts.",
+    category: "Blog",
+    icon: <BookOpen className="h-6 w-6 text-indigo-500" />,
+    href: "/espace-prive/dashboard/blogposts",
+  },
+  {
+    title: "Pages",
+    subtitle: "Ajoutez ou modifiez les pages du site.",
+    category: "Pages",
+    icon: <FileText className="h-6 w-6 text-sky-600" />,
+    href: "/espace-prive/dashboard/pages",
+  },
+  {
+    title: "Modales",
+    subtitle: "Gestion des annonces planifiées.",
+    category: "Planning",
+    icon: <CalendarClock className="h-6 w-6 text-rose-500" />,
+    href: "/espace-prive/dashboard/modals",
+  },
+];
 
-const Dashboard = async (props: Props) => {
-  const [entities, totalPosts, activeModal, usersByRole, usersByGrade] =
-    await Promise.all([
-      db.entity.findMany({
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-          _count: { select: { blogpages: true } },
-        },
-        orderBy: { name: "asc" },
-      }),
-      db.blogPost.count(),
-      db.modal.findFirst({
-        where: {
-          startDate: { lte: new Date() },
-          endDate: { gte: new Date() },
-        },
-        orderBy: { startDate: "desc" },
-      }),
-      db.user.groupBy({
-        by: ["role"],
-        _count: { role: true },
-      }),
-      db.user.groupBy({ by: ["grade"], _count: { grade: true } }),
-    ]);
-
+const Dashboard = async () => {
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Total articles</CardTitle>
-          </CardHeader>
-          <CardContent className="text-3xl font-bold">{totalPosts}</CardContent>
-        </Card>
+      <header className="space-y-2">
+        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+          Tableau de bord
+        </p>
+        <h1 className="text-4xl font-black text-secondary">
+          Espace administrateur
+        </h1>
+        <p className="text-base text-muted-foreground">
+          Pilotez le site, les utilisateurs et vos partenaires en un clin
+          d&apos;œil.
+        </p>
+      </header>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Modale active</CardTitle>
-          </CardHeader>
-          <CardContent className="text-sm">
-            {activeModal ? (
-              <div>
-                <div className="font-semibold">{activeModal.title}</div>
-                <div>
-                  du{" "}
-                  {new Date(activeModal.startDate).toLocaleDateString("fr-FR")}{" "}
-                  au {new Date(activeModal.endDate).toLocaleDateString("fr-FR")}
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {tiles.map((tile) => (
+          <Link key={tile.title} href={tile.href}>
+            <Card className="h-full min-h-[220px] transition hover:-translate-y-1 hover:shadow-lg rounded-2xl border-slate-200 bg-white">
+              <CardContent className="p-6 space-y-4 flex flex-col">
+                <div className="flex items-start justify-between">
+                  <div className="h-14 w-14 rounded-2xl bg-slate-50 flex items-center justify-center shadow-inner">
+                    {tile.icon}
+                  </div>
+                  <div className="text-[12px] uppercase tracking-[0.24em] text-muted-foreground mt-1">
+                    {tile.category}
+                  </div>
                 </div>
-                <Link
-                  className="text-primary underline"
-                  href={`/espace-prive/dashboard/modals/${activeModal.id}/edit`}
-                >
-                  Modifier
-                </Link>
-              </div>
-            ) : (
-              <div>Aucune modale active</div>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Utilisateurs (par grade)</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              {["ADMIN", "MANAGER", "MODERATOR", "USERS"].map((label) => {
-                const key = label === "USERS" ? "NONE" : label;
-                const found = usersByGrade.find((x) => String(x.grade) === key);
-                const count = found?._count.grade || 0;
-                const colorClass =
-                  label === "ADMIN"
-                    ? "bg-destructive/15 text-destructive"
-                    : label === "MANAGER"
-                      ? "bg-primary/15 text-primary"
-                      : label === "MODERATOR"
-                        ? "bg-secondary/15 text-secondary"
-                        : "bg-muted text-foreground";
-                return (
-                  <span
-                    key={label}
-                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${colorClass}`}
-                  >
-                    {label}
-                    <span className="inline-flex items-center justify-center rounded-full bg-background border px-2 py-0.5 text-[10px]">
-                      {count}
-                    </span>
-                  </span>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
+                <div className="space-y-3">
+                  <h2 className="text-2xl font-semibold text-secondary">
+                    {tile.title}
+                  </h2>
+                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                    {tile.subtitle}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Entités</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {entities.map((e) => {
-              const roleKey = e.slug.toUpperCase();
-              const usersForEntity = usersByRole.find(
-                (r) => String(r.role) === roleKey,
-              );
-              const usersCount = usersForEntity?._count.role || 0;
-              return (
-                <div
-                  key={e.id}
-                  className="flex items-center justify-between border rounded p-3"
-                >
-                  <div>
-                    <div className="font-medium">{e.name}</div>
-                    <div className="text-xs text-muted-foreground">
-                      {e.slug}
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-xs text-muted-foreground">
-                      Articles
-                    </div>
-                    <div className="text-lg font-semibold">
-                      {e._count.blogpages}
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      Users
-                    </div>
-                    <div className="text-lg font-semibold">{usersCount}</div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };

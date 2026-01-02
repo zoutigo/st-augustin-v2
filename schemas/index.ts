@@ -166,3 +166,19 @@ export const userProfileUpdateSchema = z.object({
       "Le numéro de téléphone ne doit contenir que des chiffres",
     ),
 });
+
+export const createFaqCategorySchema = z.object({
+  name: z.string().min(1, "Le nom est requis"),
+  slug: z.string().min(1, "Le slug est requis"),
+});
+
+export const updateFaqCategorySchema = createFaqCategorySchema.partial();
+
+export const createFaqSchema = z.object({
+  question: z.string().min(1, "La question est requise"),
+  answer: z.string().min(1, "La réponse est requise"),
+  categoryId: z.string().min(1, "La catégorie est requise"),
+  isFeatured: z.boolean().optional().default(false),
+});
+
+export const updateFaqSchema = createFaqSchema.partial();

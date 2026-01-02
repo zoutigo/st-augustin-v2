@@ -2,11 +2,10 @@
 import Link from "next/link";
 
 import { Entity } from "@prisma/client";
-import { Button } from "@/components/ui/button";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
-import { Pencil, Trash2 } from "lucide-react";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { ActionIconButton } from "@/components/ui/action-icon-button";
 
 const EntityActionsCell = ({ row }: { row: Row<Entity> }) => {
   const router = useRouter();
@@ -19,25 +18,23 @@ const EntityActionsCell = ({ row }: { row: Row<Entity> }) => {
 
   return (
     <div className="flex justify-center gap-2">
-      <Link href={`/espace-prive/dashboard/entities/${id}/edit`}>
-        <Button variant="ghost" size="icon" aria-label="Modifier">
-          <Pencil className="h-4 w-4 text-blue-600" />
-        </Button>
-      </Link>
+      <ActionIconButton
+        type="view"
+        href={`/classes/${row.original.slug}`}
+        aria-label="Voir la page publique"
+      />
+      <ActionIconButton
+        type="edit"
+        href={`/espace-prive/dashboard/entities/${id}/edit`}
+        aria-label="Modifier"
+      />
       <ConfirmDialog
         title="Supprimer l'entité"
         description="Cette action est irréversible et peut casser des liens. Confirmez la suppression."
         confirmText="Supprimer"
         onConfirm={handleDelete}
       >
-        <Button
-          variant="destructive"
-          size="icon"
-          aria-label="Supprimer"
-          className="bg-destructive/90 hover:bg-destructive"
-        >
-          <Trash2 className="h-4 w-4 text-destructive-foreground" />
-        </Button>
+        <ActionIconButton type="delete" aria-label="Supprimer" />
       </ConfirmDialog>
     </div>
   );
