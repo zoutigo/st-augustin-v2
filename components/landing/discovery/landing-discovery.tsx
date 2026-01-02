@@ -20,7 +20,7 @@ const destinations = [
       "from-amber-50 via-white to-primary/10 border-amber-100 text-secondary",
   },
   {
-    slug: "/ecole-infrastructures",
+    slug: "/ecole/infrastructures",
     title: "Infrastructures",
     label: "Espaces",
     description:
@@ -30,7 +30,7 @@ const destinations = [
       "from-teal-50 via-white to-secondary/10 border-teal-100 text-secondary",
   },
   {
-    slug: "/ecole-histoire",
+    slug: "/ecole/histoire",
     title: "Histoire",
     label: "Racines",
     description:

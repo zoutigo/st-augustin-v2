@@ -37,43 +37,45 @@ export const ModalNavBloc = ({ route }: ModalNavBlocProps) => {
   };
 
   return (
-    <div id="modal-navbloc-grid" className="my-2 min-h-12">
-      <div className="grid grid-cols-12 gap-2 h-full">
-        <div
-          className="col-span-10 bg-primary flex items-center justify-start h-full pl-8 cursor-pointer p-2 rounded-sm"
-          onClick={onClickLink}
-        >
-          <span className="font-semibold font-cursive tracking-widest text-2xl text-secondary uppercase">
+    <div
+      id="modal-navbloc-grid"
+      className="my-2 min-h-12 rounded-2xl bg-white/80 border border-secondary/10 shadow-sm overflow-hidden"
+    >
+      <div className="flex items-center">
+        <button className="flex-1 text-left px-4 py-4" onClick={onClickLink}>
+          <span className="text-lg font-semibold text-secondary uppercase tracking-wide">
             {gotologin ? "Login" : name}
           </span>
-        </div>
-        <div className="col-span-2 bg-transparent shadow-sm p-y-1 h-full">
+        </button>
+        <div className="pr-2">
           <Button
-            size={"sm"}
-            variant={"outline"}
-            className="min-w-full min-h-full"
+            size={"icon"}
+            variant={"ghost"}
+            className="h-12 w-14 rounded-xl bg-secondary/10 hover:bg-secondary/15 border border-secondary/20 transition-colors flex items-center justify-center"
             disabled={!subroutes || subroutes.length === 0 || gotologin}
             onClick={onClickIcon}
+            aria-label={`Ouvrir les sous-liens de ${name}`}
           >
             {!isOpenModalNavBock && (
-              <BiSolidChevronDown className="h-full w-full text-secondary" />
+              <BiSolidChevronDown className="h-5 w-5 text-secondary" />
             )}
             {isOpenModalNavBock && (
-              <BiSolidChevronUp className="h-10 w-10 text-secondary" />
+              <BiSolidChevronUp className="h-5 w-5 text-secondary" />
             )}
           </Button>
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-        {isOpenModalNavBock &&
-          subroutes?.map((subroute) => (
+      {isOpenModalNavBock && (
+        <div className="flex flex-col gap-2 px-3 pb-3">
+          {subroutes?.map((subroute) => (
             <ModalNavBlocSub
               key={subroute.slug}
               subroute={subroute}
               handleToggleModalNavBock={handleToggleModalNavBock}
             />
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

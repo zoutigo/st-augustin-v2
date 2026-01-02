@@ -45,29 +45,25 @@ export const ModalNavBlocSub = memo(function ModalNavBlocSub({
   }
 
   return (
-    <div>
+    <div className="bg-white/70 border border-secondary/10 rounded-xl p-3">
       <Button
-        variant="outline"
-        className="w-full justify-start pl-12 mt-1 min-h-12 items-center bg-primary-light"
+        variant="ghost"
+        className="w-full justify-start text-base md:text-lg font-semibold text-secondary"
         onClick={(e) => handleNavigation(e, path, slug === "logout")}
       >
-        <span className="text-2xl tracking-widest capitalize text-secondary">
-          {name}
-        </span>
+        <span className="capitalize">{name}</span>
       </Button>
 
       {finalroutes && (
-        <div className="flex items-center justify-between gap-3 px-10">
+        <div className="flex flex-wrap items-center gap-2 mt-2">
           {finalroutes.map((finalroute) => (
             <Button
               key={finalroute.slug}
-              variant="link"
-              className="min-w-[25%] min-h-14 !bg-transparent mt-3"
+              variant="secondary"
+              className="rounded-full bg-secondary/10 text-secondary px-3 py-2 text-sm"
               onClick={(e) => handleNavigation(e, finalroute.path)}
             >
-              <span className="text-2xl capitalize text-secondary">
-                {finalroute.name}
-              </span>
+              {finalroute.name}
             </Button>
           ))}
         </div>
