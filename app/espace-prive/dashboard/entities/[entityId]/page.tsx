@@ -1,6 +1,7 @@
 import React from "react";
 import { getEntityById } from "@/actions/entity/get";
 import PageContent from "@/components/tiptap/page-content";
+import { BackButton } from "@/components/dashboard/back-button";
 
 interface PageDetailProps {
   params: {
@@ -16,13 +17,20 @@ const EntityDetailPage = async ({ params }: PageDetailProps) => {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">{entity.name}</h1>
-      <h2 className="text-2xl font-bold mb-4">{entity.slug}</h2>
-      <PageContent content={entity.description} />
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-saint-augustin-navy">
+          {entity.name}
+        </h1>
+        <BackButton href="/espace-prive/dashboard/entities" />
+      </div>
 
-      <p>Created at: {new Date(entity.createdAt).toLocaleDateString()}</p>
-      <p>Updated at: {new Date(entity.updatedAt).toLocaleDateString()}</p>
+      <div className="rounded-xl border border-saint-augustin-sand/40 bg-white p-6 shadow-sm">
+        <PageContent content={entity.description} />
+        <p className="mt-6 text-sm text-saint-augustin-graphite/70">
+          Mis à jour le {new Date(entity.updatedAt).toLocaleDateString()}
+        </p>
+      </div>
     </div>
   );
 };

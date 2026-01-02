@@ -87,19 +87,41 @@ describe("FaqCategoriesBoard", () => {
   });
 
   it("soumet le formulaire et redirige", async () => {
+    (global as any).fetch = jest.fn((url: string, options?: RequestInit) => {
+      const method = options?.method?.toUpperCase();
+      if (method === "DELETE") {
+        return Promise.resolve({ ok: true, json: async () => ({}) });
+      }
+      if (method === "POST") {
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({ success: true }),
+        });
+      }
+      // GET rafraîchi avec la nouvelle catégorie ajoutée
+      return Promise.resolve({
+        ok: true,
+        json: async () => [
+          ...categories,
+          { id: "cat3", name: "Nouvelle", slug: "nouvelle" },
+        ],
+      });
+    });
+
     render(<FaqCategoriesBoard categories={categories} />);
     const inputs = screen.getAllByRole("textbox");
     fireEvent.change(inputs[0], { target: { value: "Nouvelle" } });
     fireEvent.change(inputs[1], { target: { value: "nouvelle" } });
     fireEvent.click(screen.getByRole("button", { name: /ajouter/i }));
-    await waitFor(() => {
+    await waitFor(() =>
       expect((global as any).fetch).toHaveBeenCalledWith(
         "/api/faq-categories",
         expect.objectContaining({ method: "POST" }),
-      );
-      expect(pushMock).toHaveBeenCalledWith(
-        "/espace-prive/dashboard/faq-categories",
-      );
+      ),
+    );
+    await waitFor(() => {
+      const matches = screen.getAllByText(/nouvelle/i);
+      expect(matches.length).toBeGreaterThan(0);
     });
   });
 

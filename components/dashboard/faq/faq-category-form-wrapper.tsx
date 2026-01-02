@@ -27,6 +27,8 @@ export const FaqCategoryFormWrapper = ({
     values: z.infer<typeof createFaqCategorySchema>,
   ) => {
     setLoading(true);
+    const pause = (ms: number) =>
+      new Promise((resolve) => setTimeout(resolve, ms));
     const endpoint =
       mode === "create"
         ? "/api/faq-categories"
@@ -47,8 +49,11 @@ export const FaqCategoryFormWrapper = ({
       if (mode === "create" && onCreated) {
         await onCreated();
       }
+      // Laisse le toast s'afficher avant la navigation
+      await pause(1400);
       router.push("/espace-prive/dashboard/faq-categories");
-      router.refresh();
+      // refresh après navigation
+      setTimeout(() => router.refresh(), 100);
     } else {
       confirmationMessage.error(
         "Action impossible",

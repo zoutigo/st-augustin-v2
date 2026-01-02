@@ -6,6 +6,8 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { createEntity } from "@/actions/entity/posts";
 import { EntityForm } from "@/components/dashboard/entities/entity-form";
+import { confirmationMessage } from "@/components/ui/confirmation-message";
+import { BackButton } from "@/components/dashboard/back-button";
 
 type CreateEntityInput = z.infer<typeof createEntitySchema>;
 
@@ -27,15 +29,17 @@ const CreateEntityPage = (props: Props) => {
     setError("");
     startTransition(() => {
       createEntity(values)
-        .then((data) => {
+        .then(async (data) => {
           if (data.error) {
             setError(data.error);
           }
           if (data.success) {
             setSuccess(data.success);
-
-            router.push("/espace-prive/dashboard/entities");
-            router.refresh();
+            confirmationMessage.success("Entité créée");
+            setTimeout(() => {
+              router.push("/espace-prive/dashboard/entities");
+              router.refresh();
+            }, 800);
           }
         })
         .catch(() => setError("Quelque chose n'a pas fonctionné"));
@@ -43,13 +47,27 @@ const CreateEntityPage = (props: Props) => {
   };
 
   return (
-    <EntityForm
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      isPending={isPending}
-      error={error}
-      success={success}
-    />
+    <div className="max-w-5xl mx-auto space-y-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            Entités
+          </p>
+          <h1 className="text-4xl font-black text-secondary">
+            Créer une entité
+          </h1>
+        </div>
+        <BackButton href="/espace-prive/dashboard/entities" />
+      </div>
+      <EntityForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        isPending={isPending}
+        error={error}
+        success={success}
+        mode="create"
+      />
+    </div>
   );
 };
 

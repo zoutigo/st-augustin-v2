@@ -29,6 +29,7 @@ interface EntityFormProps {
   isPending: boolean;
   error?: string;
   success?: string;
+  mode?: "create" | "edit";
 }
 
 export const EntityForm: React.FC<EntityFormProps> = ({
@@ -37,6 +38,7 @@ export const EntityForm: React.FC<EntityFormProps> = ({
   isPending,
   error,
   success,
+  mode = "create",
 }) => {
   const [editorContent, setEditorContent] = useState(
     initialValues.description || "",
@@ -51,27 +53,32 @@ export const EntityForm: React.FC<EntityFormProps> = ({
   };
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <p className="text-2xl font-semibold text-center">
-          {initialValues
-            ? "Modifier la catégorie de blog"
-            : "Créer une catégorie de blog"}
+    <Card className="w-full border-slate-200 shadow-sm">
+      <CardHeader className="space-y-2">
+        <p className="text-[11px] uppercase tracking-[0.35em] text-muted-foreground text-center">
+          {mode === "create" ? "Nouvelle entité" : "Édition"}
         </p>
+        {mode === "create" && (
+          <p className="text-2xl font-semibold text-secondary text-center">
+            {initialValues.name || "Créer une entité"}
+          </p>
+        )}
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-6">
         <Form {...form}>
           <form
             className="space-y-6"
             onSubmit={form.handleSubmit(handleSubmit)}
           >
-            <div className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{"Nom de l'entité :"} </FormLabel>
+                    <FormLabel className="text-sm font-semibold text-secondary/80 uppercase tracking-wide">
+                      {"Nom de l'entité"}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -90,7 +97,9 @@ export const EntityForm: React.FC<EntityFormProps> = ({
                 name="slug"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{"Slug de l'entité :"} </FormLabel>
+                    <FormLabel className="text-sm font-semibold text-secondary/80 uppercase tracking-wide">
+                      {"Slug de l'entité"}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -104,37 +113,43 @@ export const EntityForm: React.FC<EntityFormProps> = ({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{"Description de l'entité"} </FormLabel>
-                    <FormControl>
-                      <TiptapEditor
-                        initialContent={field.value}
-                        onChange={(content) => {
-                          field.onChange(content);
-                          setEditorContent(content);
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.description?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
             </div>
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-semibold text-secondary/80 uppercase tracking-wide">
+                    {"Description de l'entité"}
+                  </FormLabel>
+                  <FormControl>
+                    <TiptapEditor
+                      initialContent={field.value}
+                      onChange={(content) => {
+                        field.onChange(content);
+                        setEditorContent(content);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.description?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
 
             <FormError message={error} />
             <FormSuccess message={success} />
             <Button
               type="submit"
               disabled={isPending}
-              className="text-secondary"
+              className="text-secondary text-base px-6 py-2.5 rounded-full"
             >
-              {isPending ? "En cours..." : "Soumettre"}
+              {isPending
+                ? "En cours..."
+                : mode === "create"
+                  ? "Créer"
+                  : "Mettre à jour"}
             </Button>
           </form>
         </Form>

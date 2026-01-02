@@ -81,6 +81,7 @@ export const createPageSchema = z.object({
   name: z.string().min(1, "Le nom est requis"), // Le nom ne doit pas être vide
   slug: z.string().min(1, "Le slug est requis"), // Le nom ne doit pas être vide
   content: z.string().min(1, "Le contenu est requis"), // Le contenu ne doit pas être vide
+  release: z.boolean().optional().default(false),
   createdAt: z.date().optional(), // Le champ est optionnel lors de la création
   updatedAt: z.date().optional(), // Le champ est optionnel lors de la création et sera géré automatiquement
 });
@@ -88,6 +89,7 @@ export const updatePageSchema = z.object({
   name: z.string().min(1, "Le nom est requis"),
   content: z.string().min(1, "Le contenu est requis"),
   slug: z.optional(z.string().min(1, "Le contenu est requis")),
+  release: z.boolean().optional().default(false),
 });
 
 export const createEntitySchema = z.object({

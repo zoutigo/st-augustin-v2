@@ -251,7 +251,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
           }
           className={editor.isActive("paragraph") ? "is-active" : ""}
         >
-          <FaParagraph /> Paragraph
+          <FaParagraph /> Paragraphe
         </button>
         <button
           type="button"
@@ -347,7 +347,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({
             borderRadius: "4px",
           }}
         >
-          Clear Text Color
+          Effacer la couleur
         </button>
       </div>
     </div>

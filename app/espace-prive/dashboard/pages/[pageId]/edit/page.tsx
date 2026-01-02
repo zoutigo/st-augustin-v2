@@ -9,11 +9,16 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { z } from "zod";
+import { confirmationMessage } from "@/components/ui/confirmation-message";
+import { BackButton } from "@/components/dashboard/back-button";
+
+const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 type Page = {
   name: string;
   slug?: string;
   content: string;
+  release?: boolean;
   id?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -59,7 +64,13 @@ const EditPage = () => {
     {
       onSuccess: [
         () => queryClient.invalidateQueries({ queryKey: ["page", pageId] }),
-        () => router.push("/espace-prive/dashboard/pages"),
+        async () => {
+          setSuccess("Page mise à jour");
+          confirmationMessage.success("Page mise à jour");
+          await pause(1500);
+          router.push("/espace-prive/dashboard/pages");
+          setTimeout(() => router.refresh(), 100);
+        },
       ],
       onError: [
         (err: unknown) => {
@@ -85,13 +96,29 @@ const EditPage = () => {
   }
 
   return (
-    <PageForm
-      initialValues={pageData as Partial<Page>}
-      onSubmit={handleSubmit}
-      isPending={mutation.isPending}
-      error={error}
-      success={success}
-    />
+    <div className="max-w-5xl mx-auto space-y-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            Pages
+          </p>
+          <h1 className="text-4xl font-black text-secondary">
+            {pageData && "name" in pageData && pageData.name
+              ? `Page : ${pageData.name}`
+              : "Édition de page"}
+          </h1>
+        </div>
+        <BackButton href="/espace-prive/dashboard/pages" />
+      </div>
+      <PageForm
+        initialValues={pageData as Partial<Page>}
+        onSubmit={handleSubmit}
+        isPending={mutation.isPending}
+        error={error}
+        success={success}
+        mode="edit"
+      />
+    </div>
   );
 };
 
