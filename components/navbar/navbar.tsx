@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { TiThMenu } from "react-icons/ti";
 
@@ -20,9 +21,34 @@ const font = Poppins({
 export const Navbar = () => {
   const pathname = usePathname();
   const { isMenuOpen, toggleMenu } = useAppStore(); // Utilisez Zustand
+  const [isHidden, setIsHidden] = useState(false);
+  const lastScroll = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const current = window.scrollY;
+      const prev = lastScroll.current;
+      if (current <= 0) {
+        setIsHidden(false);
+      } else if (current < prev) {
+        setIsHidden(false); // dès qu'on remonte, on affiche immédiatement
+      } else if (current > prev) {
+        setIsHidden(true); // en descente, on masque
+      }
+      lastScroll.current = current;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="flex flex-row justify-between items-center h-[14vh] w-full px-[12%] shadow-sm">
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 flex flex-row justify-between items-center h-[14vh] w-full px-[12%] shadow-sm bg-white/95 backdrop-blur transition-transform duration-300",
+        isHidden ? "-translate-y-full" : "translate-y-0",
+      )}
+    >
       <div className="mt-12">
         <Logo />
       </div>

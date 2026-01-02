@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Navbar } from "@/components/navbar/navbar";
 
@@ -59,5 +59,24 @@ describe("Navbar", () => {
     render(<Navbar />);
     const loginLink = screen.getByRole("link", { name: /espace privé/i });
     expect(loginLink).toHaveAttribute("href", "/auth/login");
+  });
+
+  it("masque le header au scroll descendant et le réaffiche dès qu'on remonte", () => {
+    const { getByRole } = render(<Navbar />);
+    const header = getByRole("banner");
+
+    // Scroll vers le bas -> header caché
+    Object.defineProperty(window, "scrollY", { value: 120, writable: true });
+    act(() => {
+      window.dispatchEvent(new Event("scroll"));
+    });
+    expect(header.className).toMatch(/-translate-y-full/);
+
+    // Scroll vers le haut -> header visible
+    Object.defineProperty(window, "scrollY", { value: 30, writable: true });
+    act(() => {
+      window.dispatchEvent(new Event("scroll"));
+    });
+    expect(header.className).toMatch(/translate-y-0/);
   });
 });

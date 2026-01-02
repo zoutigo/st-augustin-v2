@@ -162,4 +162,8 @@ body {
   .dashboard-typography small {
     @apply text-sm leading-snug;
   }
+
+  .landing-container {
+    @apply w-full px-[6%] md:px-[10%] lg:px-[12%];
+  }
 }

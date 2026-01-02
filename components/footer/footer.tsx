@@ -7,7 +7,7 @@ import { FooterSitemap } from "./footer-sitemap";
 export const Footer = () => {
   return (
     <footer className="w-full overflow-hidden bg-gradient-to-br from-secondary via-secondary/90 to-secondary-dark text-white">
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 py-10 space-y-8">
+      <div className="landing-container mx-auto py-10 space-y-8">
         <div className="grid gap-8 md:grid-cols-12 items-start">
           <div className="md:col-span-4 flex flex-col gap-4">
             <FooterLogo />

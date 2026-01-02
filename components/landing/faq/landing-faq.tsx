@@ -61,12 +61,12 @@ export const LandingFaq = async () => {
   }
 
   return (
-    <section className="relative bg-gradient-to-b from-white via-blue-50/40 to-white py-12 md:py-16 px-4 md:px-10">
+    <section className="relative bg-gradient-to-b from-white via-blue-50/40 to-white py-12 md:py-16">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-6 left-8 w-24 h-24 rounded-full bg-primary/15 blur-3xl" />
         <div className="absolute bottom-4 right-10 w-32 h-32 rounded-full bg-secondary/20 blur-3xl" />
       </div>
-      <div className="max-w-6xl mx-auto space-y-6 relative">
+      <div className="landing-container mx-auto space-y-6 relative">
         <div className="flex flex-col gap-2">
           <p className="text-xs md:text-sm uppercase tracking-[0.35em] text-primary/80">
             Questions en un clin d&apos;œil

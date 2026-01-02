@@ -44,8 +44,8 @@ const favorites: LandingFavoriteCardProps[] = [
 
 export const LandingFavorites = () => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-r from-primary via-white to-secondary/10 py-10 px-4 md:py-14 md:px-10 rounded-3xl shadow-inner">
-      <div className="max-w-6xl mx-auto flex flex-col gap-6 md:gap-8">
+    <section className="relative overflow-hidden bg-gradient-to-r from-primary via-white to-secondary/10 py-10 md:py-14 rounded-3xl shadow-inner">
+      <div className="landing-container mx-auto flex flex-col gap-6 md:gap-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div>
             <p className="text-sm uppercase tracking-[0.35em] text-secondary/70">
