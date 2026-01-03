@@ -18,7 +18,7 @@ const tiles = [
     subtitle: "Coordonnées, mentions et apparence globale.",
     category: "Configuration",
     icon: <Settings className="h-6 w-6 text-primary" />,
-    href: "/espace-prive/dashboard/pages",
+    href: "/espace-prive/dashboard/site-info",
   },
   {
     title: "Utilisateurs",

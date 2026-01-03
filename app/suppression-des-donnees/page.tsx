@@ -11,8 +11,7 @@ import {
   Clock,
   Server,
 } from "lucide-react";
-
-const email = "ogec.cremieu@wanadoo.fr";
+import { getInfoSiteOrFallback } from "@/data/infosite";
 
 export const metadata: Metadata = {
   title: "Suppression des données | École Saint-Augustin",
@@ -27,7 +26,7 @@ type Section = {
   items: string[];
 };
 
-const sections: Section[] = [
+const sections = (email: string): Section[] => [
   {
     title: "Vos droits",
     icon: ShieldCheck,
@@ -79,7 +78,8 @@ const sections: Section[] = [
   },
 ];
 
-export default function DataDeletionPage() {
+export default async function DataDeletionPage() {
+  const info = await getInfoSiteOrFallback();
   return (
     <PageHolder>
       <div className="space-y-10 pb-16">
@@ -102,7 +102,7 @@ export default function DataDeletionPage() {
         </section>
 
         <section className="grid gap-6 md:grid-cols-2">
-          {sections.map((section) => {
+          {sections(info.email).map((section) => {
             const Icon = section.icon;
             const accent = section.accent || "from-secondary to-primary";
             return (
@@ -167,10 +167,10 @@ export default function DataDeletionPage() {
           <div className="flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-md">
             <Mail className="h-5 w-5 text-secondary" />
             <Link
-              href={`mailto:${email}`}
+              href={`mailto:${info.email}`}
               className="text-lg font-semibold text-secondary underline underline-offset-4 hover:text-secondary-dark"
             >
-              {email}
+              {info.email}
             </Link>
           </div>
         </section>

@@ -28,7 +28,7 @@ export const apiAuthPrefix = "/api/auth";
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/";
-export const DEFAULT_LOGOUT_REDIRECT = "/auth/login";
+export const DEFAULT_LOGOUT_REDIRECT = "/";
 
 export const NavRoutes: NavRoute[] = [
   {
@@ -153,7 +153,7 @@ export const NavRoutes: NavRoute[] = [
     path: "/espace-prive",
     subroutes: [
       {
-        name: "Logout",
+        name: "Déconnexion",
         slug: "logout",
         path: "/auth/logout",
       },

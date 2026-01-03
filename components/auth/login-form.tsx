@@ -1,67 +1,64 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { CardWrapper } from "@/components/auth/card-wrapper";
-import { LoginSchema } from "@/schemas";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormLabel,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
-import { login } from "@/actions/login";
-import Link from "next/link";
-import { redirect, useSearchParams } from "next/navigation";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { currentUser } from "@/lib/auth";
+import { Lock, ShieldCheck } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Social } from "./social";
 
 export const LoginForm = () => {
-  const user = useCurrentUser();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  // const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-  //   setError('');
-  //   setSuccess('');
-
-  //   startTransition(() => {
-  //     if (user) {
-  //       return setError('You are already logged in');
-  //     }
-  //     login(values).then((data) => {
-  //       setError(data?.error);
-  //       // setSuccess(data?.success);
-  //     });
-  //   });
-  // };
-
   return (
-    <CardWrapper
-      headerLabel=""
-      backButtonLabel="Accédez aux informations privées de l'école"
-      backButtonHref="/"
-      showSocial
+    <section
+      data-testid="login-section"
+      className="relative overflow-hidden bg-gradient-to-b from-secondary/15 via-white to-primary/10 pt-20 pb-0 min-h-[95vh] flex items-center"
     >
-      {"Choisissez Google ou Facebook pour vous connecter."}
-    </CardWrapper>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -left-20 top-8 h-56 w-56 rounded-full bg-secondary/20 blur-3xl" />
+        <div className="absolute right-[-12%] bottom-[-18%] h-96 w-96 rounded-full bg-primary/25 blur-[120px]" />
+      </div>
+
+      <div className="relative landing-container max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start lg:items-center">
+        <div className="hidden lg:block text-left space-y-4">
+          <p className="text-sm uppercase tracking-[0.2em] text-secondary/70">
+            Connexion rapide
+          </p>
+          <h1 className="text-4xl font-bold text-secondary leading-snug">
+            Authentifiez-vous en un clic.
+          </h1>
+          <p className="text-secondary/75 text-lg max-w-2xl">
+            Google ou Facebook, sans mot de passe stocké. Accédez à l’espace
+            privé en toute sécurité et retrouvez vos contenus.
+          </p>
+        </div>
+
+        <div className="w-full flex justify-center">
+          <Card className="w-full max-w-lg shadow-2xl border border-secondary/10 bg-white/95 backdrop-blur">
+            <CardHeader className="space-y-3 text-center">
+              <Badge className="bg-secondary text-white px-3 py-1 w-fit mx-auto">
+                Espace privé
+              </Badge>
+              <CardTitle className="text-2xl text-secondary">
+                Choisissez votre méthode
+              </CardTitle>
+              <p className="text-secondary/75">
+                Les boutons ci-dessous sont vos portes d’entrée.
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <Social />
+              <div className="rounded-xl border border-secondary/10 bg-secondary/5 px-4 py-3 text-sm text-secondary/80 text-left space-y-2">
+                <div className="flex items-center gap-2">
+                  <Lock className="h-4 w-4 text-secondary" />
+                  <span>Connexion OAuth sécurisée</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-secondary" />
+                  <span>Aucun mot de passe stocké par l’école</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
   );
 };

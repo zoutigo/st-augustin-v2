@@ -12,8 +12,7 @@ import {
   UserCheck,
   RefreshCw,
 } from "lucide-react";
-
-const email = "ogec.cremieu@wanadoo.fr";
+import { getInfoSiteOrFallback } from "@/data/infosite";
 
 export const metadata: Metadata = {
   title: "Politique de confidentialité | École Saint-Augustin",
@@ -33,11 +32,7 @@ const sections: Section[] = [
     title: "Responsable du traitement",
     icon: ShieldCheck,
     accent: "from-secondary to-secondary-dark",
-    items: [
-      "École Saint-Augustin",
-      "Site web : https://ecole-st-augustin.fr",
-      `Email : ${email}`,
-    ],
+    items: ["École Saint-Augustin", "Site web : https://ecole-st-augustin.fr"],
   },
   {
     title: "Données collectées",
@@ -108,7 +103,7 @@ const sections: Section[] = [
     items: [
       "Droit d’accès, de rectification, d’effacement et de limitation",
       "Droit d’opposition au traitement",
-      `Contact : ${email} pour exercer ces droits`,
+      `Contact : {{email}} pour exercer ces droits`,
     ],
   },
   {
@@ -116,7 +111,7 @@ const sections: Section[] = [
     icon: Mail,
     accent: "from-secondary-dark to-secondary",
     items: [
-      `Envoyer une demande à ${email}`,
+      `Envoyer une demande à {{email}}`,
       "Traitement dans les meilleurs délais conformément aux obligations légales",
     ],
   },
@@ -131,7 +126,9 @@ const sections: Section[] = [
   },
 ];
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
+  const info = await getInfoSiteOrFallback();
+  const email = info.email || "contact@example.com";
   return (
     <PageHolder>
       <div className="space-y-10 pb-16">
@@ -191,7 +188,7 @@ export default function PrivacyPolicyPage() {
                           aria-hidden
                         />
                         <p className="text-base leading-relaxed text-foreground/90">
-                          {item}
+                          {item.replace("{{email}}", email)}
                         </p>
                       </div>
                     );

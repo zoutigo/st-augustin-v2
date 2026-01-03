@@ -15,10 +15,7 @@ import {
   Globe,
   Link as LinkIcon,
 } from "lucide-react";
-
-const email = "ogec.cremieu@wanadoo.fr";
-const phone = "04 74 90 78 80";
-const address = "Place du 8 Mai 1945, 38460 Crémieu";
+import { getInfoSiteOrFallback } from "@/data/infosite";
 
 export const metadata: Metadata = {
   title: "Mentions légales | École Saint-Augustin",
@@ -33,7 +30,12 @@ type Section = {
   items: string[];
 };
 
-const sections: Section[] = [
+const baseSections = (
+  email: string,
+  phone: string,
+  addressLine: string,
+  country: string,
+): Section[] => [
   {
     title: "Éditeur du site",
     icon: Building2,
@@ -42,7 +44,7 @@ const sections: Section[] = [
       "École Saint-Augustin",
       "Établissement d’enseignement privé sous contrat avec l’État",
       "Géré par l’Organisme de Gestion de l’Enseignement Catholique (OGEC)",
-      `Adresse : ${address}`,
+      `Adresse : ${addressLine}, ${country}`,
       `Téléphone : ${phone}`,
       `Adresse e-mail : ${email}`,
     ],
@@ -114,7 +116,16 @@ const sections: Section[] = [
   },
 ];
 
-export default function LegalNoticePage() {
+export default async function LegalNoticePage() {
+  const info = await getInfoSiteOrFallback();
+  const phoneDisplay = info.phone.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
+  const addressLine = `${info.address}, ${info.postalCode} ${info.city}`;
+  const sections = baseSections(
+    info.email,
+    phoneDisplay,
+    addressLine,
+    info.country,
+  );
   return (
     <PageHolder>
       <div className="space-y-10 pb-16">
@@ -201,26 +212,26 @@ export default function LegalNoticePage() {
               <div className="flex items-center gap-2">
                 <Mail className="h-5 w-5" />
                 <Link
-                  href={`mailto:${email}`}
+                  href={`mailto:${info.email}`}
                   className="underline underline-offset-4 hover:text-secondary-dark"
                 >
-                  {email}
+                  {info.email}
                 </Link>
               </div>
               <div className="hidden h-4 w-px bg-secondary/30 md:block" />
               <div className="flex items-center gap-2">
                 <Phone className="h-5 w-5" />
                 <Link
-                  href={`tel:${phone.replace(/\s/g, "")}`}
+                  href={`tel:${info.phone.replace(/\s/g, "")}`}
                   className="hover:text-secondary-dark"
                 >
-                  {phone}
+                  {phoneDisplay}
                 </Link>
               </div>
               <div className="hidden h-4 w-px bg-secondary/30 md:block" />
               <div className="flex items-center gap-2">
                 <MapPin className="h-5 w-5" />
-                <span>{address}</span>
+                <span>{addressLine}</span>
               </div>
             </div>
           </div>

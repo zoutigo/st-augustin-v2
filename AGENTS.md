@@ -7,6 +7,7 @@
 - Auth / Prisma / CI must not break
 - No secrets or env changes
 - Build, lint, type-check must pass
+- Favor UI interaction tests (React Testing Library + fireEvent) for links/buttons when validating navigation flows.
 
 ## Preferences (follow unless justified)
 

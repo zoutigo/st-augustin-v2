@@ -1,14 +1,20 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import DataDeletionPage from "@/app/suppression-des-donnees/page";
+import defaultInfo from "@/lib/data/info-site.json";
 
 jest.mock("next/navigation", () => ({
   usePathname: () => "/suppression-des-donnees",
 }));
 
+jest.mock("@/data/infosite", () => ({
+  getInfoSiteOrFallback: jest.fn(async () => defaultInfo),
+}));
+
 describe("Page /suppression-des-donnees", () => {
-  it("affiche la procédure de suppression et l'email de contact", () => {
-    render(<DataDeletionPage />);
+  it("affiche la procédure de suppression et l'email de contact", async () => {
+    const ui = await DataDeletionPage();
+    render(ui as JSX.Element);
 
     expect(screen.getByText(/maîtrisez vos données/i)).toBeInTheDocument();
 

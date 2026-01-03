@@ -184,3 +184,14 @@ export const createFaqSchema = z.object({
 });
 
 export const updateFaqSchema = createFaqSchema.partial();
+
+export const infoSiteSchema = z.object({
+  siteName: z.string().min(1, "Le nom du site est requis"),
+  email: z.string().email("Email invalide"),
+  address: z.string().min(1, "L'adresse est requise"),
+  city: z.string().min(1, "La ville est requise"),
+  postalCode: z.string().min(2, "Code postal requis"),
+  country: z.string().min(1, "Pays requis"),
+  phone: z.string().min(6, "Téléphone requis"),
+  responsible: z.string().min(1, "Nom du responsable requis"),
+});

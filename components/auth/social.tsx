@@ -21,7 +21,7 @@ export const Social = () => {
     });
   };
   return (
-    <div className="flex items-center w-full gap-x-2">
+    <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-2">
       <Button
         size="lg"
         variant="outline"

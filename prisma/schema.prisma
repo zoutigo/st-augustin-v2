@@ -133,3 +133,17 @@ model FAQ {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }
+
+model InfoSite {
+  id            String   @id @default(cuid())
+  siteName      String
+  email         String
+  address       String
+  city          String
+  postalCode    String
+  country       String
+  phone         String
+  responsible   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

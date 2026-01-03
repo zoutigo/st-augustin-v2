@@ -1,14 +1,20 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import PrivacyPolicyPage from "@/app/politique-de-confidentialite/page";
+import defaultInfo from "@/lib/data/info-site.json";
 
 jest.mock("next/navigation", () => ({
   usePathname: () => "/politique-de-confidentialite",
 }));
 
+jest.mock("@/data/infosite", () => ({
+  getInfoSiteOrFallback: jest.fn(async () => defaultInfo),
+}));
+
 describe("Page /politique-de-confidentialite", () => {
-  it("affiche le héros et l'adresse email de contact", () => {
-    render(<PrivacyPolicyPage />);
+  it("affiche le héros et l'adresse email de contact", async () => {
+    const ui = await PrivacyPolicyPage();
+    render(ui as JSX.Element);
 
     expect(
       screen.getByText(/nous protégeons vos données/i),
@@ -19,8 +25,9 @@ describe("Page /politique-de-confidentialite", () => {
     expect(mailLink).toHaveAttribute("href", "mailto:ogec.cremieu@wanadoo.fr");
   });
 
-  it("détaille les sections principales", () => {
-    render(<PrivacyPolicyPage />);
+  it("détaille les sections principales", async () => {
+    const ui = await PrivacyPolicyPage();
+    render(ui as JSX.Element);
 
     const sections = [
       /responsable du traitement/i,
