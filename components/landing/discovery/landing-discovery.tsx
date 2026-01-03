@@ -43,9 +43,9 @@ const destinations = [
 
 const playfulCtas = [
   "On chausse ses baskets ?",
-  "Prêt pour la visite magique ?",
-  "On a des projets plein les poches !",
+  "Prêt pour la visite imagée ?",
   "Une histoire à conter, promis.",
+  "On a des projets plein les poches !",
 ];
 
 export const LandingDiscovery = () => {
@@ -72,7 +72,7 @@ export const LandingDiscovery = () => {
               </p>
             </div>
             <div className="hidden md:block px-4 py-2 rounded-full bg-white/80 border border-primary/30 text-secondary shadow-sm">
-              5 escales à découvrir
+              3 escales à découvrir
             </div>
           </div>
         </div>
