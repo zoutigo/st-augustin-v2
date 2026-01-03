@@ -2,12 +2,13 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 import Link from "next/link";
+import { InfoSiteData } from "@/data/infosite";
 
-export const FooterContactcard = () => {
-  const phone = `0474907880`;
-  const email = `ogec.cremieu@wanadoo.fr`;
-  const phoneString = `tel:${phone}`;
-  const emailString = `mailto:${email}`;
+type Props = { info: InfoSiteData };
+
+export const FooterContactcard = ({ info }: Props) => {
+  const phoneString = `tel:${info.phone}`;
+  const emailString = `mailto:${info.email}`;
 
   return (
     <div className="md:col-span-2 text-white/90 text-sm sm:text-base md:text-lg space-y-4">
@@ -20,25 +21,28 @@ export const FooterContactcard = () => {
             <FaLocationDot className="w-6 h-6" />
           </span>
           <div>
-            <p className="text-justify">Place du 8 Mai 1945</p>
-            <p>38460 Crémieu</p>
+            <p className="text-justify">{info.address}</p>
+            <p>
+              {info.postalCode} {info.city}
+            </p>
+            <p>{info.country}</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <FaPhoneAlt className="w-5 h-5" />
           <Link href={phoneString} className="hover:text-white">
-            {phone}
+            {info.phone}
           </Link>
         </div>
         <div className="flex items-center gap-3">
           <IoMail className="w-5 h-5" />
           <Link href={emailString} className="hover:text-white">
-            {email}
+            {info.email}
           </Link>
         </div>
       </div>
       <div className="text-white/70 text-sm sm:text-base">
-        Horaires : 07h45 - 18:00
+        Responsable : {info.responsible}
       </div>
     </div>
   );

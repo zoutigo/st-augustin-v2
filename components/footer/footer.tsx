@@ -3,8 +3,11 @@ import { FooterCopyrigths } from "./footer-copyrigths";
 import { FooterLogo } from "./footer-logo";
 import { FooterSponsorCard } from "./footer-sponsors-card";
 import { FooterSitemap } from "./footer-sitemap";
+import { InfoSiteData } from "@/data/infosite";
 
-export const Footer = () => {
+type Props = { info: InfoSiteData };
+
+export const Footer = ({ info }: Props) => {
   return (
     <footer className="w-full overflow-hidden bg-gradient-to-br from-secondary via-secondary/90 to-secondary-dark text-white">
       <div className="landing-container mx-auto py-10 space-y-8">
@@ -13,7 +16,7 @@ export const Footer = () => {
             <FooterLogo />
           </div>
           <div className="md:col-span-4">
-            <FooterContactcard />
+            <FooterContactcard info={info} />
           </div>
           <div className="md:col-span-4">
             <FooterSponsorCard />

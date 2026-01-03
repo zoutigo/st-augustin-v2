@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Footer } from "@/components/footer/footer";
+import defaultInfo from "@/lib/data/info-site.json";
 
 jest.mock("next/link", () => {
   return ({ href, children, passHref: _passHref, ...rest }: any) => (
@@ -12,7 +13,7 @@ jest.mock("next/link", () => {
 
 describe("Footer", () => {
   it("affiche les sections principales du footer", () => {
-    render(<Footer />);
+    render(<Footer info={defaultInfo as any} />);
 
     expect(screen.getByText(/nous contacter/i)).toBeInTheDocument();
     expect(screen.getByText(/nos partenaires/i)).toBeInTheDocument();
@@ -23,7 +24,7 @@ describe("Footer", () => {
   });
 
   it("contient les liens de navigation attendus", () => {
-    render(<Footer />);
+    render(<Footer info={defaultInfo as any} />);
     const expectedLinks: Array<[RegExp, string]> = [
       [/l'ecole/i, "/ecole"],
       [/vie scolaire/i, "/vie-scolaire"],
@@ -43,7 +44,7 @@ describe("Footer", () => {
   });
 
   it("affiche les liens contact et partenaires", () => {
-    render(<Footer />);
+    render(<Footer info={defaultInfo as any} />);
 
     expect(screen.getByRole("link", { name: /0474907880/i })).toHaveAttribute(
       "href",
@@ -66,7 +67,7 @@ describe("Footer", () => {
   });
 
   it("respecte la hiérarchie visuelle (logo + tagline + sitemap)", () => {
-    const { container } = render(<Footer />);
+    const { container } = render(<Footer info={defaultInfo as any} />);
 
     const logo = container.querySelector("svg");
     expect(logo).toBeInTheDocument();

@@ -12,6 +12,7 @@ import NavigationModal from "@/components/modals/navigation-modal";
 import { Footer } from "@/components/footer/footer";
 import Breadcrumb from "@/components/breadcrumb";
 import { ReactQueryProvider } from "@/lib/react-query-provider";
+import { getInfoSiteOrFallback } from "@/data/infosite";
 
 const poppins = Poppins({
   weight: ["400", "700"],
@@ -45,6 +46,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  const infoSite = await getInfoSiteOrFallback();
 
   return (
     <SessionProvider session={session}>
@@ -60,7 +62,7 @@ export default async function RootLayout({
             <div className="flex-grow">
               <ReactQueryProvider>{children}</ReactQueryProvider>
             </div>
-            <Footer />
+            <Footer info={infoSite} />
           </div>
         </body>
       </html>

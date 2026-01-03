@@ -3,10 +3,23 @@ require("dotenv").config();
 const { PrismaClient } = require("@prisma/client");
 const { ensureDefaultPages } = require("../lib/ensure-default-pages");
 const { ensureDefaultEntities } = require("../lib/ensure-default-entities");
+const defaultInfoSite = require("../lib/data/info-site.json");
 
 const prisma = new PrismaClient();
 
 async function main() {
+  const infoSiteCount = await prisma.infoSite.count();
+  if (infoSiteCount === 0) {
+    await prisma.infoSite.create({
+      data: defaultInfoSite,
+    });
+    // eslint-disable-next-line no-console
+    console.log("[seed] InfoSite créé");
+  } else {
+    // eslint-disable-next-line no-console
+    console.log("[seed] InfoSite déjà présent, skip");
+  }
+
   const pageCount = await prisma.page.count();
   if (pageCount > 0) {
     // eslint-disable-next-line no-console

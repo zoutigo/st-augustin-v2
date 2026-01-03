@@ -1,9 +1,7 @@
 import { LoginForm } from "@/components/auth/login-form";
 import React from "react";
 
-type Props = {};
-
-const LoginPage = (props: Props) => {
+const LoginPage = () => {
   return <LoginForm />;
 };
 
