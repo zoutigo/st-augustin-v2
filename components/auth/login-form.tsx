@@ -61,7 +61,7 @@ export const LoginForm = () => {
       backButtonHref="/"
       showSocial
     >
-      {"Pour le momont , seule l'athentification google est possible"}
+      {"Choisissez Google ou Facebook pour vous connecter."}
     </CardWrapper>
   );
 };
