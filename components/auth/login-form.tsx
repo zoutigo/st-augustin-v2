@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Social } from "./social";
 
 export const LoginForm = () => {
+  const showFacebook = process.env.NODE_ENV !== "production";
   return (
     <section
       data-testid="login-section"
@@ -25,8 +26,9 @@ export const LoginForm = () => {
             Authentifiez-vous en un clic.
           </h1>
           <p className="text-secondary/75 text-lg max-w-2xl">
-            Google ou Facebook, sans mot de passe stocké. Accédez à l’espace
-            privé en toute sécurité et retrouvez vos contenus.
+            {showFacebook
+              ? "Google ou Facebook, sans mot de passe stocké. Accédez à l’espace privé en toute sécurité et retrouvez vos contenus."
+              : "Connexion sécurisée via Google, sans mot de passe stocké. Accédez à l’espace privé en toute sécurité et retrouvez vos contenus."}
           </p>
         </div>
 
