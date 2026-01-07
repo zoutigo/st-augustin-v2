@@ -1,10 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import EcolePage from "@/app/ecole/page";
-import HistoirePage from "@/app/ecole/histoire/page";
+import HistoirePage, {
+  metadata as histoireMetadata,
+} from "@/app/ecole/histoire/page";
 import InfrastructuresPage from "@/app/ecole/infrastructures/page";
-import ProjetsPage from "@/app/ecole/projets/page";
-import EquipePage from "@/app/ecole/equipe/page";
+import ProjetsPage, {
+  metadata as projetsMetadata,
+} from "@/app/ecole/projets/page";
+import EquipePage, {
+  metadata as equipeMetadata,
+} from "@/app/ecole/equipe/page";
 import InscriptionsPage from "@/app/ecole/inscriptions/page";
 import Loading from "@/app/ecole/loading";
 import NotFound from "@/app/ecole/not-found";
@@ -34,25 +40,49 @@ describe("Pages Ecole (SSR/ISR)", () => {
     mockGetPageBySlug.mockReset();
   });
 
-  const pages = [
-    { name: "ecole-histoire", Component: HistoirePage },
-    { name: "ecole-infrastructures", Component: InfrastructuresPage },
-    { name: "ecole-projets", Component: ProjetsPage },
-    { name: "ecole-equipe", Component: EquipePage },
-    { name: "ecole-inscriptions", Component: InscriptionsPage },
-  ];
+  it("render Histoire page SSR with metadata", () => {
+    render(<HistoirePage />);
+    expect(screen.getByText(/Histoire de l'école/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Une école chrétienne, héritière/i),
+    ).toBeInTheDocument();
+    expect(histoireMetadata.alternates?.canonical).toBe("/ecole/histoire");
+  });
 
-  pages.forEach(({ name, Component }) => {
-    it(`rend le contenu pour ${name}`, async () => {
-      mockGetPageBySlug.mockResolvedValueOnce(
-        successContent(`Contenu ${name}`),
-      );
-      const ui = await Component();
-      render(ui as JSX.Element);
-      expect(
-        screen.getByText(new RegExp(`Contenu ${name}`, "i")),
-      ).toBeInTheDocument();
-    });
+  it("render Projets page SSR with metadata", () => {
+    render(<ProjetsPage />);
+    expect(screen.getByText(/Une école ouverte à tous/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /Projet pastoral/i, level: 3 }),
+    ).toBeInTheDocument();
+    expect(projetsMetadata.alternates?.canonical).toBe("/ecole/projets");
+  });
+
+  it("render Équipe page SSR with metadata", () => {
+    render(<EquipePage />);
+    expect(screen.getByText(/Équipe pédagogique/i)).toBeInTheDocument();
+    expect(screen.getByText(/Équipe enseignante/i)).toBeInTheDocument();
+    expect(equipeMetadata.alternates?.canonical).toBe("/ecole/equipe");
+  });
+
+  it("rend le contenu dynamique pour ecole-infrastructures", async () => {
+    mockGetPageBySlug.mockResolvedValueOnce(
+      successContent("Contenu ecole-infrastructures"),
+    );
+    const ui = await InfrastructuresPage();
+    render(ui as JSX.Element);
+    expect(
+      screen.getByText(/Contenu ecole-infrastructures/i),
+    ).toBeInTheDocument();
+  });
+
+  it("rend le contenu dynamique pour ecole-inscriptions", async () => {
+    mockGetPageBySlug.mockResolvedValueOnce(
+      successContent("Contenu ecole-inscriptions"),
+    );
+    const ui = await InscriptionsPage();
+    render(ui as JSX.Element);
+    expect(screen.getByText(/Contenu ecole-inscriptions/i)).toBeInTheDocument();
   });
 
   it("affiche les cartes de la page ecole", async () => {
@@ -66,7 +96,7 @@ describe("Pages Ecole (SSR/ISR)", () => {
 
   it("affiche le fallback not found en cas d'erreur", async () => {
     mockGetPageBySlug.mockResolvedValueOnce({ error: "not found" });
-    const ui = await HistoirePage();
+    const ui = await InfrastructuresPage();
     render(ui as JSX.Element);
     expect(screen.getByText(/Page not found/i)).toBeInTheDocument();
   });

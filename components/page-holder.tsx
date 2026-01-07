@@ -7,7 +7,7 @@ interface PageHolderProps {
 
 export const PageHolder: React.FC<PageHolderProps> = ({ children }) => {
   return (
-    <div className="mx-[12%]">
+    <div className="mx-[12%] pt-[14vh] md:pt-[16vh]">
       <Breadcrumb />
       <div className="min-w-full my-[1.5%]">{children}</div>
     </div>
