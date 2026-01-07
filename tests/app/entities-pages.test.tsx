@@ -11,10 +11,18 @@ import GrandeSectionPage from "@/app/classes/grande-section/page";
 import MoyenneSectionPage from "@/app/classes/moyenne-section/page";
 import PetiteSectionPage from "@/app/classes/petite-section/page";
 
-import ApelPage from "@/app/vie-scolaire/apel/page";
-import CantinePage from "@/app/vie-scolaire/cantine/page";
-import OgecPage from "@/app/vie-scolaire/ogec/page";
-import PastoralePage from "@/app/vie-scolaire/pastorale/page";
+import ApelPage, {
+  metadata as apelMetadata,
+} from "@/app/vie-scolaire/apel/page";
+import CantinePage, {
+  metadata as cantineMetadata,
+} from "@/app/vie-scolaire/cantine/page";
+import OgecPage, {
+  metadata as ogecMetadata,
+} from "@/app/vie-scolaire/ogec/page";
+import PastoralePage, {
+  metadata as pastoraleMetadata,
+} from "@/app/vie-scolaire/pastorale/page";
 
 import { Entity, BlogPost } from "@prisma/client";
 
@@ -130,34 +138,54 @@ describe("Pages entités (classes)", () => {
   });
 });
 
-describe("Pages entités (vie scolaire)", () => {
-  beforeEach(() => {
-    mockGetEntityBySlug.mockReset();
-    mockGetPageBySlug.mockReset();
+describe("Pages vie scolaire (SSR personnalisées)", () => {
+  it("render APEL page with SSR content and metadata", () => {
+    render(<ApelPage />);
+    expect(
+      screen.getByRole("heading", {
+        name: /des parents bénévoles qui font vivre les projets/i,
+        level: 1,
+      }),
+    ).toBeInTheDocument();
+    expect(apelMetadata.title).toMatch(/APEL/i);
+    expect(apelMetadata.alternates?.canonical).toBe("/vie-scolaire/apel");
   });
 
-  const entityPages = [
-    { slug: "apel", Component: ApelPage },
-    { slug: "cantine", Component: CantinePage },
-    { slug: "ogec", Component: OgecPage },
-    { slug: "pastorale", Component: PastoralePage },
-  ];
+  it("render Cantine page with SSR content and metadata", () => {
+    render(<CantinePage />);
+    expect(
+      screen.getByRole("heading", {
+        name: /Des repas cuisinés sur place/i,
+        level: 1,
+      }),
+    ).toBeInTheDocument();
+    expect(cantineMetadata.title).toMatch(/Cantine/i);
+    expect(cantineMetadata.alternates?.canonical).toBe("/vie-scolaire/cantine");
+  });
 
-  entityPages.forEach(({ slug, Component }) => {
-    it(`rend le contenu pour ${slug}`, async () => {
-      mockGetEntityBySlug.mockResolvedValueOnce(makeEntity(slug));
-      mockUsePathname.mockReturnValue(`/vie-scolaire/${slug}`);
-      const ui = await Component();
-      render(ui as JSX.Element);
-      expect(
-        screen.getByText(new RegExp(`Description ${slug}`, "i")),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(new RegExp(`Article ${slug}`, "i")),
-      ).toBeInTheDocument();
-      expect(
-        screen.queryByRole("button", { name: /liste des fournitures/i }),
-      ).not.toBeInTheDocument();
-    });
+  it("render OGEC page with SSR content and metadata", () => {
+    render(<OgecPage />);
+    expect(
+      screen.getByRole("heading", {
+        name: /pilier financier et juridique/i,
+        level: 1,
+      }),
+    ).toBeInTheDocument();
+    expect(ogecMetadata.title).toMatch(/OGEC/i);
+    expect(ogecMetadata.alternates?.canonical).toBe("/vie-scolaire/ogec");
+  });
+
+  it("render Pastorale page with SSR content and metadata", () => {
+    render(<PastoralePage />);
+    expect(
+      screen.getByRole("heading", {
+        name: /Une histoire chrétienne qui se vit aujourd’hui/i,
+        level: 1,
+      }),
+    ).toBeInTheDocument();
+    expect(pastoraleMetadata.title).toMatch(/Pastorale/i);
+    expect(pastoraleMetadata.alternates?.canonical).toBe(
+      "/vie-scolaire/pastorale",
+    );
   });
 });

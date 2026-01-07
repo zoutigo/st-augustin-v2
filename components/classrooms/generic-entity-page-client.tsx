@@ -15,11 +15,12 @@ interface GenericEntityPageClientProps {
   blogposts: BlogPost[];
   blogpostsTitle: string;
   isClassroom: boolean;
+  showNews?: boolean;
 }
 
 export const GenericEntityPageClient: React.FC<
   GenericEntityPageClientProps
-> = ({ entity, blogposts, blogpostsTitle, isClassroom }) => {
+> = ({ entity, blogposts, blogpostsTitle, isClassroom, showNews = true }) => {
   const [showFournitureList, setShowFournitureList] = useState(false);
   const [fournitureContent, setFournitureContent] = useState<string | null>(
     null,
@@ -30,6 +31,11 @@ export const GenericEntityPageClient: React.FC<
   const handlePostSelect = useCallback((post: BlogPost) => {
     setSelectedPost({ ...post });
   }, []);
+
+  const displayNews = showNews && !isClassroom;
+  const gridColsClass = displayNews
+    ? "grid-cols-1 lg:grid-cols-[2fr_1fr]"
+    : "grid-cols-1";
 
   const toggleFournitureList = async () => {
     if (!showFournitureList) {
@@ -63,18 +69,14 @@ export const GenericEntityPageClient: React.FC<
 
   return (
     <PageHolder>
-      <div
-        className={`grid gap-6 ${
-          isClassroom ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-[2fr_1fr]"
-        }`}
-      >
+      <div className={`grid gap-6 ${gridColsClass}`}>
         {/* Section principale */}
         <div className={isClassroom ? "w-full" : "w-full"}>
           <PageContent content={entity.description} />
         </div>
 
         {/* Section blogposts (sauf pour les classes) */}
-        {!isClassroom && (
+        {displayNews && (
           <div className="lg:w-1/3">
             <EntityBlogPostList
               title={blogpostsTitle}
@@ -87,7 +89,7 @@ export const GenericEntityPageClient: React.FC<
       </div>
 
       {/* Affichage du post sélectionné (uniquement si liste affichée) */}
-      {!isClassroom && selectedPost && selectedPost.content && (
+      {displayNews && selectedPost && selectedPost.content && (
         <div className="mt-8 p-4 border border-gray-300 rounded-lg bg-white shadow-md">
           <h2 className="text-xl font-bold mb-4 text-secondary">
             {capitalizeFirstLetter(selectedPost.title)}

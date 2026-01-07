@@ -45,7 +45,7 @@ const Breadcrumb = () => {
   return (
     <StyledNav
       $dynamicColor={dynamicColor()}
-      className="h-[3.5rem] w-full flex items-center rounded-md shadow-sm mb-4"
+      className="hidden w-full items-center rounded-md shadow-sm mb-4 sm:flex sm:h-[3.5rem]"
     >
       <ul className="flex space-x-2 items-center pl-6 text-base text-gray-900 font-semibold">
         {pathSegments.map((segment, index) => {
