@@ -1,23 +1,57 @@
-# Utiliser l'image officielle de Node.js 20.16.0 comme base
-FROM node:20.16.0
+# ---- deps ----
+FROM node:20-alpine AS deps
+RUN apk add --no-cache libc6-compat openssl
+WORKDIR /app
 
-# Définir le répertoire de travail
-WORKDIR /usr/src/app
+# Prisma exige DATABASE_URL même pour `prisma generate`.
+ARG DATABASE_URL="mysql://user:pass@localhost:3306/placeholder"
+ENV DATABASE_URL=${DATABASE_URL}
 
-# Copier les fichiers package.json et package-lock.json
 COPY package*.json ./
+COPY prisma ./prisma
 
-# Installer les dépendances
-RUN npm install
+RUN npm ci
+RUN npx prisma generate
 
-# Copier le reste de l'application
+# ---- builder ----
+FROM node:20-alpine AS builder
+RUN apk add --no-cache libc6-compat openssl
+WORKDIR /app
+
+ARG DATABASE_URL="mysql://user:pass@localhost:3306/placeholder"
+ENV DATABASE_URL=${DATABASE_URL}
+ENV NEXT_TELEMETRY_DISABLED=1
+
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Construire l'application pour la production
+RUN npx prisma generate
 RUN npm run build
 
-# Exposer le port que l'application utilise
-EXPOSE 3001
+# ---- runner ----
+FROM node:20-alpine AS runner
+RUN apk add --no-cache libc6-compat openssl
+WORKDIR /app
 
-# Définir la commande pour démarrer l'application
-CMD ["npm", "start"]
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
+
+# Serveur Node custom (pas de Next standalone : on garde le seed
+# ensureDefaultPages/ensureDefaultEntities et les node_modules complets).
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/lib ./lib
+COPY --from=builder /app/server.js ./server.js
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/next.config.mjs ./next.config.mjs
+
+RUN chown -R nextjs:nodejs /app
+USER nextjs
+
+EXPOSE 3000
+CMD ["node", "server.js"]

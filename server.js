@@ -5,51 +5,11 @@ if (process.env.NODE_ENV !== "production") {
 }
 const { createServer } = require("http");
 const next = require("next");
-const fs = require("fs");
 const { ensureDefaultPages } = require("./lib/ensure-default-pages");
 const { ensureDefaultEntities } = require("./lib/ensure-default-entities");
 
-// Redirection des logs vers un fichier avec vérification d'accès
-const logFilePath = "/home/bdeh8989/prod.ecole-st-augustin.fr/v2/passenger.log";
-let logStream;
-try {
-  logStream = fs.createWriteStream(logFilePath, { flags: "a" });
-} catch (err) {
-  console.error("Failed to open log file:", logFilePath, err);
-  process.exit(1);
-}
-
-// Function to safely convert arguments to string
-function formatLogArgs(args) {
-  return args
-    .map((arg) => {
-      if (typeof arg === "object") {
-        try {
-          return JSON.stringify(arg, null, 2);
-        } catch (err) {
-          return "[Unserializable Object]";
-        }
-      }
-      return arg;
-    })
-    .join(" ");
-}
-
-// Overriding console methods for detailed logging
-function logToFile(level, ...args) {
-  const formattedMessage = `${new Date().toISOString()} [${level}] ${formatLogArgs(
-    args,
-  )}\n`;
-  logStream.write(formattedMessage);
-  process.stdout.write(formattedMessage);
-}
-
-console.log = (...args) => logToFile("INFO", ...args);
-console.warn = (...args) => logToFile("WARN", ...args);
-console.error = (...args) => {
-  const stack = new Error().stack.split("\n").slice(2).join("\n");
-  logToFile("ERROR", ...args, "\nStack Trace:\n" + stack);
-};
+// Logs vers stdout/stderr : capturés par `docker logs` (plus de fichier
+// passenger.log spécifique à cPanel).
 
 // Configuration du serveur
 const port = parseInt(process.env.PORT || "3000", 10);
