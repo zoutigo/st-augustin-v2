@@ -7,6 +7,37 @@ import {
   humanAllowedTypes,
 } from "./upload-constraints";
 
+// Convertit une data URL (base64) en File pour pouvoir l'envoyer à /api/files
+// au lieu de l'embarquer telle quelle dans le contenu (ce qui faisait exploser
+// la taille de la requête de sauvegarde et bloquait le formulaire).
+const dataUrlToFile = async (
+  dataUrl: string,
+  filename: string,
+): Promise<File> => {
+  const res = await fetch(dataUrl);
+  const blob = await res.blob();
+  return new File([blob], filename, { type: blob.type });
+};
+
+const uploadPdfPageImage = async (
+  dataUrl: string,
+  pageIndex: number,
+): Promise<string | null> => {
+  const file = await dataUrlToFile(dataUrl, `pdf-page-${pageIndex + 1}.jpg`);
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch("/api/files", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) return null;
+
+  const data = await response.json();
+  return data?.url ?? null;
+};
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const handleFile = async (file: File | null, editor: any) => {
   if (file) {
@@ -62,16 +93,28 @@ export const handleFile = async (file: File | null, editor: any) => {
           if (file.type === "application/pdf") {
             const pdfImages = await loadPdfPagesAsImages(data.url);
 
-            pdfImages.forEach((image: string, index: number) => {
+            for (let index = 0; index < pdfImages.length; index++) {
+              const uploadedUrl = await uploadPdfPageImage(
+                pdfImages[index],
+                index,
+              );
+
+              if (!uploadedUrl) {
+                console.error(
+                  `Échec de l'upload de la page ${index + 1} du PDF.`,
+                );
+                continue;
+              }
+
               console.log(
                 `Ajout de l'image de la page ${index + 1} à l’éditeur.`,
               );
               editor
                 .chain()
                 .focus()
-                .setImage({ src: image, alt: `Page ${index + 1}` })
+                .setImage({ src: uploadedUrl, alt: `Page ${index + 1}` })
                 .run();
-            });
+            }
           } else {
             editor.chain().focus().setImage({ src: data.url, alt: "" }).run();
           }
